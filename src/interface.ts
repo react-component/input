@@ -3,12 +3,10 @@ import type {
   ReactElement,
   ReactNode,
   MouseEventHandler,
-  ChangeEventHandler,
 } from 'react';
 
 export interface BaseInputProps {
   value?: string;
-  defaultValue?: string;
 
   inputElement: ReactElement;
   prefix?: ReactNode;
@@ -28,5 +26,4 @@ export interface BaseInputProps {
   clearIcon?: ReactNode;
 
   // Events
-  onChange?: ChangeEventHandler<HTMLElement>;
 }
