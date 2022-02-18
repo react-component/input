@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BaseInput prefix and suffix should work 1`] = `
+<div>
+  <div>
+    <span
+      class="rc-input-affix-wrapper"
+    >
+      <span
+        class="rc-input-prefix"
+      >
+        prefix
+      </span>
+      <input
+        class="rc-input"
+        value=""
+      />
+    </span>
+    <br />
+    <br />
+    <span
+      class="rc-input-affix-wrapper"
+    >
+      <input
+        class="rc-input"
+        value=""
+      />
+      <span
+        class="rc-input-suffix"
+      >
+        suffix
+      </span>
+    </span>
+  </div>
+</div>
+`;

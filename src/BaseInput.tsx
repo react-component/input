@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import React, { cloneElement } from 'react';
 import classNames from 'classnames';
-import getInputCls from '@/utils/getInputCls';
-import type { BaseInputProps } from '@/interface';
-import { hasPrefixSuffix } from '@/utils/commonUtils';
+import getInputCls from './utils/getInputCls';
+import type { BaseInputProps } from './interface';
+import { hasPrefixSuffix } from './utils/commonUtils';
 
 const BaseInput: FC<BaseInputProps> = (props) => {
   const {
