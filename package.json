@@ -1,12 +1,12 @@
 {
-  "name": "rc-footer",
-  "version": "0.6.6",
-  "description": "Pretty Footer react component used in ant.design",
+  "name": "rc-input",
+  "version": "0.0.0",
+  "description": "React input component",
   "keywords": [
     "react",
     "react-component",
-    "react-footer",
-    "footer",
+    "react-input",
+    "input",
     "antd",
     "ant-design"
   ],
@@ -19,13 +19,13 @@
     "lib",
     "dist"
   ],
-  "homepage": "https://react-component.github.io/footer",
+  "homepage": "https://github.com/react-component/input",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/footer.git"
+    "url": "git@github.com:react-component/input.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/footer/issues"
+    "url": "http://github.com/react-component/input/issues"
   },
   "license": "MIT",
   "scripts": {
