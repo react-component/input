@@ -34,3 +34,11 @@ exports[`BaseInput prefix and suffix should work 1`] = `
   </div>
 </div>
 `;
+
+exports[`BaseInput should render perfectly 1`] = `
+<div>
+  <input
+    value=""
+  />
+</div>
+`;
