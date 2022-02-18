@@ -13,9 +13,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.umi/*"],
-      "rc-footer": ["src/index.tsx"]
+      "rc-input": ["src/index.tsx"]
     }
   }
 }
