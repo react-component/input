@@ -1,6 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BaseInput prefix and suffix should work 1`] = `
+exports[`BaseInput addon should render properly 1`] = `
+<div>
+  <div>
+    <span
+      class="rc-input-group-wrapper"
+    >
+      <span
+        class="rc-input-wrapper rc-input-group"
+      >
+        <span
+          class="rc-input-group-addon"
+        >
+          addonBefore
+        </span>
+        <input
+          value=""
+        />
+      </span>
+    </span>
+    <br />
+    <br />
+    <span
+      class="rc-input-group-wrapper"
+    >
+      <span
+        class="rc-input-wrapper rc-input-group"
+      >
+        <input
+          value=""
+        />
+        <span
+          class="rc-input-group-addon"
+        >
+          addonAfter
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`BaseInput prefix and suffix should render properly 1`] = `
 <div>
   <div>
     <span
