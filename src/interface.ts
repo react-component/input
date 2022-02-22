@@ -17,6 +17,7 @@ export interface BaseInputProps {
   className?: string;
   style?: CSSProperties;
   affixWrapperClassName?: string;
+  groupWrapperClassName?: string;
   direction?: 'ltr' | 'rtl';
   disabled?: boolean;
   focused?: boolean;
@@ -24,6 +25,7 @@ export interface BaseInputProps {
   allowClear?: boolean;
   handleReset?: MouseEventHandler;
   clearIcon?: ReactNode;
+  hidden?: boolean;
 
   // Events
 }

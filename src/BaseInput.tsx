@@ -16,6 +16,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     className,
     style,
     affixWrapperClassName,
+    addonClassName,
+    groupWrapperClassName,
     direction,
     disabled,
     readOnly,
@@ -24,6 +26,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     clearIcon,
     value,
     handleReset,
+    hidden,
   } = props;
 
   // ================== Clear Icon ================== //
@@ -50,8 +53,12 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
   };
 
+  let element: ReactElement = cloneElement(inputElement, {
+    value,
+    hidden,
+  });
+
   // ================== Prefix & Suffix ================== //
-  let element: ReactElement;
   if (hasPrefixSuffix(props)) {
     const affixWrapperPrefixCls = `${prefixCls}-affix-wrapper`;
     const affixWrapperCls = classNames(
@@ -76,32 +83,33 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
 
     element = (
-      <span className={affixWrapperCls} style={style}>
+      <span
+        className={affixWrapperCls}
+        style={style}
+        hidden={!hasAddon(props) && hidden}
+      >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
         {cloneElement(inputElement, {
           style: null,
           value,
+          hidden: null,
           className: getInputCls(prefixCls, disabled),
         })}
         {suffixNode}
       </span>
     );
-  } else {
-    element = cloneElement(inputElement, {
-      value,
-    });
   }
 
   // ================== Addon ================== //
   if (hasAddon(props)) {
-    const wrapperClassName = `${prefixCls}-group`;
-    const addonClassName = `${wrapperClassName}-addon`;
+    const wrapperCls = `${prefixCls}-group`;
+    const addonCls = `${wrapperCls}-addon`;
 
     const mergedWrapperClassName = classNames(
       `${prefixCls}-wrapper`,
-      wrapperClassName,
+      wrapperCls,
       {
-        [`${wrapperClassName}-rtl`]: direction === 'rtl',
+        [`${wrapperCls}-rtl`]: direction === 'rtl',
       },
     );
 
@@ -110,17 +118,18 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       {
         [`${prefixCls}-group-wrapper-rtl`]: direction === 'rtl',
       },
+      groupWrapperClassName,
       className,
     );
 
     // Need another wrapper for changing display:table to display:inline-block
     // and put style prop in wrapper
     return (
-      <span className={mergedGroupClassName} style={style}>
+      <span className={mergedGroupClassName} style={style} hidden={hidden}>
         <span className={mergedWrapperClassName}>
-          {addonBefore && <span className={addonClassName}>{addonBefore}</span>}
-          {cloneElement(element, { style: null })}
-          {addonAfter && <span className={addonClassName}>{addonAfter}</span>}
+          {addonBefore && <span className={addonCls}>{addonBefore}</span>}
+          {cloneElement(element, { style: null, hidden: null })}
+          {addonAfter && <span className={addonCls}>{addonAfter}</span>}
         </span>
       </span>
     );
