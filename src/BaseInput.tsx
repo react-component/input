@@ -16,7 +16,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     className,
     style,
     affixWrapperClassName,
-    addonClassName,
     groupWrapperClassName,
     direction,
     disabled,
