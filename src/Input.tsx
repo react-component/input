@@ -119,7 +119,7 @@ const Input: FC<InputProps> = (props) => {
       const valueLength = [...fixControlledValue(value)].length;
       const dataCount =
         typeof showCount === 'object'
-          ? showCount?.formatter({ count: valueLength, maxLength })
+          ? showCount.formatter({ count: valueLength, maxLength })
           : `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
 
       return (
