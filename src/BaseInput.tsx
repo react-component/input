@@ -1,9 +1,9 @@
-import type { FC } from 'react';
+import type { FC, ReactElement } from 'react';
 import React, { cloneElement } from 'react';
 import classNames from 'classnames';
 import getInputCls from './utils/getInputCls';
 import type { BaseInputProps } from './interface';
-import { hasPrefixSuffix } from './utils/commonUtils';
+import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
 const BaseInput: FC<BaseInputProps> = (props) => {
   const {
@@ -11,9 +11,12 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     prefixCls,
     prefix,
     suffix,
+    addonBefore,
+    addonAfter,
     className,
     style,
     affixWrapperClassName,
+    groupWrapperClassName,
     direction,
     disabled,
     readOnly,
@@ -22,9 +25,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     clearIcon,
     value,
     handleReset,
+    hidden,
   } = props;
 
-  // Clear Icon
+  // ================== Clear Icon ================== //
   const getClearIcon = () => {
     if (!allowClear) {
       return null;
@@ -48,6 +52,12 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
   };
 
+  let element: ReactElement = cloneElement(inputElement, {
+    value,
+    hidden,
+  });
+
+  // ================== Prefix & Suffix ================== //
   if (hasPrefixSuffix(props)) {
     const affixWrapperPrefixCls = `${prefixCls}-affix-wrapper`;
     const affixWrapperCls = classNames(
@@ -61,7 +71,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           suffix && allowClear && value,
       },
       affixWrapperClassName,
-      className,
+      !hasAddon(props) && className,
     );
 
     const suffixNode = (suffix || allowClear) && (
@@ -71,12 +81,17 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       </span>
     );
 
-    return (
-      <span className={affixWrapperCls} style={style}>
+    element = (
+      <span
+        className={affixWrapperCls}
+        style={style}
+        hidden={!hasAddon(props) && hidden}
+      >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
         {cloneElement(inputElement, {
           style: null,
           value,
+          hidden: null,
           className: getInputCls(prefixCls, disabled),
         })}
         {suffixNode}
@@ -84,9 +99,41 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
   }
 
-  return cloneElement(inputElement, {
-    value,
-  });
+  // ================== Addon ================== //
+  if (hasAddon(props)) {
+    const wrapperCls = `${prefixCls}-group`;
+    const addonCls = `${wrapperCls}-addon`;
+
+    const mergedWrapperClassName = classNames(
+      `${prefixCls}-wrapper`,
+      wrapperCls,
+      {
+        [`${wrapperCls}-rtl`]: direction === 'rtl',
+      },
+    );
+
+    const mergedGroupClassName = classNames(
+      `${prefixCls}-group-wrapper`,
+      {
+        [`${prefixCls}-group-wrapper-rtl`]: direction === 'rtl',
+      },
+      groupWrapperClassName,
+      className,
+    );
+
+    // Need another wrapper for changing display:table to display:inline-block
+    // and put style prop in wrapper
+    return (
+      <span className={mergedGroupClassName} style={style} hidden={hidden}>
+        <span className={mergedWrapperClassName}>
+          {addonBefore && <span className={addonCls}>{addonBefore}</span>}
+          {cloneElement(element, { style: null, hidden: null })}
+          {addonAfter && <span className={addonCls}>{addonAfter}</span>}
+        </span>
+      </span>
+    );
+  }
+  return element;
 };
 
 export default BaseInput;

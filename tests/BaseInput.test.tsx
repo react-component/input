@@ -8,11 +8,10 @@ describe('BaseInput', () => {
     const { container } = render(
       <BaseInput prefixCls="rc-input" inputElement={<input />} />,
     );
-
     expect(container).toMatchSnapshot();
   });
 
-  it('prefix and suffix should work', () => {
+  it('prefix and suffix should render properly', () => {
     const { container } = render(
       <div>
         <BaseInput
@@ -29,7 +28,26 @@ describe('BaseInput', () => {
         />
       </div>,
     );
+    expect(container).toMatchSnapshot();
+  });
 
+  it('addon should render properly', () => {
+    const { container } = render(
+      <div>
+        <BaseInput
+          prefixCls="rc-input"
+          inputElement={<input />}
+          addonBefore="addonBefore"
+        />
+        <br />
+        <br />
+        <BaseInput
+          prefixCls="rc-input"
+          inputElement={<input />}
+          addonAfter="addonAfter"
+        />
+      </div>,
+    );
     expect(container).toMatchSnapshot();
   });
 
