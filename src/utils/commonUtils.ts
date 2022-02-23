@@ -1,5 +1,5 @@
 import type { BaseInputProps } from '../interface';
-import type { ChangeEvent } from 'react';
+import type React from 'react';
 
 export function hasAddon(props: BaseInputProps) {
   return !!(props.addonBefore || props.addonAfter);
@@ -47,7 +47,7 @@ export function resolveOnChange<
     });
 
     currentTarget.value = '';
-    onChange(event as ChangeEvent<E>);
+    onChange(event as React.ChangeEvent<E>);
     return;
   }
 
@@ -59,10 +59,10 @@ export function resolveOnChange<
     });
 
     target.value = targetValue;
-    onChange(event as ChangeEvent<E>);
+    onChange(event as React.ChangeEvent<E>);
     return;
   }
-  onChange(event as ChangeEvent<E>);
+  onChange(event as React.ChangeEvent<E>);
 }
 
 export interface InputFocusOptions extends FocusOptions {

@@ -11,13 +11,24 @@ const Demo: FC = () => {
   };
 
   return (
-    <Input
-      prefixCls="rc-input"
-      allowClear
-      clearIcon="✖"
-      onChange={handleChange}
-      value={value}
-    />
+    <div>
+      <Input
+        prefixCls="rc-input"
+        allowClear
+        clearIcon="✖"
+        placeholder="uncontrolled"
+      />
+      <br />
+      <br />
+      <Input
+        prefixCls="rc-input"
+        allowClear
+        clearIcon="✖"
+        onChange={handleChange}
+        value={value}
+        placeholder="controlled"
+      />
+    </div>
   );
 };
 

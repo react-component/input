@@ -151,7 +151,9 @@ const Input: FC<InputProps> = (props) => {
       handleReset={handleReset}
       value={fixControlledValue(value)}
       focused={focused}
+      triggerFocus={focus}
       suffix={getSuffix()}
+      disabled={disabled}
     />
   );
 };

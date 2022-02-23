@@ -1,5 +1,137 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Input allowClear should change type when click 1`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value="111"
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Input allowClear should change type when click 2`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value=""
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Input allowClear should not show icon if defaultValue is undefined or empty string 1`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value=""
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Input allowClear should not show icon if defaultValue is undefined or empty string 2`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value=""
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Input allowClear should not show icon if value is undefined or empty string 1`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value=""
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Input allowClear should not show icon if value is undefined or empty string 2`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <input
+      class="rc-input"
+      type="text"
+      value=""
+    />
+    <span
+      class="rc-input-suffix"
+    >
+      <span
+        class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        role="button"
+      />
+    </span>
+  </span>
+</div>
+`;
+
 exports[`Input should support maxLength 1`] = `
 <div>
   <input

@@ -4,7 +4,7 @@ import '../../assets/index.less';
 import Input from 'rc-input';
 
 const Demo: FC = () => {
-  return <Input />;
+  return <Input onChange={(e) => console.log(e.target.value)} />;
 };
 
 export default Demo;
