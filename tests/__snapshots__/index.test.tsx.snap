@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input should support maxLength 1`] = `
+<div>
+  <input
+    class=""
+    maxlength="3"
+    type="text"
+    value=""
+  />
+</div>
+`;

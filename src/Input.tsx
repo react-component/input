@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import React, { useRef, useState } from 'react';
-import type { BaseInputProps, InputProps } from './interface';
+import type { InputProps } from './interface';
 import BaseInput from './BaseInput';
 import omit from 'rc-util/lib/omit';
 import type { InputFocusOptions } from './utils/commonUtils';
@@ -27,6 +27,7 @@ const Input: FC<InputProps> = (props) => {
     maxLength,
     suffix,
     showCount,
+    type = 'text',
     ...rest
   } = props;
 
@@ -107,6 +108,7 @@ const Input: FC<InputProps> = (props) => {
         )}
         ref={inputRef}
         size={htmlSize}
+        type={type}
       />
     );
   };
