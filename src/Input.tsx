@@ -27,7 +27,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onBlur,
     onPressEnter,
     onKeyDown,
-    prefixCls,
+    prefixCls = 'rc-input',
     disabled,
     htmlSize,
     className,
