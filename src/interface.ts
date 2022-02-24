@@ -15,7 +15,8 @@ export interface CommonInputProps {
   addonBefore?: ReactNode;
   addonAfter?: ReactNode;
   affixWrapperClassName?: string;
-  groupWrapperClassName?: string;
+  groupClassName?: string;
+  wrapperClassName?: string;
   allowClear?: boolean;
   clearIcon?: ReactNode;
 }
@@ -72,6 +73,7 @@ export interface InputProps
   showCount?: boolean | ShowCountProps;
   autoComplete?: string;
   htmlSize?: number;
+  inputClassName?: string;
 }
 
 export interface InputRef {

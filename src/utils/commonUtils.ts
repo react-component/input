@@ -1,11 +1,11 @@
-import type { BaseInputProps } from '../interface';
+import type { BaseInputProps, InputProps } from '../interface';
 import type React from 'react';
 
-export function hasAddon(props: BaseInputProps) {
+export function hasAddon(props: BaseInputProps | InputProps) {
   return !!(props.addonBefore || props.addonAfter);
 }
 
-export function hasPrefixSuffix(props: BaseInputProps) {
+export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
   return !!(props.prefix || props.suffix || props.allowClear);
 }
 
