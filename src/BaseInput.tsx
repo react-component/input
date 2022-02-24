@@ -1,7 +1,6 @@
 import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import classNames from 'classnames';
-import getInputCls from './utils/getInputCls';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
