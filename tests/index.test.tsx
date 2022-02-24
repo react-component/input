@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import Input from 'rc-input';
+import Input from '../src';
 import React from 'react';
 import type { InputRef } from '../src/interface';
 import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
@@ -280,6 +280,13 @@ describe('Input ref', () => {
       undefined,
     );
     inputSpy.mockRestore();
+  });
+
+  it('input should work', () => {
+    const ref = React.createRef<InputRef>();
+    const { container } = render(<Input ref={ref} defaultValue="light" />);
+    const inputEl = container.querySelector('input')!;
+    expect(ref.current?.input).toBe(inputEl);
   });
 });
 

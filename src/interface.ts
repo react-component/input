@@ -85,4 +85,5 @@ export interface InputRef {
     direction?: 'forward' | 'backward' | 'none',
   ) => void;
   select: () => void;
+  input: HTMLInputElement | null;
 }
