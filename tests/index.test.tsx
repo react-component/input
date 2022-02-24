@@ -1,7 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
 import Input from 'rc-input';
 import React from 'react';
-import anything = jasmine.anything;
+import type { InputRef } from '../src/interface';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import userEvent from '@testing-library/user-event';
+import { resolveOnChange } from '../src/utils/commonUtils';
 
 describe('Input', () => {
   it('should support maxLength', () => {
@@ -62,6 +65,15 @@ describe('Input', () => {
     expect(inputEl.value).toEqual('');
     fireEvent.change(inputEl, { target: { value: 'Bamboo' } });
     expect(inputEl.value).toEqual('Bamboo');
+  });
+
+  it('should focus input after clear', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <Input prefixCls="rc-input" allowClear defaultValue="111" />,
+    );
+    await user.click(container.querySelector('.rc-input-clear-icon')!);
+    expect(document.activeElement).toBe(container.querySelector('input'));
   });
 });
 
@@ -226,4 +238,60 @@ describe('Input allowClear', () => {
       ).toBeTruthy();
     });
   });
+});
+
+describe('Input ref', () => {
+  it('focus and blur should work', () => {
+    const ref = React.createRef<InputRef>();
+    const { container } = render(
+      <Input ref={ref} defaultValue="light" prefixCls="rc-input" />,
+    );
+    const inputEl = container.querySelector('input')!;
+    ref.current?.focus();
+    expect(document.activeElement).toBe(inputEl);
+    ref.current?.blur();
+    expect(document.activeElement).not.toBe(inputEl);
+  });
+
+  it('select should work', () => {
+    const select = jest.fn();
+    const inputSpy = spyElementPrototypes(HTMLInputElement, {
+      select,
+    });
+    const ref = React.createRef<InputRef>();
+    render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
+    ref.current?.select();
+    expect(select).toHaveBeenCalled();
+    inputSpy.mockRestore();
+  });
+
+  it('setSelectionRange should work', () => {
+    const setSelectionRange = jest.fn();
+    const inputSpy = spyElementPrototypes(HTMLInputElement, {
+      setSelectionRange,
+    });
+    const ref = React.createRef<InputRef>();
+    render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
+    ref.current?.setSelectionRange(0, 0);
+    expect(setSelectionRange).toHaveBeenCalledWith(
+      expect.anything(),
+      0,
+      0,
+      undefined,
+    );
+    inputSpy.mockRestore();
+  });
+});
+
+describe('resolveChange should work', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <textarea
+      onCompositionEnd={(e) =>
+        resolveOnChange(e.currentTarget, e, onChange, 'triggerValue')
+      }
+    />,
+  );
+  fireEvent.compositionEnd(container.querySelector('textarea')!);
+  expect(onChange).toHaveBeenCalled();
 });

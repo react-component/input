@@ -5,7 +5,6 @@ import Input from 'rc-input';
 
 const Demo: FC = () => {
   const [value, setValue] = useState<string>('');
-  const [disabled, setDisabled] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -18,8 +17,6 @@ const Demo: FC = () => {
         allowClear
         clearIcon="✖"
         placeholder="uncontrolled"
-        disabled={disabled}
-        onChange={(e) => setDisabled(e.target.value.length > 5)}
       />
       <br />
       <br />

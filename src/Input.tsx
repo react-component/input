@@ -5,7 +5,7 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react';
-import type { InputProps } from './interface';
+import type { InputProps, InputRef } from './interface';
 import BaseInput from './BaseInput';
 import omit from 'rc-util/lib/omit';
 import type { InputFocusOptions } from './utils/commonUtils';
@@ -17,7 +17,7 @@ import {
 import classNames from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 
-const Input = forwardRef<any, InputProps>((props, ref) => {
+const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
     autoComplete,
     onChange,
@@ -43,30 +43,26 @@ const Input = forwardRef<any, InputProps>((props, ref) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const focus = (option?: InputFocusOptions) => {
+    if (inputRef.current) {
+      triggerFocus(inputRef.current, option);
+    }
+  };
+
   useImperativeHandle(ref, () => ({
-    focus: (option?: InputFocusOptions) => {
-      if (inputRef.current) {
-        triggerFocus(inputRef.current, option);
-      }
-    },
+    focus,
     blur: () => {
-      if (inputRef.current) {
-        inputRef.current.blur();
-      }
+      inputRef.current?.blur();
     },
     setSelectionRange: (
       start: number,
       end: number,
       direction?: 'forward' | 'backward' | 'none',
     ) => {
-      if (inputRef.current) {
-        inputRef.current.setSelectionRange(start, end, direction);
-      }
+      inputRef.current?.setSelectionRange(start, end, direction);
     },
     select: () => {
-      if (inputRef.current) {
-        inputRef.current.select();
-      }
+      inputRef.current?.select();
     },
   }));
 
@@ -96,12 +92,6 @@ const Input = forwardRef<any, InputProps>((props, ref) => {
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     setFocused(false);
     onBlur?.(e);
-  };
-
-  const focus = (option?: InputFocusOptions) => {
-    if (inputRef.current) {
-      triggerFocus(inputRef.current, option);
-    }
   };
 
   const handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -137,6 +127,7 @@ const Input = forwardRef<any, InputProps>((props, ref) => {
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         className={classNames(
+          prefixCls,
           {
             [`${prefixCls}-disabled`]: disabled,
           },

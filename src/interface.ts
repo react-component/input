@@ -7,6 +7,7 @@ import type {
   InputHTMLAttributes,
 } from 'react';
 import type { LiteralUnion } from './utils/types';
+import type { InputFocusOptions } from './utils/commonUtils';
 
 export interface CommonInputProps {
   prefix?: ReactNode;
@@ -71,4 +72,15 @@ export interface InputProps
   showCount?: boolean | ShowCountProps;
   autoComplete?: string;
   htmlSize?: number;
+}
+
+export interface InputRef {
+  focus: (options?: InputFocusOptions) => void;
+  blur: () => void;
+  setSelectionRange: (
+    start: number,
+    end: number,
+    direction?: 'forward' | 'backward' | 'none',
+  ) => void;
+  select: () => void;
 }

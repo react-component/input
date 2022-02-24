@@ -135,7 +135,7 @@ exports[`Input allowClear should not show icon if value is undefined or empty st
 exports[`Input should support maxLength 1`] = `
 <div>
   <input
-    class=""
+    class="rc-input"
     maxlength="3"
     type="text"
     value=""
