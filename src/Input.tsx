@@ -67,6 +67,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     select: () => {
       inputRef.current?.select();
     },
+    input: inputRef.current,
   }));
 
   useEffect(() => {
