@@ -1,6 +1,6 @@
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
-import BaseInput from 'rc-input';
+import BaseInput from '../src/BaseInput';
 import { fireEvent, render } from '@testing-library/react';
 
 describe('BaseInput', () => {

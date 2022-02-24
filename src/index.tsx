@@ -1,3 +1,6 @@
 import BaseInput from './BaseInput';
+import Input from './Input';
 
-export default BaseInput;
+export { BaseInput };
+
+export default Input;

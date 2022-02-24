@@ -1,5 +1,5 @@
 import type { FC, ReactElement } from 'react';
-import React, { cloneElement } from 'react';
+import React, { cloneElement, useRef } from 'react';
 import classNames from 'classnames';
 import getInputCls from './utils/getInputCls';
 import type { BaseInputProps } from './interface';
@@ -17,16 +17,24 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     style,
     affixWrapperClassName,
     groupWrapperClassName,
-    direction,
     disabled,
     readOnly,
     focused,
+    triggerFocus,
     allowClear,
     clearIcon,
     value,
     handleReset,
     hidden,
   } = props;
+
+  const containerRef = useRef<HTMLSpanElement>(null);
+
+  const onInputMouseUp: React.MouseEventHandler = (e) => {
+    if (containerRef.current?.contains(e.target as Element)) {
+      triggerFocus?.();
+    }
+  };
 
   // ================== Clear Icon ================== //
   const getClearIcon = () => {
@@ -66,7 +74,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         [`${affixWrapperPrefixCls}-disabled`]: disabled,
         [`${affixWrapperPrefixCls}-focused`]: focused,
         [`${affixWrapperPrefixCls}-readonly`]: readOnly,
-        [`${affixWrapperPrefixCls}-rtl`]: direction === 'rtl',
         [`${affixWrapperPrefixCls}-input-with-clear-btn`]:
           suffix && allowClear && value,
       },
@@ -86,6 +93,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         className={affixWrapperCls}
         style={style}
         hidden={!hasAddon(props) && hidden}
+        onMouseUp={onInputMouseUp}
+        ref={containerRef}
       >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
         {cloneElement(inputElement, {
@@ -107,16 +116,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     const mergedWrapperClassName = classNames(
       `${prefixCls}-wrapper`,
       wrapperCls,
-      {
-        [`${wrapperCls}-rtl`]: direction === 'rtl',
-      },
     );
 
     const mergedGroupClassName = classNames(
       `${prefixCls}-group-wrapper`,
-      {
-        [`${prefixCls}-group-wrapper-rtl`]: direction === 'rtl',
-      },
       groupWrapperClassName,
       className,
     );
