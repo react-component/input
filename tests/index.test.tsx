@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import Input from 'rc-input';
 import React from 'react';
+import anything = jasmine.anything;
 
 describe('Input', () => {
   it('should support maxLength', () => {
@@ -11,6 +12,56 @@ describe('Input', () => {
   it('not crash when value is number', () => {
     const { container } = render(<Input suffix="Bamboo" value={1} />);
     expect(container).toBeTruthy();
+  });
+
+  it('should trigger onFocus and onBlur', () => {
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
+    const { container } = render(<Input onFocus={onFocus} onBlur={onBlur} />);
+    const inputEl = container.querySelector('input')!;
+    fireEvent.focus(inputEl);
+    expect(onFocus).toHaveBeenCalled();
+    fireEvent.blur(inputEl);
+    expect(onBlur).toHaveBeenCalled();
+  });
+
+  it('should trigger onKeydown and onPressEnter', () => {
+    const onKeyDown = jest.fn();
+    const onPressEnter = jest.fn();
+    const { container } = render(
+      <Input onKeyDown={onKeyDown} onPressEnter={onPressEnter} />,
+    );
+    const inputEl = container.querySelector('input')!;
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(onPressEnter).toHaveBeenCalled();
+  });
+
+  it('should trigger onChange', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input onChange={onChange} />);
+    const inputEl = container.querySelector('input')!;
+    fireEvent.change(inputEl, { target: { value: 'test' } });
+    expect(onChange).toHaveBeenCalled();
+    expect(inputEl.value).toBe('test');
+  });
+
+  it('not block input when `value` is undefined', () => {
+    const { container, rerender } = render(<Input value={undefined} />);
+    const inputEl = container.querySelector('input')!;
+    fireEvent.change(inputEl, { target: { value: 'Bamboo' } });
+    expect(inputEl.value).toEqual('Bamboo');
+
+    // Controlled
+    rerender(<Input value="Light" />);
+    fireEvent.change(inputEl, { target: { value: 'Bamboo' } });
+    expect(inputEl.value).toEqual('Light');
+
+    // Uncontrolled
+    rerender(<Input value={undefined} />);
+    expect(inputEl.value).toEqual('');
+    fireEvent.change(inputEl, { target: { value: 'Bamboo' } });
+    expect(inputEl.value).toEqual('Bamboo');
   });
 });
 

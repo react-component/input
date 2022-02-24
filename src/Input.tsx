@@ -1,5 +1,10 @@
-import type { FC } from 'react';
-import React, { useRef, useState } from 'react';
+import React, {
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react';
 import type { InputProps } from './interface';
 import BaseInput from './BaseInput';
 import omit from 'rc-util/lib/omit';
@@ -12,7 +17,7 @@ import {
 import classNames from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 
-const Input: FC<InputProps> = (props) => {
+const Input = forwardRef<any, InputProps>((props, ref) => {
   const {
     autoComplete,
     onChange,
@@ -38,6 +43,37 @@ const Input: FC<InputProps> = (props) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useImperativeHandle(ref, () => ({
+    focus: (option?: InputFocusOptions) => {
+      if (inputRef.current) {
+        triggerFocus(inputRef.current, option);
+      }
+    },
+    blur: () => {
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    },
+    setSelectionRange: (
+      start: number,
+      end: number,
+      direction?: 'forward' | 'backward' | 'none',
+    ) => {
+      if (inputRef.current) {
+        inputRef.current.setSelectionRange(start, end, direction);
+      }
+    },
+    select: () => {
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
+    },
+  }));
+
+  useEffect(() => {
+    setFocused((prev) => (prev && disabled ? false : prev));
+  }, [disabled]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     if (inputRef.current) {
@@ -46,7 +82,7 @@ const Input: FC<InputProps> = (props) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onPressEnter && e.code === 'Enter') {
+    if (onPressEnter && e.key === 'Enter') {
       onPressEnter(e);
     }
     onKeyDown?.(e);
@@ -156,6 +192,6 @@ const Input: FC<InputProps> = (props) => {
       disabled={disabled}
     />
   );
-};
+});
 
 export default Input;
