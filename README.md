@@ -17,14 +17,6 @@
 [bundlephobia-url]: https://bundlephobia.com/result?p=rc-input
 [bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-input
 
-Pretty Footer react component used in [ant.design](https://ant.design) and [antv.vision](https://antv.vision).
-
-![](https://gw.alipayobjects.com/zos/antfincdn/z4ie3X8x6u/1cb23945-ec67-45a3-b521-f8da62e12255.png)
-
-## Live Demo
-
-https://react-component.github.io/input/
-
 ## Install
 
 [![rc-input](https://nodei.co/npm/rc-input.png)](https://npmjs.org/package/rc-input)
