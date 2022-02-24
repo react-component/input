@@ -1,7 +1,6 @@
 import type { ChangeEvent, FC } from 'react';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import '../../assets/index.less';
-import type { InputRef } from 'rc-input';
 import Input from 'rc-input';
 
 const Demo: FC = () => {
@@ -11,8 +10,6 @@ const Demo: FC = () => {
     setValue(e.target.value);
   };
 
-  const ref = useRef<InputRef>(null);
-
   return (
     <div>
       <Input
@@ -20,7 +17,6 @@ const Demo: FC = () => {
         allowClear
         clearIcon="✖"
         placeholder="uncontrolled"
-        ref={ref}
       />
       <br />
       <br />
