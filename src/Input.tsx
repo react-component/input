@@ -11,6 +11,8 @@ import omit from 'rc-util/lib/omit';
 import type { InputFocusOptions } from './utils/commonUtils';
 import {
   fixControlledValue,
+  hasAddon,
+  hasPrefixSuffix,
   resolveOnChange,
   triggerFocus,
 } from './utils/commonUtils';
@@ -33,6 +35,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     suffix,
     showCount,
     type = 'text',
+    inputClassName,
     ...rest
   } = props;
 
@@ -104,7 +107,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const getInputElement = () => {
     // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit(props as InputProps & { inputType: any }, [
+    const otherProps = omit(props as InputProps, [
       'prefixCls',
       'onPressEnter',
       'addonBefore',
@@ -115,8 +118,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       // Input elements must be either controlled or uncontrolled,
       // specify either the value prop, or the defaultValue prop, but not both.
       'defaultValue',
-      'inputType',
       'showCount',
+      'affixWrapperClassName',
+      'groupClassName',
+      'inputClassName',
+      'wrapperClassName',
+      'clearIcon',
     ]);
     return (
       <input
@@ -131,7 +138,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           {
             [`${prefixCls}-disabled`]: disabled,
           },
-          className,
+          inputClassName,
+          !hasAddon(props) && !hasPrefixSuffix(props) && className,
         )}
         ref={inputRef}
         size={htmlSize}

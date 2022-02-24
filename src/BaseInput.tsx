@@ -1,7 +1,6 @@
 import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import classNames from 'classnames';
-import getInputCls from './utils/getInputCls';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
@@ -16,7 +15,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     className,
     style,
     affixWrapperClassName,
-    groupWrapperClassName,
+    groupClassName,
+    wrapperClassName,
     disabled,
     readOnly,
     focused,
@@ -54,6 +54,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           [`${clearIconCls}-has-suffix`]: !!suffix,
         })}
         role="button"
+        tabIndex={-1}
       >
         {clearIcon}
       </span>
@@ -101,7 +102,9 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           style: null,
           value,
           hidden: null,
-          className: getInputCls(prefixCls, disabled),
+          className: classNames(prefixCls, {
+            [`${prefixCls}-disabled`]: disabled,
+          }),
         })}
         {suffixNode}
       </span>
@@ -116,11 +119,12 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     const mergedWrapperClassName = classNames(
       `${prefixCls}-wrapper`,
       wrapperCls,
+      wrapperClassName,
     );
 
     const mergedGroupClassName = classNames(
       `${prefixCls}-group-wrapper`,
-      groupWrapperClassName,
+      groupClassName,
       className,
     );
 
