@@ -124,6 +124,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       'groupClassName',
       'inputClassName',
       'wrapperClassName',
+      'htmlSize',
       'clearIcon',
     ]);
     return (
