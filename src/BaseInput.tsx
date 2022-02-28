@@ -78,8 +78,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         [`${affixWrapperPrefixCls}-input-with-clear-btn`]:
           suffix && allowClear && value,
       },
-      affixWrapperClassName,
       !hasAddon(props) && className,
+      affixWrapperClassName,
     );
 
     const suffixNode = (suffix || allowClear) && (
@@ -124,8 +124,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
 
     const mergedGroupClassName = classNames(
       `${prefixCls}-group-wrapper`,
-      groupClassName,
       className,
+      groupClassName,
     );
 
     // Need another wrapper for changing display:table to display:inline-block
