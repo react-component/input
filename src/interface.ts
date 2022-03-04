@@ -17,6 +17,7 @@ export interface CommonInputProps {
   affixWrapperClassName?: string;
   groupClassName?: string;
   wrapperClassName?: string;
+  inputClassName?: string;
   allowClear?: boolean;
   clearIcon?: ReactNode;
 }
@@ -73,7 +74,6 @@ export interface InputProps
   showCount?: boolean | ShowCountProps;
   autoComplete?: string;
   htmlSize?: number;
-  inputClassName?: string;
 }
 
 export interface InputRef {

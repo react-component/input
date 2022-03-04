@@ -102,9 +102,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           style: null,
           value,
           hidden: null,
-          className: classNames(prefixCls, {
-            [`${prefixCls}-disabled`]: disabled,
-          }),
         })}
         {suffixNode}
       </span>
