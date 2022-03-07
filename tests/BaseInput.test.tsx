@@ -71,8 +71,7 @@ describe('BaseInput', () => {
       return (
         <BaseInput
           prefixCls="rc-input"
-          allowClear
-          clearIcon="✖"
+          allowClear={{ clearIcon: '✖' }}
           inputElement={
             <input onChange={handleChange} onBlur={onBlur} onFocus={onFocus} />
           }
@@ -99,5 +98,21 @@ describe('BaseInput', () => {
     expect(onBlur).not.toHaveBeenCalled();
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(inputEl!.value).toBe('');
+  });
+
+  it('should display clearIcon correctly', () => {
+    const { container, rerender } = render(
+      <BaseInput prefixCls="rc-input" inputElement={<input />} allowClear />,
+    );
+    const clearIcon = container.querySelector('.rc-input-clear-icon');
+    expect(clearIcon?.innerHTML).toBe('✖');
+    rerender(
+      <BaseInput
+        prefixCls="rc-input"
+        inputElement={<input />}
+        allowClear={{ clearIcon: 'clear' }}
+      />,
+    );
+    expect(clearIcon?.innerHTML).toBe('clear');
   });
 });
