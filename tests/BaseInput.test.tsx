@@ -71,8 +71,7 @@ describe('BaseInput', () => {
       return (
         <BaseInput
           prefixCls="rc-input"
-          allowClear
-          clearIcon="✖"
+          allowClear={{ clearIcon: '✖' }}
           inputElement={
             <input onChange={handleChange} onBlur={onBlur} onFocus={onFocus} />
           }

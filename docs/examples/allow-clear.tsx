@@ -12,18 +12,12 @@ const Demo: FC = () => {
 
   return (
     <div>
-      <Input
-        prefixCls="rc-input"
-        allowClear
-        clearIcon="✖"
-        placeholder="uncontrolled"
-      />
+      <Input prefixCls="rc-input" allowClear={{}} placeholder="uncontrolled" />
       <br />
       <br />
       <Input
         prefixCls="rc-input"
-        allowClear
-        clearIcon="✖"
+        allowClear={{ clearIcon: '✖' }}
         onChange={handleChange}
         value={value}
         placeholder="controlled"

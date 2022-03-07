@@ -22,7 +22,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     focused,
     triggerFocus,
     allowClear,
-    clearIcon,
     value,
     handleReset,
     hidden,
@@ -43,6 +42,17 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     }
     const needClear = !disabled && !readOnly && value;
     const clearIconCls = `${prefixCls}-clear-icon`;
+
+    let iconNode: React.ReactNode;
+    if (
+      allowClear === true ||
+      (typeof allowClear === 'object' && !allowClear?.clearIcon)
+    ) {
+      iconNode = '✖';
+    } else if (typeof allowClear === 'object' && !allowClear?.clearIcon) {
+      iconNode = allowClear.clearIcon;
+    }
+
     return (
       <span
         onClick={handleReset}
@@ -56,7 +66,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         role="button"
         tabIndex={-1}
       >
-        {clearIcon}
+        {iconNode}
       </span>
     );
   };

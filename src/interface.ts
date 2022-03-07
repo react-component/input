@@ -18,8 +18,7 @@ export interface CommonInputProps {
   groupClassName?: string;
   wrapperClassName?: string;
   inputClassName?: string;
-  allowClear?: boolean;
-  clearIcon?: ReactNode;
+  allowClear?: boolean | { clearIcon?: ReactNode };
 }
 
 export interface BaseInputProps extends CommonInputProps {
