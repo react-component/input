@@ -42,16 +42,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     }
     const needClear = !disabled && !readOnly && value;
     const clearIconCls = `${prefixCls}-clear-icon`;
-
-    let iconNode: React.ReactNode;
-    if (
-      allowClear === true ||
-      (typeof allowClear === 'object' && !allowClear?.clearIcon)
-    ) {
-      iconNode = '✖';
-    } else if (typeof allowClear === 'object' && !allowClear?.clearIcon) {
-      iconNode = allowClear.clearIcon;
-    }
+    const iconNode =
+      typeof allowClear === 'object' && allowClear?.clearIcon
+        ? allowClear.clearIcon
+        : '✖';
 
     return (
       <span

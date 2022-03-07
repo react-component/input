@@ -12,7 +12,7 @@ const Demo: FC = () => {
 
   return (
     <div>
-      <Input prefixCls="rc-input" allowClear={{}} placeholder="uncontrolled" />
+      <Input prefixCls="rc-input" allowClear placeholder="uncontrolled" />
       <br />
       <br />
       <Input
