@@ -75,7 +75,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }, [disabled]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    if (props.value === undefined) {
+      setValue(e.target.value);
+    }
     if (inputRef.current) {
       resolveOnChange(inputRef.current, e, onChange);
     }
