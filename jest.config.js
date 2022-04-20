@@ -1,3 +1,3 @@
 module.exports = {
-  snapshotSerializers: [require.resolve('enzyme-to-json/serializer')],
+  setupFilesAfterEnv: ['<rootDir>/tests/setupFilesAfterEnv.js'],
 };
