@@ -29,7 +29,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
 
   const containerRef = useRef<HTMLSpanElement>(null);
 
-  const onInputMouseUp: React.MouseEventHandler = (e) => {
+  const onInputMouseDown: React.MouseEventHandler = (e) => {
     if (containerRef.current?.contains(e.target as Element)) {
       triggerFocus?.();
     }
@@ -98,7 +98,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         className={affixWrapperCls}
         style={style}
         hidden={!hasAddon(props) && hidden}
-        onMouseUp={onInputMouseUp}
+        onMouseDown={onInputMouseDown}
         ref={containerRef}
       >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
