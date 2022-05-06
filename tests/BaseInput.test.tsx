@@ -115,4 +115,18 @@ describe('BaseInput', () => {
     );
     expect(clearIcon?.innerHTML).toBe('clear');
   });
+
+  it('should focus input when click prefix', () => {
+    const inputRef = React.createRef<HTMLInputElement>();
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        inputElement={<input ref={inputRef} />}
+        triggerFocus={() => inputRef.current?.focus()}
+        prefix="$"
+      />,
+    );
+    fireEvent.mouseDown(container.querySelector('.rc-input-affix-wrapper')!);
+    expect(document.activeElement).toBe(container.querySelector('input'));
+  });
 });
