@@ -133,7 +133,8 @@ describe('should support showCount', () => {
         prefixCls="rc-input"
         maxLength={5}
         showCount={{
-          formatter: ({ count, maxLength }) => `${count}, ${maxLength}`,
+          formatter: ({ value, count, maxLength }) =>
+            `${value}, ${count}, ${maxLength}`,
         }}
         value="12345"
       />,
@@ -141,7 +142,7 @@ describe('should support showCount', () => {
     expect(container.querySelector('input')?.value).toBe('12345');
     expect(
       container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-    ).toBe('5, 5');
+    ).toBe('12345, 5, 5');
   });
 });
 
