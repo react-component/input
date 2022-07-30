@@ -156,10 +156,11 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     const hasMaxLength = Number(maxLength) > 0;
 
     if (suffix || showCount) {
-      const valueLength = [...fixControlledValue(value)].length;
+      const val = fixControlledValue(value);
+      const valueLength = [...val].length;
       const dataCount =
         typeof showCount === 'object'
-          ? showCount.formatter({ count: valueLength, maxLength })
+          ? showCount.formatter({ value: val, count: valueLength, maxLength })
           : `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
 
       return (

@@ -36,7 +36,11 @@ export interface BaseInputProps extends CommonInputProps {
 }
 
 export interface ShowCountProps {
-  formatter: (args: { count: number; maxLength?: number }) => ReactNode;
+  formatter: (args: {
+    value: string;
+    count: number;
+    maxLength?: number;
+  }) => ReactNode;
 }
 
 export interface InputProps
