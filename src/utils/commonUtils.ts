@@ -1,6 +1,23 @@
 import type { BaseInputProps, InputProps } from '../interface';
 import type React from 'react';
 
+const idCounter: {
+  [key: string]: number;
+} = {};
+
+export function uniqueId(prefix = '$rc-input$') {
+  if (!idCounter[prefix]) {
+    idCounter[prefix] = 0;
+  }
+
+  const id = ++idCounter[prefix];
+  if (prefix === '$lodash$') {
+    return `${id}`;
+  }
+
+  return `${prefix}${id}`;
+}
+
 export function hasAddon(props: BaseInputProps | InputProps) {
   return !!(props.addonBefore || props.addonAfter);
 }
