@@ -2,9 +2,7 @@ import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import classNames from 'classnames';
 import type { BaseInputProps } from './interface';
-import { hasAddon, hasPrefixSuffix, uniqueId } from './utils/commonUtils';
-
-let isMouseDown: null | string = null;
+import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
 const BaseInput: FC<BaseInputProps> = (props) => {
   const {
@@ -30,20 +28,11 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
-  const containerId = useRef(uniqueId());
 
-  const onInputMouseUp: React.MouseEventHandler = (e) => {
-    if (
-      containerRef.current?.contains(e.target as Element) &&
-      (isMouseDown === null || isMouseDown === containerId.current)
-    ) {
+  const onInputClick: React.MouseEventHandler = (e) => {
+    if (containerRef.current?.contains(e.target as Element)) {
       triggerFocus?.();
     }
-    isMouseDown = null;
-  };
-
-  const onInputMouseDown: React.MouseEventHandler = (e) => {
-    isMouseDown = containerId.current;
   };
 
   // ================== Clear Icon ================== //
@@ -109,8 +98,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         className={affixWrapperCls}
         style={style}
         hidden={!hasAddon(props) && hidden}
-        onMouseDown={onInputMouseDown}
-        onMouseUp={onInputMouseUp}
+        onClick={onInputClick}
         ref={containerRef}
       >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}

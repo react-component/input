@@ -126,7 +126,7 @@ describe('BaseInput', () => {
         prefix="$"
       />,
     );
-    fireEvent.mouseUp(container.querySelector('.rc-input-affix-wrapper')!);
+    fireEvent.click(container.querySelector('.rc-input-affix-wrapper')!);
     expect(document.activeElement).toBe(container.querySelector('input'));
   });
 });
