@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
 import BaseInput from '../src/BaseInput';
-import { fireEvent, render } from '@testing-library/react';
+import { createEvent, fireEvent, render } from '@testing-library/react';
 
 describe('BaseInput', () => {
   it('should render perfectly', () => {
@@ -126,7 +126,10 @@ describe('BaseInput', () => {
         prefix="$"
       />,
     );
-    fireEvent.mouseDown(container.querySelector('.rc-input-affix-wrapper')!);
+    const wrapper = container.querySelector('.rc-input-affix-wrapper')!;
+    const mouseDownEvent = createEvent.mouseDown(wrapper);
+    fireEvent(wrapper, mouseDownEvent);
     expect(document.activeElement).toBe(container.querySelector('input'));
+    expect(mouseDownEvent.defaultPrevented).toBe(true);
   });
 });

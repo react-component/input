@@ -30,6 +30,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   const containerRef = useRef<HTMLSpanElement>(null);
 
   const onInputMouseDown: React.MouseEventHandler = (e) => {
+    e.preventDefault();
     if (containerRef.current?.contains(e.target as Element)) {
       triggerFocus?.();
     }
