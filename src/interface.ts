@@ -33,6 +33,7 @@ export interface BaseInputProps extends CommonInputProps {
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
   hidden?: boolean;
+  inputStyle?: CSSProperties;
 }
 
 export interface ShowCountProps {

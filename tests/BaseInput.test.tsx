@@ -129,4 +129,29 @@ describe('BaseInput', () => {
     fireEvent.click(container.querySelector('.rc-input-affix-wrapper')!);
     expect(document.activeElement).toBe(container.querySelector('input'));
   });
+
+  it('should support inputStyle', () => {
+    const { container } = render(
+      <>
+        <BaseInput
+          prefixCls="rc-input"
+          inputStyle={{ marginTop: 200 }}
+          inputElement={<input style={{ marginLeft: 100 }} />}
+        />
+        <BaseInput
+          prefixCls="rc-input"
+          prefix="prefix"
+          inputStyle={{ marginTop: 200 }}
+          inputElement={<input style={{ marginLeft: 100 }} />}
+        />
+        <BaseInput
+          prefixCls="rc-input"
+          addonBefore="addon"
+          inputStyle={{ marginTop: 200 }}
+          inputElement={<input style={{ marginLeft: 100 }} />}
+        />
+      </>,
+    );
+    expect(container).toMatchSnapshot();
+  });
 });

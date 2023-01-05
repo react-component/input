@@ -25,6 +25,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     value,
     handleReset,
     hidden,
+    inputStyle,
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
@@ -68,6 +69,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   let element: ReactElement = cloneElement(inputElement, {
     value,
     hidden,
+    style: {
+      ...inputElement.props?.style,
+      ...inputStyle,
+    },
   });
 
   // ================== Prefix & Suffix ================== //
@@ -103,7 +108,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
         {cloneElement(inputElement, {
-          style: null,
+          style: inputStyle ?? null,
           value,
           hidden: null,
         })}
@@ -135,7 +140,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       <span className={mergedGroupClassName} style={style} hidden={hidden}>
         <span className={mergedWrapperClassName}>
           {addonBefore && <span className={addonCls}>{addonBefore}</span>}
-          {cloneElement(element, { style: null, hidden: null })}
+          {cloneElement(element, { style: inputStyle ?? null, hidden: null })}
           {addonAfter && <span className={addonCls}>{addonAfter}</span>}
         </span>
       </span>
