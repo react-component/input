@@ -14,10 +14,17 @@ export interface CommonInputProps {
   suffix?: ReactNode;
   addonBefore?: ReactNode;
   addonAfter?: ReactNode;
+  classes?: {
+    affixWrapper?: string;
+    group?: string;
+    wrapper?: string;
+  };
+  /** @deprecated Use classes instead */
   affixWrapperClassName?: string;
+  /** @deprecated Use classes instead */
   groupClassName?: string;
+  /** @deprecated Use classes instead */
   wrapperClassName?: string;
-  inputClassName?: string;
   allowClear?: boolean | { clearIcon?: ReactNode };
 }
 
@@ -78,6 +85,11 @@ export interface InputProps
   showCount?: boolean | ShowCountProps;
   autoComplete?: string;
   htmlSize?: number;
+  /** @deprecated Use classes instead */
+  inputClassName?: string;
+  classes?: CommonInputProps['classes'] & {
+    input?: string;
+  };
 }
 
 export interface InputRef {

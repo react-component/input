@@ -36,6 +36,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     showCount,
     type = 'text',
     inputClassName,
+    classes,
     ...rest
   } = props;
 
@@ -125,6 +126,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       'affixWrapperClassName',
       'groupClassName',
       'inputClassName',
+      'classes',
       'wrapperClassName',
       'htmlSize',
     ]);
@@ -142,6 +144,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
             [`${prefixCls}-disabled`]: disabled,
           },
           inputClassName,
+          classes?.input,
           !hasAddon(props) && !hasPrefixSuffix(props) && className,
         )}
         ref={inputRef}
@@ -193,6 +196,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       triggerFocus={focus}
       suffix={getSuffix()}
       disabled={disabled}
+      classes={classes}
     />
   );
 });
