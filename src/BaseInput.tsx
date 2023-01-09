@@ -26,6 +26,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     handleReset,
     hidden,
     inputStyle,
+    classes,
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
@@ -89,6 +90,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       },
       !hasAddon(props) && className,
       affixWrapperClassName,
+      classes?.affixWrapper,
     );
 
     const suffixNode = (suffix || allowClear) && (
@@ -126,12 +128,14 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       `${prefixCls}-wrapper`,
       wrapperCls,
       wrapperClassName,
+      classes?.wrapper,
     );
 
     const mergedGroupClassName = classNames(
       `${prefixCls}-group-wrapper`,
       className,
       groupClassName,
+      classes?.group,
     );
 
     // Need another wrapper for changing display:table to display:inline-block
