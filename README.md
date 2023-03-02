@@ -56,6 +56,28 @@ render(<Input placeholder="input" allowClear />, mountNode);
 | onChange              | function(e)                                                                        | -        | Callback when user input                                                                                                                                            |
 | onPressEnter          | function(e)                                                                        | -        | The callback function that is triggered when Enter key is pressed                                                                                                   |
 
+## inputRef
+
+```tsx | pure
+const inputRef = useRef(null);
+
+useEffect(() => {
+  inputRef.current.focus();// the input will get focus
+  inputRef.current.blur();// the input will lose focus
+  console.log(inputRef.current.input);// The origin input element
+}, []);
+// ....
+<Input ref={inputRef} />
+```
+
+| Property | Type                                    | Description                       |
+| -------- | --------------------------------------- | --------------------------------- |
+| focus    | `(options?: InputFocusOptions) => void` | The input get focus when called   |
+| blur     | `() => void`                            | The input loses focus when called |
+| input    | `HTMLInputElement \| null`              | The origin input element          |
+
+
+
 ## Development
 
 ```

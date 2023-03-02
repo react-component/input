@@ -17,5 +17,6 @@
       "@@/*": [".dumi/tmp/*"],
       "rc-input": ["src/index.tsx"]
     }
-  }
+  },
+  "include": [".dumi/**/*", ".dumirc.ts", "**/*.ts", "**/*.tsx"]
 }
