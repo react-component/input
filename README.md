@@ -74,7 +74,7 @@ useEffect(() => {
 | -------- | --------------------------------------- | --------------------------------- |
 | focus    | `(options?: InputFocusOptions) => void` | The input get focus when called   |
 | blur     | `() => void`                            | The input loses focus when called |
-| input    | `HTMLInputElement | null`               | The origin input element          |
+| input    | `HTMLInputElement \| null`               | The origin input element          |
 
 
 
