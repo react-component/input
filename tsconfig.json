@@ -13,6 +13,8 @@
     "skipLibCheck": true,
     "declaration": true,
     "paths": {
+      "@/*": ["src/*"],
+      "@@/*": [".dumi/tmp/*"],
       "rc-input": ["src/index.tsx"]
     }
   }
