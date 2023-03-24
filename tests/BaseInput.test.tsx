@@ -154,4 +154,24 @@ describe('BaseInput', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  it('should support data-*', () => {
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix="prefix"
+        dataAttrs={{
+          affixWrapper: {
+            'data-test': 'test',
+          },
+        }}
+        inputElement={<input />}
+      />,
+    );
+    expect(
+      container
+        .querySelector('.rc-input-affix-wrapper')
+        ?.getAttribute('data-test'),
+    ).toBe('test');
+  });
 });

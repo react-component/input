@@ -27,6 +27,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     hidden,
     inputStyle,
     classes,
+    dataAttrs,
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
@@ -106,6 +107,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         style={style}
         hidden={!hasAddon(props) && hidden}
         onClick={onInputClick}
+        {...dataAttrs?.affixWrapper}
         ref={containerRef}
       >
         {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
