@@ -1,14 +1,13 @@
 import type {
   CSSProperties,
+  InputHTMLAttributes,
+  KeyboardEventHandler,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
-  MouseEventHandler,
-  KeyboardEventHandler,
-  InputHTMLAttributes,
 } from 'react';
 import type { LiteralUnion } from './utils/types';
 import type { InputFocusOptions } from './utils/commonUtils';
-import { string } from 'prop-types';
 
 export interface CommonInputProps {
   prefix?: ReactNode;
