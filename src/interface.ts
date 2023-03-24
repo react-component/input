@@ -1,10 +1,10 @@
 import type {
   CSSProperties,
+  InputHTMLAttributes,
+  KeyboardEventHandler,
+  MouseEventHandler,
   ReactElement,
   ReactNode,
-  MouseEventHandler,
-  KeyboardEventHandler,
-  InputHTMLAttributes,
 } from 'react';
 import type { LiteralUnion } from './utils/types';
 import type { InputFocusOptions } from './utils/commonUtils';
@@ -28,6 +28,8 @@ export interface CommonInputProps {
   allowClear?: boolean | { clearIcon?: ReactNode };
 }
 
+type DataAttr = Record<`data-${string}`, string>;
+
 export interface BaseInputProps extends CommonInputProps {
   value?: InputHTMLAttributes<HTMLInputElement>['value'];
   inputElement: ReactElement;
@@ -41,6 +43,9 @@ export interface BaseInputProps extends CommonInputProps {
   handleReset?: MouseEventHandler;
   hidden?: boolean;
   inputStyle?: CSSProperties;
+  dataAttrs?: {
+    affixWrapper?: DataAttr;
+  };
 }
 
 export interface ShowCountProps {
