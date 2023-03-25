@@ -203,4 +203,16 @@ describe('BaseInput', () => {
       container.querySelector('input')?.classList.contains('test-base'),
     ).toBeFalsy();
   });
+
+  it('should correct render with prefix and addon', () => {
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix="prefix"
+        addonBefore="addon"
+        inputElement={<input />}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
 });

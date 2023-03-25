@@ -74,6 +74,36 @@ exports[`BaseInput prefix and suffix should render properly 1`] = `
 </div>
 `;
 
+exports[`BaseInput should correct render with prefix and addon 1`] = `
+<div>
+  <span
+    class="rc-input-group-wrapper"
+  >
+    <span
+      class="rc-input-wrapper rc-input-group"
+    >
+      <span
+        class="rc-input-group-addon"
+      >
+        addon
+      </span>
+      <span
+        class="rc-input-affix-wrapper"
+      >
+        <span
+          class="rc-input-prefix"
+        >
+          prefix
+        </span>
+        <input
+          value=""
+        />
+      </span>
+    </span>
+  </span>
+</div>
+`;
+
 exports[`BaseInput should render perfectly 1`] = `
 <div>
   <input
