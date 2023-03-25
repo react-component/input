@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
-import classNames from 'classnames';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
@@ -71,6 +71,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   let element: ReactElement = cloneElement(inputElement, {
     value,
     hidden,
+    className:
+      classNames(inputElement.props?.className, className) || undefined,
     style: {
       ...inputElement.props?.style,
       ...inputStyle,
