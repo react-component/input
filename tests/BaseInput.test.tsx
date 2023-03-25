@@ -1,7 +1,7 @@
+import { fireEvent, render } from '@testing-library/react';
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
 import BaseInput from '../src/BaseInput';
-import { fireEvent, render } from '@testing-library/react';
 
 describe('BaseInput', () => {
   it('should render perfectly', () => {
@@ -173,5 +173,17 @@ describe('BaseInput', () => {
         .querySelector('.rc-input-affix-wrapper')
         ?.getAttribute('data-test'),
     ).toBe('test');
+  });
+
+  it('should apply className to inputElement', () => {
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        className="test-base"
+        inputElement={<input className="test" />}
+      />,
+    );
+    expect(container.querySelector('.test-base')).toBeTruthy();
+    expect(container.querySelector('.test')).toBeTruthy();
   });
 });
