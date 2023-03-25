@@ -1,23 +1,21 @@
+import classNames from 'classnames';
+import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import omit from 'rc-util/lib/omit';
 import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
   useRef,
   useState,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
 } from 'react';
-import type { InputProps, InputRef } from './interface';
 import BaseInput from './BaseInput';
-import omit from 'rc-util/lib/omit';
+import type { InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
 import {
   fixControlledValue,
-  hasAddon,
-  hasPrefixSuffix,
   resolveOnChange,
   triggerFocus,
 } from './utils/commonUtils';
-import classNames from 'classnames';
-import useMergedState from 'rc-util/lib/hooks/useMergedState';
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
@@ -145,7 +143,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           },
           inputClassName,
           classes?.input,
-          !hasAddon(props) && !hasPrefixSuffix(props) && className,
         )}
         ref={inputRef}
         size={htmlSize}
