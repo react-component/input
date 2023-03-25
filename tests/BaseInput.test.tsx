@@ -186,4 +186,21 @@ describe('BaseInput', () => {
     expect(container.querySelector('.test-base')).toBeTruthy();
     expect(container.querySelector('.test')).toBeTruthy();
   });
+
+  it('should not pass className to inputElement when has addon', () => {
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        className="test-base"
+        addonBefore="addon"
+        inputElement={<input className="test" />}
+      />,
+    );
+    expect(
+      container.querySelector('input')?.classList.contains('test'),
+    ).toBeTruthy();
+    expect(
+      container.querySelector('input')?.classList.contains('test-base'),
+    ).toBeFalsy();
+  });
 });

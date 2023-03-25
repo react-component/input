@@ -148,7 +148,11 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       <span className={mergedGroupClassName} style={style} hidden={hidden}>
         <span className={mergedWrapperClassName}>
           {addonBefore && <span className={addonCls}>{addonBefore}</span>}
-          {cloneElement(element, { style: inputStyle ?? null, hidden: null })}
+          {cloneElement(inputElement, {
+            style: inputStyle ?? null,
+            hidden: null,
+            value,
+          })}
           {addonAfter && <span className={addonCls}>{addonAfter}</span>}
         </span>
       </span>
