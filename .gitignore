@@ -29,12 +29,13 @@ yarn.lock
 package-lock.json
 coverage/
 .doc
+dist/
 
 # umi
 .umi
 .umi-production
 .umi-test
-.env.local 
+.env.local
 
 # dumi
 .dumi/tmp
