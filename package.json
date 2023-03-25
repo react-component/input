@@ -16,8 +16,7 @@
     "assets/*.css",
     "assets/*.less",
     "es",
-    "lib",
-    "dist"
+    "lib"
   ],
   "homepage": "https://github.com/react-component/input",
   "repository": {
