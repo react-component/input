@@ -30,6 +30,12 @@ exports[`Input allowClear classNames and styles should work 1`] = `
       suffix
     </span>
   </span>
+  <input
+    class="rc-input custom-input"
+    style="color: red;"
+    type="text"
+    value="123"
+  />
 </div>
 `;
 

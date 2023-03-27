@@ -76,6 +76,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       ) || null,
     style: {
       ...inputElement.props?.style,
+      ...(!hasPrefixSuffix(props) && !hasAddon(props) ? style : {}),
     },
   });
 
