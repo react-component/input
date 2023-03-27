@@ -3,7 +3,8 @@
 exports[`Input allowClear classNames and styles should work 1`] = `
 <div>
   <span
-    class="rc-input-affix-wrapper"
+    class="rc-input-affix-wrapper custom-class"
+    style="background-color: red;"
   >
     <span
       class="rc-input-prefix custom-prefix"
@@ -28,6 +29,74 @@ exports[`Input allowClear classNames and styles should work 1`] = `
         3
       </span>
       suffix
+    </span>
+  </span>
+  <span
+    class="rc-input-group-wrapper custom-class"
+    style="background-color: red;"
+  >
+    <span
+      class="rc-input-wrapper rc-input-group"
+    >
+      <span
+        class="rc-input-affix-wrapper"
+      >
+        <span
+          class="rc-input-prefix custom-prefix"
+          style="color: blue;"
+        >
+          prefix
+        </span>
+        <input
+          class="rc-input custom-input"
+          style="color: red;"
+          type="text"
+          value="123"
+        />
+        <span
+          class="rc-input-suffix custom-suffix"
+          style="color: yellow;"
+        >
+          <span
+            class="rc-input-show-count-suffix rc-input-show-count-has-suffix custom-count"
+            style="color: green;"
+          >
+            3
+          </span>
+          suffix
+        </span>
+      </span>
+      <span
+        class="rc-input-group-addon"
+      >
+        addon
+      </span>
+    </span>
+  </span>
+  <input
+    class="rc-input custom-input custom-class"
+    style="color: red; background-color: red;"
+    type="text"
+    value="123"
+  />
+  <span
+    class="rc-input-group-wrapper custom-class"
+    style="background-color: red;"
+  >
+    <span
+      class="rc-input-wrapper rc-input-group"
+    >
+      <input
+        class="rc-input custom-input"
+        style="color: red;"
+        type="text"
+        value="123"
+      />
+      <span
+        class="rc-input-group-addon"
+      >
+        addon
+      </span>
     </span>
   </span>
 </div>

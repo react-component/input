@@ -242,25 +242,76 @@ describe('Input allowClear', () => {
 
   it('classNames and styles should work', () => {
     const { container } = render(
-      <Input
-        value="123"
-        showCount
-        prefixCls="rc-input"
-        prefix="prefix"
-        suffix="suffix"
-        classNames={{
-          input: 'custom-input',
-          prefix: 'custom-prefix',
-          suffix: 'custom-suffix',
-          count: 'custom-count',
-        }}
-        styles={{
-          input: { color: 'red' },
-          prefix: { color: 'blue' },
-          suffix: { color: 'yellow' },
-          count: { color: 'green' },
-        }}
-      />,
+      <>
+        <Input
+          value="123"
+          showCount
+          prefixCls="rc-input"
+          prefix="prefix"
+          suffix="suffix"
+          className="custom-class"
+          style={{ backgroundColor: 'red' }}
+          classNames={{
+            input: 'custom-input',
+            prefix: 'custom-prefix',
+            suffix: 'custom-suffix',
+            count: 'custom-count',
+          }}
+          styles={{
+            input: { color: 'red' },
+            prefix: { color: 'blue' },
+            suffix: { color: 'yellow' },
+            count: { color: 'green' },
+          }}
+        />
+        <Input
+          value="123"
+          addonAfter="addon"
+          showCount
+          prefixCls="rc-input"
+          prefix="prefix"
+          suffix="suffix"
+          className="custom-class"
+          style={{ backgroundColor: 'red' }}
+          classNames={{
+            input: 'custom-input',
+            prefix: 'custom-prefix',
+            suffix: 'custom-suffix',
+            count: 'custom-count',
+          }}
+          styles={{
+            input: { color: 'red' },
+            prefix: { color: 'blue' },
+            suffix: { color: 'yellow' },
+            count: { color: 'green' },
+          }}
+        />
+        <Input
+          value="123"
+          prefixCls="rc-input"
+          className="custom-class"
+          style={{ backgroundColor: 'red' }}
+          classNames={{
+            input: 'custom-input',
+          }}
+          styles={{
+            input: { color: 'red' },
+          }}
+        />
+        <Input
+          value="123"
+          prefixCls="rc-input"
+          className="custom-class"
+          addonAfter="addon"
+          style={{ backgroundColor: 'red' }}
+          classNames={{
+            input: 'custom-input',
+          }}
+          styles={{
+            input: { color: 'red' },
+          }}
+        />
+      </>,
     );
     expect(container).toMatchSnapshot();
   });
