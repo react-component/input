@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import omit from 'rc-util/lib/omit';
 import React, {
@@ -33,8 +33,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     suffix,
     showCount,
     type = 'text',
-    inputClassName,
     classes,
+    classNames,
+    styles,
     ...rest
   } = props;
 
@@ -121,12 +122,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       // specify either the value prop, or the defaultValue prop, but not both.
       'defaultValue',
       'showCount',
-      'affixWrapperClassName',
-      'groupClassName',
-      'inputClassName',
       'classes',
-      'wrapperClassName',
       'htmlSize',
+      'styles',
+      'classNames',
     ]);
     return (
       <input
@@ -136,14 +135,14 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
-        className={classNames(
+        className={clsx(
           prefixCls,
           {
             [`${prefixCls}-disabled`]: disabled,
           },
-          inputClassName,
-          classes?.input,
+          classNames?.input,
         )}
+        style={styles?.input}
         ref={inputRef}
         size={htmlSize}
         type={type}
@@ -167,9 +166,16 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         <>
           {!!showCount && (
             <span
-              className={classNames(`${prefixCls}-show-count-suffix`, {
-                [`${prefixCls}-show-count-has-suffix`]: !!suffix,
-              })}
+              className={clsx(
+                `${prefixCls}-show-count-suffix`,
+                {
+                  [`${prefixCls}-show-count-has-suffix`]: !!suffix,
+                },
+                classNames?.count,
+              )}
+              style={{
+                ...styles?.count,
+              }}
             >
               {dataCount}
             </span>
@@ -194,6 +200,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       suffix={getSuffix()}
       disabled={disabled}
       classes={classes}
+      classNames={classNames}
+      styles={styles}
     />
   );
 });

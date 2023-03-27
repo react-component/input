@@ -1,9 +1,9 @@
 import { fireEvent, render } from '@testing-library/react';
-import Input from '../src';
-import React from 'react';
-import type { InputRef } from '../src/interface';
-import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
 import userEvent from '@testing-library/user-event';
+import { spyElementPrototypes } from 'rc-util/lib/test/domHook';
+import React from 'react';
+import Input from '../src';
+import type { InputRef } from '../src/interface';
 import { resolveOnChange } from '../src/utils/commonUtils';
 
 describe('Input', () => {
@@ -238,6 +238,31 @@ describe('Input allowClear', () => {
         container.querySelector('.rc-input-clear-icon-hidden'),
       ).toBeTruthy();
     });
+  });
+
+  it('classNames and styles should work', () => {
+    const { container } = render(
+      <Input
+        value="123"
+        showCount
+        prefixCls="rc-input"
+        prefix="prefix"
+        suffix="suffix"
+        classNames={{
+          input: 'custom-input',
+          prefix: 'custom-prefix',
+          suffix: 'custom-suffix',
+          count: 'custom-count',
+        }}
+        styles={{
+          input: { color: 'red' },
+          prefix: { color: 'blue' },
+          suffix: { color: 'yellow' },
+          count: { color: 'green' },
+        }}
+      />,
+    );
+    expect(container).toMatchSnapshot();
   });
 });
 

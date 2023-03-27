@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Input allowClear classNames and styles should work 1`] = `
+<div>
+  <span
+    class="rc-input-affix-wrapper"
+  >
+    <span
+      class="rc-input-prefix custom-prefix"
+      style="color: blue;"
+    >
+      prefix
+    </span>
+    <input
+      class="rc-input custom-input"
+      style="color: red;"
+      type="text"
+      value="123"
+    />
+    <span
+      class="rc-input-suffix custom-suffix"
+      style="color: yellow;"
+    >
+      <span
+        class="rc-input-show-count-suffix rc-input-show-count-has-suffix custom-count"
+        style="color: green;"
+      >
+        3
+      </span>
+      suffix
+    </span>
+  </span>
+</div>
+`;
+
 exports[`Input allowClear should change type when click 1`] = `
 <div>
   <span

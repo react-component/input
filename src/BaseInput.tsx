@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'classnames';
 import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import type { BaseInputProps } from './interface';
@@ -14,9 +14,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     addonAfter,
     className,
     style,
-    affixWrapperClassName,
-    groupClassName,
-    wrapperClassName,
     disabled,
     readOnly,
     focused,
@@ -25,9 +22,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     value,
     handleReset,
     hidden,
-    inputStyle,
     classes,
+    classNames,
     dataAttrs,
+    styles,
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
@@ -56,7 +54,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         // Do not trigger onBlur when clear input
         // https://github.com/ant-design/ant-design/issues/31200
         onMouseDown={(e) => e.preventDefault()}
-        className={classNames(clearIconCls, {
+        className={clsx(clearIconCls, {
           [`${clearIconCls}-hidden`]: !needClear,
           [`${clearIconCls}-has-suffix`]: !!suffix,
         })}
@@ -72,20 +70,19 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     value,
     hidden,
     className:
-      classNames(
+      clsx(
         inputElement.props?.className,
         !hasPrefixSuffix(props) && !hasAddon(props) && className,
       ) || null,
     style: {
       ...inputElement.props?.style,
-      ...inputStyle,
     },
   });
 
   // ================== Prefix & Suffix ================== //
   if (hasPrefixSuffix(props)) {
     const affixWrapperPrefixCls = `${prefixCls}-affix-wrapper`;
-    const affixWrapperCls = classNames(
+    const affixWrapperCls = clsx(
       affixWrapperPrefixCls,
       {
         [`${affixWrapperPrefixCls}-disabled`]: disabled,
@@ -95,12 +92,14 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           suffix && allowClear && value,
       },
       !hasAddon(props) && className,
-      affixWrapperClassName,
       classes?.affixWrapper,
     );
 
     const suffixNode = (suffix || allowClear) && (
-      <span className={`${prefixCls}-suffix`}>
+      <span
+        className={clsx(`${prefixCls}-suffix`, classNames?.suffix)}
+        style={styles?.suffix}
+      >
         {getClearIcon()}
         {suffix}
       </span>
@@ -115,9 +114,15 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         {...dataAttrs?.affixWrapper}
         ref={containerRef}
       >
-        {prefix && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
+        {prefix && (
+          <span
+            className={clsx(`${prefixCls}-prefix`, classNames?.prefix)}
+            style={styles?.prefix}
+          >
+            {prefix}
+          </span>
+        )}
         {cloneElement(inputElement, {
-          style: inputStyle ?? null,
           value,
           hidden: null,
         })}
@@ -131,17 +136,15 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     const wrapperCls = `${prefixCls}-group`;
     const addonCls = `${wrapperCls}-addon`;
 
-    const mergedWrapperClassName = classNames(
+    const mergedWrapperClassName = clsx(
       `${prefixCls}-wrapper`,
       wrapperCls,
-      wrapperClassName,
       classes?.wrapper,
     );
 
-    const mergedGroupClassName = classNames(
+    const mergedGroupClassName = clsx(
       `${prefixCls}-group-wrapper`,
       className,
-      groupClassName,
       classes?.group,
     );
 
@@ -152,7 +155,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
         <span className={mergedWrapperClassName}>
           {addonBefore && <span className={addonCls}>{addonBefore}</span>}
           {cloneElement(element, {
-            style: inputStyle ?? null,
             hidden: null,
           })}
           {addonAfter && <span className={addonCls}>{addonAfter}</span>}

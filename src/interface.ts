@@ -6,8 +6,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react';
-import type { LiteralUnion } from './utils/types';
 import type { InputFocusOptions } from './utils/commonUtils';
+import type { LiteralUnion } from './utils/types';
 
 export interface CommonInputProps {
   prefix?: ReactNode;
@@ -19,12 +19,14 @@ export interface CommonInputProps {
     group?: string;
     wrapper?: string;
   };
-  /** @deprecated Use classes instead */
-  affixWrapperClassName?: string;
-  /** @deprecated Use classes instead */
-  groupClassName?: string;
-  /** @deprecated Use classes instead */
-  wrapperClassName?: string;
+  classNames?: {
+    prefix?: string;
+    suffix?: string;
+  };
+  styles?: {
+    prefix?: CSSProperties;
+    suffix?: CSSProperties;
+  };
   allowClear?: boolean | { clearIcon?: ReactNode };
 }
 
@@ -42,7 +44,6 @@ export interface BaseInputProps extends CommonInputProps {
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
   hidden?: boolean;
-  inputStyle?: CSSProperties;
   dataAttrs?: {
     affixWrapper?: DataAttr;
   };
@@ -90,10 +91,13 @@ export interface InputProps
   showCount?: boolean | ShowCountProps;
   autoComplete?: string;
   htmlSize?: number;
-  /** @deprecated Use classes instead */
-  inputClassName?: string;
-  classes?: CommonInputProps['classes'] & {
+  classNames?: CommonInputProps['classNames'] & {
     input?: string;
+    count?: string;
+  };
+  styles?: CommonInputProps['styles'] & {
+    input?: CSSProperties;
+    count?: CSSProperties;
   };
 }
 
