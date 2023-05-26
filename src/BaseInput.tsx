@@ -1,8 +1,24 @@
 import clsx from 'classnames';
 import type { FC, ReactElement } from 'react';
 import React, { cloneElement, useRef } from 'react';
+import DefaultCopyIcon from './DefaultCopyIcon';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
+
+const copyText = (text?: string): void => {
+  if (!text) {
+    return;
+  }
+  const textarea = document.createElement('textarea');
+  textarea.setAttribute('readonly', 'readonly');
+  textarea.innerHTML = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  if (document.execCommand('copy')) {
+    document.execCommand('copy');
+  }
+  document.body.removeChild(textarea);
+};
 
 const BaseInput: FC<BaseInputProps> = (props) => {
   const {
@@ -26,6 +42,8 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     classNames,
     dataAttrs,
     styles,
+    allowCopy,
+    copyCallback,
   } = props;
 
   const containerRef = useRef<HTMLSpanElement>(null);
@@ -76,7 +94,9 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       ) || null,
     style: {
       ...inputElement.props?.style,
-      ...(!hasPrefixSuffix(props) && !hasAddon(props) ? style : {}),
+      ...(!hasPrefixSuffix(props) && !hasAddon(props) && !allowCopy
+        ? style
+        : {}),
     },
   });
 
@@ -132,6 +152,20 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
   }
 
+  const CopyIcon = React.createElement(
+    'span',
+    {
+      onClick: () => {
+        if (typeof copyCallback === 'function') {
+          copyCallback(value, inputElement);
+        } else {
+          copyText(value?.toString());
+        }
+      },
+    },
+    DefaultCopyIcon,
+  );
+
   // ================== Addon ================== //
   if (hasAddon(props)) {
     const wrapperCls = `${prefixCls}-group`;
@@ -159,11 +193,25 @@ const BaseInput: FC<BaseInputProps> = (props) => {
             hidden: null,
           })}
           {addonAfter && <span className={addonCls}>{addonAfter}</span>}
+          {allowCopy ? CopyIcon : null}
         </span>
       </span>
     );
   }
-  return element;
+  return (
+    <>
+      {CopyIcon ? (
+        <div
+          style={{ display: 'flex', alignItems: 'center', ...(style || {}) }}
+        >
+          {element}
+          {allowCopy ? CopyIcon : null}
+        </div>
+      ) : (
+        element
+      )}
+    </>
+  );
 };
 
 export default BaseInput;

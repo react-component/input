@@ -10,6 +10,11 @@ import type { InputFocusOptions } from './utils/commonUtils';
 import type { LiteralUnion } from './utils/types';
 
 export interface CommonInputProps {
+  allowCopy?: ReactNode | boolean;
+  copyCallback?: (
+    v: InputHTMLAttributes<HTMLInputElement>['value'],
+    ele: ReactElement<any, string | React.JSXElementConstructor<any>>,
+  ) => void;
   prefix?: ReactNode;
   suffix?: ReactNode;
   addonBefore?: ReactNode;
