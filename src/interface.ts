@@ -14,16 +14,19 @@ export interface CommonInputProps {
   suffix?: ReactNode;
   addonBefore?: ReactNode;
   addonAfter?: ReactNode;
+  /** @deprecated Use `classNames` instead */
   classes?: {
     affixWrapper?: string;
     group?: string;
     wrapper?: string;
   };
   classNames?: {
+    affixWrapper?: string;
     prefix?: string;
     suffix?: string;
   };
   styles?: {
+    affixWrapper?: CSSProperties;
     prefix?: CSSProperties;
     suffix?: CSSProperties;
   };
@@ -46,6 +49,12 @@ export interface BaseInputProps extends CommonInputProps {
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;
+  };
+  components?: {
+    affixWrapper?: 'span' | 'div';
+    groupWrapper?: 'span' | 'div';
+    wrapper?: 'span' | 'div';
+    groupAddon?: 'span' | 'div';
   };
 }
 

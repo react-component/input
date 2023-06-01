@@ -26,9 +26,15 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     classNames,
     dataAttrs,
     styles,
+    components,
   } = props;
 
-  const containerRef = useRef<HTMLSpanElement>(null);
+  const AffixWrapperComponent = components?.affixWrapper || 'span';
+  const GroupWrapperComponent = components?.groupWrapper || 'span';
+  const WrapperComponent = components?.wrapper || 'span';
+  const GroupAddonComponent = components?.groupAddon || 'span';
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const onInputClick: React.MouseEventHandler = (e) => {
     if (containerRef.current?.contains(e.target as Element)) {
@@ -94,6 +100,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       },
       !hasAddon(props) && className,
       classes?.affixWrapper,
+      classNames?.affixWrapper,
     );
 
     const suffixNode = (suffix || allowClear) && (
@@ -107,7 +114,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
 
     element = (
-      <span
+      <AffixWrapperComponent
         className={affixWrapperCls}
         style={!hasAddon(props) ? style : undefined}
         hidden={!hasAddon(props) && hidden}
@@ -128,7 +135,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
           hidden: null,
         })}
         {suffixNode}
-      </span>
+      </AffixWrapperComponent>
     );
   }
 
@@ -152,15 +159,27 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     // Need another wrapper for changing display:table to display:inline-block
     // and put style prop in wrapper
     return (
-      <span className={mergedGroupClassName} style={style} hidden={hidden}>
-        <span className={mergedWrapperClassName}>
-          {addonBefore && <span className={addonCls}>{addonBefore}</span>}
+      <GroupWrapperComponent
+        className={mergedGroupClassName}
+        style={style}
+        hidden={hidden}
+      >
+        <WrapperComponent className={mergedWrapperClassName}>
+          {addonBefore && (
+            <GroupAddonComponent className={addonCls}>
+              {addonBefore}
+            </GroupAddonComponent>
+          )}
           {cloneElement(element, {
             hidden: null,
           })}
-          {addonAfter && <span className={addonCls}>{addonAfter}</span>}
-        </span>
-      </span>
+          {addonAfter && (
+            <GroupAddonComponent className={addonCls}>
+              {addonAfter}
+            </GroupAddonComponent>
+          )}
+        </WrapperComponent>
+      </GroupWrapperComponent>
     );
   }
   return element;
