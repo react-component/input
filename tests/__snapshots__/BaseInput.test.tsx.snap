@@ -111,3 +111,33 @@ exports[`BaseInput should render perfectly 1`] = `
   />
 </div>
 `;
+
+exports[`BaseInput support use div as basic element 1`] = `
+<div>
+  <div
+    class="rc-input-group-wrapper"
+  >
+    <div
+      class="rc-input-wrapper rc-input-group"
+    >
+      <div
+        class="rc-input-group-addon"
+      >
+        addon
+      </div>
+      <div
+        class="rc-input-affix-wrapper"
+      >
+        <span
+          class="rc-input-prefix"
+        >
+          prefix
+        </span>
+        <input
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

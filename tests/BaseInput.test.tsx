@@ -190,4 +190,22 @@ describe('BaseInput', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  it('support use div as basic element', () => {
+    const { container } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix="prefix"
+        addonBefore="addon"
+        inputElement={<input />}
+        components={{
+          affixWrapper: 'div',
+          groupWrapper: 'div',
+          wrapper: 'div',
+          groupAddon: 'div',
+        }}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
 });
