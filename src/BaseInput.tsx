@@ -116,7 +116,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     element = (
       <AffixWrapperComponent
         className={affixWrapperCls}
-        style={!hasAddon(props) ? style : undefined}
+        style={{
+          ...(!hasAddon(props) ? style : undefined),
+          ...styles?.affixWrapper,
+        }}
         hidden={!hasAddon(props) && hidden}
         onClick={onInputClick}
         {...dataAttrs?.affixWrapper}
