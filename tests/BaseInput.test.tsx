@@ -208,4 +208,33 @@ describe('BaseInput', () => {
     );
     expect(container).toMatchSnapshot();
   });
+
+  it('styles should work', () => {
+    const container = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix="prefix"
+        addonBefore="addon"
+        inputElement={<input />}
+        styles={{
+          affixWrapper: {
+            color: 'red',
+          },
+          prefix: {
+            color: 'blue',
+          },
+        }}
+      />,
+    );
+
+    expect(
+      container.container.querySelector<HTMLSpanElement>(
+        '.rc-input-affix-wrapper',
+      )?.style.color,
+    ).toBe('red');
+    expect(
+      container.container.querySelector<HTMLSpanElement>('.rc-input-prefix')
+        ?.style.color,
+    ).toBe('blue');
+  });
 });
