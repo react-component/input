@@ -35,8 +35,10 @@ export interface CommonInputProps {
 
 type DataAttr = Record<`data-${string}`, string>;
 
+export type ValueType = InputHTMLAttributes<HTMLInputElement>['value'] | bigint;
+
 export interface BaseInputProps extends CommonInputProps {
-  value?: InputHTMLAttributes<HTMLInputElement>['value'];
+  value?: ValueType;
   inputElement: ReactElement;
   prefixCls?: string;
   className?: string;
@@ -68,7 +70,11 @@ export interface ShowCountProps {
 
 export interface InputProps
   extends CommonInputProps,
-    Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'> {
+    Omit<
+      InputHTMLAttributes<HTMLInputElement>,
+      'size' | 'prefix' | 'type' | 'value'
+    > {
+  value?: ValueType;
   prefixCls?: string;
   // ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#%3Cinput%3E_types
   type?: LiteralUnion<
