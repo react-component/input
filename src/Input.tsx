@@ -74,6 +74,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
+  useEffect(() => {
+    if (rest.autoFocus) {
+      focus();
+    }
+  }, [rest.autoFocus]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.value === undefined) {
       setValue(e.target.value);
