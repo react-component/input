@@ -110,23 +110,28 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const getInputElement = () => {
     // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit(props as InputProps, [
-      'prefixCls',
-      'onPressEnter',
-      'addonBefore',
-      'addonAfter',
-      'prefix',
-      'suffix',
-      'allowClear',
-      // Input elements must be either controlled or uncontrolled,
-      // specify either the value prop, or the defaultValue prop, but not both.
-      'defaultValue',
-      'showCount',
-      'classes',
-      'htmlSize',
-      'styles',
-      'classNames',
-    ]);
+    const otherProps = omit(
+      props as Omit<InputProps, 'value'> & {
+        value?: React.InputHTMLAttributes<HTMLInputElement>['value'];
+      },
+      [
+        'prefixCls',
+        'onPressEnter',
+        'addonBefore',
+        'addonAfter',
+        'prefix',
+        'suffix',
+        'allowClear',
+        // Input elements must be either controlled or uncontrolled,
+        // specify either the value prop, or the defaultValue prop, but not both.
+        'defaultValue',
+        'showCount',
+        'classes',
+        'htmlSize',
+        'styles',
+        'classNames',
+      ],
+    );
     return (
       <input
         autoComplete={autoComplete}

@@ -75,6 +75,10 @@ describe('Input', () => {
     await user.click(container.querySelector('.rc-input-clear-icon')!);
     expect(document.activeElement).toBe(container.querySelector('input'));
   });
+
+  it('support bigint type', () => {
+    expect(<Input value={BigInt('2222')} />).toBeTruthy();
+  });
 });
 
 describe('should support showCount', () => {
