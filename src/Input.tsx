@@ -161,7 +161,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
     if (suffix || showCount) {
       const val = fixControlledValue(value);
-      const valueLength = [...val].length;
+      const valueLength = val.length;
       const dataCount =
         typeof showCount === 'object'
           ? showCount.formatter({ value: val, count: valueLength, maxLength })
