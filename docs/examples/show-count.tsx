@@ -15,6 +15,15 @@ const Demo: FC = () => {
     >
       <Input prefixCls="rc-input" showCount defaultValue="👨‍👩‍👧‍👦" />
       <Input prefixCls="rc-input" showCount defaultValue="👨‍👩‍👧‍👦" maxLength={20} />
+      <Input
+        prefixCls="rc-input"
+        defaultValue="👨‍👩‍👧‍👦"
+        count={{
+          show: true,
+          strategy: (val) =>
+            [...new (Intl as any).Segmenter().segment(val)].length,
+        }}
+      />
     </div>
   );
 };

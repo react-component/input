@@ -60,13 +60,11 @@ export interface BaseInputProps extends CommonInputProps {
   };
 }
 
-export interface ShowCountProps {
-  formatter: (args: {
-    value: string;
-    count: number;
-    maxLength?: number;
-  }) => ReactNode;
-}
+export type ShowCountFormatter = (args: {
+  value: string;
+  count: number;
+  maxLength?: number;
+}) => ReactNode;
 
 export interface InputProps
   extends CommonInputProps,
@@ -103,7 +101,12 @@ export interface InputProps
     string
   >;
   onPressEnter?: KeyboardEventHandler<HTMLInputElement>;
-  showCount?: boolean | ShowCountProps;
+  /** @deprecated Use `count` instead */
+  showCount?:
+    | boolean
+    | {
+        formatter: ShowCountFormatter;
+      };
   autoComplete?: string;
   htmlSize?: number;
   classNames?: CommonInputProps['classNames'] & {
@@ -113,6 +116,12 @@ export interface InputProps
   styles?: CommonInputProps['styles'] & {
     input?: CSSProperties;
     count?: CSSProperties;
+  };
+  count?: {
+    max?: number;
+    strategy?: (value: string) => number;
+    show?: boolean;
+    formatter?: ShowCountFormatter;
   };
 }
 

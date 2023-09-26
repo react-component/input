@@ -9,6 +9,7 @@ import React, {
   useState,
 } from 'react';
 import BaseInput from './BaseInput';
+import useCount from './hooks/useCount';
 import type { InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
 import {
@@ -32,6 +33,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     maxLength,
     suffix,
     showCount,
+    count,
     type = 'text',
     classes,
     classNames,
@@ -52,6 +54,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
   };
 
+  // ====================== Count =======================
+  const countConfig = useCount(count, showCount);
+
+  // ======================= Ref ========================
   useImperativeHandle(ref, () => ({
     focus,
     blur: () => {
@@ -126,6 +132,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         // specify either the value prop, or the defaultValue prop, but not both.
         'defaultValue',
         'showCount',
+        'count',
         'classes',
         'htmlSize',
         'styles',
@@ -159,17 +166,16 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     // Max length value
     const hasMaxLength = Number(maxLength) > 0;
 
-    if (suffix || showCount) {
+    if (suffix || countConfig.show) {
       const val = fixControlledValue(value);
-      const valueLength = val.length;
-      const dataCount =
-        typeof showCount === 'object'
-          ? showCount.formatter({ value: val, count: valueLength, maxLength })
-          : `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
+      const valueLength = countConfig.strategy(val);
+      const dataCount = countConfig.formatter
+        ? countConfig.formatter({ value: val, count: valueLength, maxLength })
+        : `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
 
       return (
         <>
-          {!!showCount && (
+          {countConfig.show && (
             <span
               className={clsx(
                 `${prefixCls}-show-count-suffix`,
@@ -192,6 +198,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     return null;
   };
 
+  // ====================== Render ======================
   return (
     <BaseInput
       {...rest}
