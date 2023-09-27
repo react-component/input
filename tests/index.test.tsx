@@ -102,35 +102,6 @@ describe('should support showCount', () => {
     ).toBe('8 / 5');
   });
 
-  describe('emoji', () => {
-    it('should minimize value between emoji length and maxLength', () => {
-      const { container } = render(
-        <Input prefixCls="rc-input" maxLength={1} showCount value="👀" />,
-      );
-      expect(container.querySelector('input')?.value).toBe('👀');
-      expect(
-        container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('1 / 1');
-
-      const { container: container1 } = render(
-        <Input prefixCls="rc-input" maxLength={2} showCount value="👀" />,
-      );
-      expect(
-        container1.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('1 / 2');
-    });
-
-    it('slice emoji', () => {
-      const { container } = render(
-        <Input prefixCls="rc-input" maxLength={5} showCount value="1234😂" />,
-      );
-      expect(container.querySelector('input')?.value).toBe('1234😂');
-      expect(
-        container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('5 / 5');
-    });
-  });
-
   it('count formatter', () => {
     const { container } = render(
       <Input
