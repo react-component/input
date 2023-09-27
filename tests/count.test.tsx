@@ -82,4 +82,33 @@ describe('Input.Count', () => {
     expect(container.querySelector('input')?.value).toEqual('🔥');
     expect(onCompositionEnd).toHaveBeenCalled();
   });
+
+  describe('cls', () => {
+    it('raw', () => {
+      const { container } = render(
+        <Input
+          count={{
+            max: 3,
+          }}
+          defaultValue="bamboo"
+        />,
+      );
+
+      expect(container.querySelector('.rc-input-out-of-range')).toBeTruthy();
+    });
+
+    it('wrapper', () => {
+      const { container } = render(
+        <Input
+          count={{
+            max: 3,
+            show: true,
+          }}
+          defaultValue="bamboo"
+        />,
+      );
+
+      expect(container.querySelector('.rc-input-out-of-range')).toBeTruthy();
+    });
+  });
 });
