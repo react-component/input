@@ -34,6 +34,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     classes,
     classNames,
     styles,
+    onCompositionStart,
+    onCompositionEnd,
     ...rest
   } = props;
 
@@ -114,9 +116,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     triggerChange(e, e.target.value);
   };
 
-  const onCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+  const onInternalCompositionEnd = (
+    e: React.CompositionEvent<HTMLInputElement>,
+  ) => {
     compositionRef.current = false;
     triggerChange(e, e.currentTarget.value);
+    onCompositionEnd?.(e);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -189,10 +194,11 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         ref={inputRef}
         size={htmlSize}
         type={type}
-        onCompositionStart={() => {
+        onCompositionStart={(e) => {
           compositionRef.current = true;
+          onCompositionStart?.(e);
         }}
-        onCompositionEnd={onCompositionEnd}
+        onCompositionEnd={onInternalCompositionEnd}
       />
     );
   };
