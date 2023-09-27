@@ -40,8 +40,7 @@ const Demo: FC = () => {
         count={{
           show: true,
           max: 5,
-          strategy: (val) =>
-            [...new (Intl as any).Segmenter().segment(val)].length,
+          strategy: (val) => [...new Intl.Segmenter().segment(val)].length,
         }}
       />
       <h4 style={sharedHeadStyle}>Customize exceedFormatter</h4>
@@ -53,7 +52,7 @@ const Demo: FC = () => {
           show: true,
           max: 5,
           exceedFormatter: (val, { max }) => {
-            const segments = [...new (Intl as any).Segmenter().segment(val)];
+            const segments = [...new Intl.Segmenter().segment(val)];
 
             return segments
               .filter((seg) => seg.index + seg.segment.length <= max)
