@@ -1,5 +1,5 @@
-import type { BaseInputProps, InputProps } from '../interface';
 import type React from 'react';
+import type { BaseInputProps, InputProps } from '../interface';
 
 export function hasAddon(props: BaseInputProps | InputProps) {
   return !!(props.addonBefore || props.addonAfter);
@@ -95,11 +95,4 @@ export function triggerFocus(
         element.setSelectionRange(0, len);
     }
   }
-}
-
-export function fixControlledValue<T>(value: T) {
-  if (typeof value === 'undefined' || value === null) {
-    return '';
-  }
-  return String(value);
 }

@@ -18,5 +18,5 @@
       "rc-input": ["src/index.tsx"]
     }
   },
-  "include": [".dumi/**/*", ".dumirc.ts", "**/*.ts", "**/*.tsx"]
+  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx"]
 }

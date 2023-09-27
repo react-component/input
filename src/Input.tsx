@@ -9,13 +9,10 @@ import React, {
   useState,
 } from 'react';
 import BaseInput from './BaseInput';
+import useCount from './hooks/useCount';
 import type { InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
-import {
-  fixControlledValue,
-  resolveOnChange,
-  triggerFocus,
-} from './utils/commonUtils';
+import { resolveOnChange, triggerFocus } from './utils/commonUtils';
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
@@ -32,6 +29,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     maxLength,
     suffix,
     showCount,
+    count,
     type = 'text',
     classes,
     classNames,
@@ -39,10 +37,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     ...rest
   } = props;
 
-  const [value, setValue] = useMergedState(props.defaultValue, {
-    value: props.value,
-  });
   const [focused, setFocused] = useState<boolean>(false);
+  const compositionRef = React.useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,6 +48,21 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
   };
 
+  // ====================== Value =======================
+  const [value, setValue] = useMergedState(props.defaultValue, {
+    value: props.value,
+  });
+  const formatValue =
+    value === undefined || value === null ? '' : String(value);
+
+  // ====================== Count =======================
+  const countConfig = useCount(count, showCount);
+  const mergedMax = countConfig.max || maxLength;
+  const valueLength = countConfig.strategy(formatValue);
+
+  const isOutOfRange = !!mergedMax && valueLength > mergedMax;
+
+  // ======================= Ref ========================
   useImperativeHandle(ref, () => ({
     focus,
     blur: () => {
@@ -74,13 +85,38 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (props.value === undefined) {
-      setValue(e.target.value);
+  const triggerChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.CompositionEvent<HTMLInputElement>,
+    currentValue: string,
+  ) => {
+    let cutValue = currentValue;
+
+    if (
+      !compositionRef.current &&
+      countConfig.exceedFormatter &&
+      countConfig.max &&
+      countConfig.strategy(currentValue) > countConfig.max
+    ) {
+      cutValue = countConfig.exceedFormatter(currentValue, {
+        max: countConfig.max,
+      });
     }
+    setValue(cutValue);
+
     if (inputRef.current) {
-      resolveOnChange(inputRef.current, e, onChange);
+      resolveOnChange(inputRef.current, e, onChange, cutValue);
     }
+  };
+
+  const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    triggerChange(e, e.target.value);
+  };
+
+  const onCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    compositionRef.current = false;
+    triggerChange(e, e.currentTarget.value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -126,6 +162,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         // specify either the value prop, or the defaultValue prop, but not both.
         'defaultValue',
         'showCount',
+        'count',
         'classes',
         'htmlSize',
         'styles',
@@ -136,7 +173,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       <input
         autoComplete={autoComplete}
         {...otherProps}
-        onChange={handleChange}
+        onChange={onInternalChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
@@ -144,6 +181,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           prefixCls,
           {
             [`${prefixCls}-disabled`]: disabled,
+            [`${prefixCls}-out-of-range`]: isOutOfRange,
           },
           classNames?.input,
         )}
@@ -151,25 +189,30 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         ref={inputRef}
         size={htmlSize}
         type={type}
+        onCompositionStart={() => {
+          compositionRef.current = true;
+        }}
+        onCompositionEnd={onCompositionEnd}
       />
     );
   };
 
   const getSuffix = () => {
     // Max length value
-    const hasMaxLength = Number(maxLength) > 0;
+    const hasMaxLength = Number(mergedMax) > 0;
 
-    if (suffix || showCount) {
-      const val = fixControlledValue(value);
-      const valueLength = [...val].length;
-      const dataCount =
-        typeof showCount === 'object'
-          ? showCount.formatter({ value: val, count: valueLength, maxLength })
-          : `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
+    if (suffix || countConfig.show) {
+      const dataCount = countConfig.showFormatter
+        ? countConfig.showFormatter({
+            value: formatValue,
+            count: valueLength,
+            maxLength: mergedMax,
+          })
+        : `${valueLength}${hasMaxLength ? ` / ${mergedMax}` : ''}`;
 
       return (
         <>
-          {!!showCount && (
+          {countConfig.show && (
             <span
               className={clsx(
                 `${prefixCls}-show-count-suffix`,
@@ -192,6 +235,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     return null;
   };
 
+  // ====================== Render ======================
   return (
     <BaseInput
       {...rest}
@@ -199,7 +243,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       className={className}
       inputElement={getInputElement()}
       handleReset={handleReset}
-      value={fixControlledValue(value)}
+      value={formatValue}
       focused={focused}
       triggerFocus={focus}
       suffix={getSuffix()}
