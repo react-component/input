@@ -48,6 +48,9 @@ describe('Input.Count', () => {
   });
 
   it('exceedFormatter', () => {
+    const onCompositionStart = jest.fn();
+    const onCompositionEnd = jest.fn();
+
     const { container } = render(
       <Input
         count={{
@@ -59,6 +62,8 @@ describe('Input.Count', () => {
               .map((seg) => seg.segment)
               .join(''),
         }}
+        onCompositionStart={onCompositionStart}
+        onCompositionEnd={onCompositionEnd}
       />,
     );
 
@@ -70,9 +75,11 @@ describe('Input.Count', () => {
       },
     });
     expect(container.querySelector('input')?.value).toEqual('🔥🔥🔥🔥🔥');
+    expect(onCompositionStart).toHaveBeenCalled();
 
     // Fallback
     fireEvent.compositionEnd(container.querySelector('input')!);
     expect(container.querySelector('input')?.value).toEqual('🔥');
+    expect(onCompositionEnd).toHaveBeenCalled();
   });
 });
