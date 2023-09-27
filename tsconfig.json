@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "baseUrl": "./",
-    "lib": ["dom", "es2017"],
+    "lib": ["dom", "es2017", "es2022"],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,

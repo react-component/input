@@ -2,9 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import Input from '../src';
 
-const getSegments = (val: string) => [
-  ...new (Intl as any).Segmenter().segment(val),
-];
+const getSegments = (val: string) => [...new Intl.Segmenter().segment(val)];
 
 describe('Input.Count', () => {
   it('basic emoji take length', () => {
