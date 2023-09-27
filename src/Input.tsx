@@ -149,6 +149,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
   };
 
+  // ====================== Input =======================
+  const outOfRangeCls = isOutOfRange && `${prefixCls}-out-of-range`;
+
   const getInputElement = () => {
     // Fix https://fb.me/react-unknown-prop
     const otherProps = omit(
@@ -186,7 +189,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           prefixCls,
           {
             [`${prefixCls}-disabled`]: disabled,
-            [`${prefixCls}-out-of-range`]: isOutOfRange,
           },
           classNames?.input,
         )}
@@ -246,7 +248,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     <BaseInput
       {...rest}
       prefixCls={prefixCls}
-      className={className}
+      className={clsx(className, outOfRangeCls)}
       inputElement={getInputElement()}
       handleReset={handleReset}
       value={formatValue}
