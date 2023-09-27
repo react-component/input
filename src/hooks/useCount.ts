@@ -1,23 +1,53 @@
 import * as React from 'react';
 import type { InputProps } from '..';
+import type { CountConfig, ShowCountFormatter } from '../interface';
+
+function isEmoji(character: string) {
+  const codePoint = character.codePointAt(0)!;
+  return codePoint >= 0x1f300 && codePoint <= 0x1f6ff;
+}
+
+type ForcedCountConfig = Omit<CountConfig, 'show'> &
+  Pick<Required<CountConfig>, 'strategy'> & {
+    show: boolean;
+    showFormatter?: ShowCountFormatter;
+  };
+
+/**
+ * Cut `value` by the `count.max` prop.
+ */
+export function inCountRange(value: string, countConfig: ForcedCountConfig) {
+  if (!countConfig.max) {
+    return true;
+  }
+
+  const count = countConfig.strategy(value);
+  return count <= countConfig.max;
+}
 
 export default function useCount(
-  count?: InputProps['count'],
+  count?: CountConfig,
   showCount?: InputProps['showCount'],
 ) {
-  return React.useMemo(() => {
-    let countConfig = count || {};
+  return React.useMemo<ForcedCountConfig>(() => {
+    let mergedConfig = count;
 
-    if (!count && showCount) {
-      countConfig = {
-        show: true,
-        formatter: typeof showCount === 'function' ? showCount : undefined,
+    if (!count) {
+      mergedConfig = {
+        show:
+          typeof showCount === 'object' && showCount.formatter
+            ? showCount.formatter
+            : !!showCount,
       };
     }
 
+    const { show, ...rest } = mergedConfig!;
+
     return {
-      ...countConfig,
-      strategy: countConfig.strategy || ((value) => value.length),
+      ...rest,
+      show: !!show,
+      showFormatter: typeof show === 'function' ? show : undefined,
+      strategy: rest.strategy || ((value) => value.length),
     };
   }, [count, showCount]);
 }

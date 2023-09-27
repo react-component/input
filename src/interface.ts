@@ -66,6 +66,19 @@ export type ShowCountFormatter = (args: {
   maxLength?: number;
 }) => ReactNode;
 
+export type ExceedFormatter = (
+  value: string,
+  config: { max: number },
+) => string;
+
+export interface CountConfig {
+  max?: number;
+  strategy?: (value: string) => number;
+  show?: boolean | ShowCountFormatter;
+  /** Trigger when content larger than the `max` limitation */
+  exceedFormatter?: ExceedFormatter;
+}
+
 export interface InputProps
   extends CommonInputProps,
     Omit<
@@ -117,12 +130,7 @@ export interface InputProps
     input?: CSSProperties;
     count?: CSSProperties;
   };
-  count?: {
-    max?: number;
-    strategy?: (value: string) => number;
-    show?: boolean;
-    formatter?: ShowCountFormatter;
-  };
+  count?: CountConfig;
 }
 
 export interface InputRef {
