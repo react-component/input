@@ -3,6 +3,11 @@ import type { FC } from 'react';
 import React from 'react';
 import '../../assets/index.less';
 
+const sharedHeadStyle: React.CSSProperties = {
+  margin: 0,
+  padding: 0,
+};
+
 const Demo: FC = () => {
   return (
     <div
@@ -13,11 +18,11 @@ const Demo: FC = () => {
         alignItems: 'start',
       }}
     >
-      <h1>Native</h1>
+      <h3 style={sharedHeadStyle}>Native</h3>
       <Input prefixCls="rc-input" showCount defaultValue="👨‍👩‍👧‍👦" />
       <Input prefixCls="rc-input" showCount defaultValue="👨‍👩‍👧‍👦" maxLength={20} />
-      <h1>Count</h1>
-      <h4>Only Max</h4>
+      <h3 style={sharedHeadStyle}>Count</h3>
+      <h4 style={sharedHeadStyle}>Only Max</h4>
       <Input
         placeholder="count.max"
         prefixCls="rc-input"
@@ -27,7 +32,7 @@ const Demo: FC = () => {
           max: 5,
         }}
       />
-      <h4>Customize strategy</h4>
+      <h4 style={sharedHeadStyle}>Customize strategy</h4>
       <Input
         placeholder="Emoji count 1"
         prefixCls="rc-input"
@@ -39,7 +44,7 @@ const Demo: FC = () => {
             [...new (Intl as any).Segmenter().segment(val)].length,
         }}
       />
-      <h4>Customize exceedFormatter</h4>
+      <h4 style={sharedHeadStyle}>Customize exceedFormatter</h4>
       <Input
         placeholder="Emoji count 1"
         prefixCls="rc-input"

@@ -2,11 +2,6 @@ import * as React from 'react';
 import type { InputProps } from '..';
 import type { CountConfig, ShowCountFormatter } from '../interface';
 
-function isEmoji(character: string) {
-  const codePoint = character.codePointAt(0)!;
-  return codePoint >= 0x1f300 && codePoint <= 0x1f6ff;
-}
-
 type ForcedCountConfig = Omit<CountConfig, 'show'> &
   Pick<Required<CountConfig>, 'strategy'> & {
     show: boolean;
