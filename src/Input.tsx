@@ -57,6 +57,11 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const formatValue =
     value === undefined || value === null ? '' : String(value);
 
+  // =================== Select Range ===================
+  const [selection, setSelection] = React.useState<
+    [start: number, end: number] | null
+  >(null);
+
   // ====================== Count =======================
   const countConfig = useCount(count, showCount);
   const mergedMax = countConfig.max || maxLength;
@@ -104,6 +109,13 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       cutValue = countConfig.exceedFormatter(currentValue, {
         max: countConfig.max,
       });
+
+      if (currentValue !== cutValue) {
+        setSelection([
+          inputRef.current?.selectionStart || 0,
+          inputRef.current?.selectionEnd || 0,
+        ]);
+      }
     }
     setValue(cutValue);
 
@@ -111,6 +123,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       resolveOnChange(inputRef.current, e, onChange, cutValue);
     }
   };
+
+  React.useEffect(() => {
+    if (selection) {
+      inputRef.current?.setSelectionRange(...selection);
+    }
+  }, [selection]);
 
   const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     triggerChange(e, e.target.value);
