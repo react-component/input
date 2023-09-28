@@ -114,7 +114,7 @@ export interface InputProps
     string
   >;
   onPressEnter?: KeyboardEventHandler<HTMLInputElement>;
-  /** @deprecated Use `count.show` instead */
+  /** It's better to use `count.show` instead */
   showCount?:
     | boolean
     | {

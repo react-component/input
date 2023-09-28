@@ -25,16 +25,19 @@ export default function useCount(
   showCount?: InputProps['showCount'],
 ) {
   return React.useMemo<ForcedCountConfig>(() => {
-    let mergedConfig = count;
+    let mergedConfig: CountConfig = {};
 
-    if (!count) {
-      mergedConfig = {
-        show:
-          typeof showCount === 'object' && showCount.formatter
-            ? showCount.formatter
-            : !!showCount,
-      };
+    if (showCount) {
+      mergedConfig.show =
+        typeof showCount === 'object' && showCount.formatter
+          ? showCount.formatter
+          : !!showCount;
     }
+
+    mergedConfig = {
+      ...mergedConfig,
+      ...count,
+    };
 
     const { show, ...rest } = mergedConfig!;
 

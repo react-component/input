@@ -110,5 +110,20 @@ describe('Input.Count', () => {
 
       expect(container.querySelector('.rc-input-out-of-range')).toBeTruthy();
     });
+
+    it('mix usage', () => {
+      const { container } = render(
+        <Input
+          showCount
+          count={{
+            max: 10,
+          }}
+          defaultValue="bamboo"
+        />,
+      );
+      expect(
+        container.querySelector('.rc-input-show-count-suffix')?.textContent,
+      ).toEqual('6 / 10');
+    });
   });
 });
