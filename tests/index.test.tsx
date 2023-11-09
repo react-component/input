@@ -79,6 +79,18 @@ describe('Input', () => {
   it('support bigint type', () => {
     expect(<Input value={BigInt('2222')} />).toBeTruthy();
   });
+
+  it('should be compatible with type="file"', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input type="file" onChange={onChange} />);
+    const inputEl = container.querySelector('input')!;
+    const file = new File(['(⌐□_□)'], 'file.xml', { type: 'application/xml' });
+    // upload the file by updating the value attribute of the input
+    // I assume : <input type="file" data-testid="fileInput" />
+    fireEvent.change(inputEl, {
+      target: { files: [file] },
+    });
+  });
 });
 
 describe('should support showCount', () => {

@@ -57,8 +57,10 @@ export function resolveOnChange<
       target: { value: target },
       currentTarget: { value: target },
     });
-
-    target.value = targetValue;
+    // https://github.com/ant-design/ant-design/issues/45737
+    if (target.type !== 'file') {
+      target.value = targetValue;
+    }
     onChange(event as React.ChangeEvent<E>);
     return;
   }
