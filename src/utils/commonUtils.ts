@@ -53,13 +53,15 @@ export function resolveOnChange<
 
   // Trigger by composition event, this means we need force change the input value
   if (targetValue !== undefined) {
+    const currentTarget = target.cloneNode(true) as E;
+
     event = Object.create(e, {
-      target: { value: target },
-      currentTarget: { value: target },
+      target: { value: currentTarget },
+      currentTarget: { value: currentTarget },
     });
     // https://github.com/ant-design/ant-design/issues/45737
-    if (target.type !== 'file') {
-      target.value = targetValue;
+    if (currentTarget.type !== 'file') {
+      currentTarget.value = targetValue;
     }
     onChange(event as React.ChangeEvent<E>);
     return;
