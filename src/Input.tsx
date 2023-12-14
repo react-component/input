@@ -267,7 +267,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       {...rest}
       prefixCls={prefixCls}
       className={clsx(className, outOfRangeCls)}
-      inputElement={getInputElement()}
       handleReset={handleReset}
       value={formatValue}
       focused={focused}
@@ -277,7 +276,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       classes={classes}
       classNames={classNames}
       styles={styles}
-    />
+    >
+      {getInputElement()}
+    </BaseInput>
   );
 });
 

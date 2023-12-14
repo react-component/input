@@ -24,6 +24,8 @@ export interface CommonInputProps {
     affixWrapper?: string;
     prefix?: string;
     suffix?: string;
+    groupWrapper?: string;
+    wrapper?: string;
   };
   styles?: {
     affixWrapper?: CSSProperties;
@@ -39,7 +41,8 @@ export type ValueType = InputHTMLAttributes<HTMLInputElement>['value'] | bigint;
 
 export interface BaseInputProps extends CommonInputProps {
   value?: ValueType;
-  inputElement: ReactElement;
+  /** @deprecated Use `children` instead */
+  inputElement?: ReactElement;
   prefixCls?: string;
   className?: string;
   style?: CSSProperties;
@@ -58,6 +61,7 @@ export interface BaseInputProps extends CommonInputProps {
     wrapper?: 'span' | 'div';
     groupAddon?: 'span' | 'div';
   };
+  children: ReactElement;
 }
 
 export type ShowCountFormatter = (args: {
