@@ -226,4 +226,14 @@ describe('BaseInput', () => {
         ?.style.color,
     ).toBe('blue');
   });
+
+  it('with addon and disabled', () => {
+    const { container } = render(
+      <BaseInput prefixCls="rc-input" addonBefore="addon" disabled>
+        <input />
+      </BaseInput>,
+    );
+
+    expect(container.firstChild).toHaveClass('rc-input-group-wrapper-disabled');
+  });
 });
