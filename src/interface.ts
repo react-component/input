@@ -26,6 +26,7 @@ export interface CommonInputProps {
     suffix?: string;
     groupWrapper?: string;
     wrapper?: string;
+    variant?: string;
   };
   styles?: {
     affixWrapper?: CSSProperties;

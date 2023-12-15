@@ -45,12 +45,17 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     }
   };
 
+  const hasAffix = hasPrefixSuffix(props);
+
   let element: ReactElement = cloneElement(inputElement, {
     value,
+    className:
+      clsx(inputElement.props.className, !hasAffix && classNames?.variant) ||
+      null,
   });
 
   // ================== Prefix & Suffix ================== //
-  if (hasPrefixSuffix(props)) {
+  if (hasAffix) {
     // ================== Clear Icon ================== //
     let clearIcon: ReactNode = null;
     if (allowClear) {
@@ -92,6 +97,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       },
       classes?.affixWrapper,
       classNames?.affixWrapper,
+      classNames?.variant,
     );
 
     const suffixNode = (suffix || allowClear) && (
