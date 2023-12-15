@@ -130,6 +130,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   if (hasAddon(props)) {
     const wrapperCls = `${prefixCls}-group`;
     const addonCls = `${wrapperCls}-addon`;
+    const groupWrapperCls = `${wrapperCls}-wrapper`;
 
     const mergedWrapperClassName = clsx(
       `${prefixCls}-wrapper`,
@@ -139,7 +140,10 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     );
 
     const mergedGroupClassName = clsx(
-      `${prefixCls}-group-wrapper`,
+      groupWrapperCls,
+      {
+        [`${groupWrapperCls}-disabled`]: disabled,
+      },
       classes?.group,
       classNames?.groupWrapper,
     );
