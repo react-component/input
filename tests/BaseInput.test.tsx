@@ -236,4 +236,35 @@ describe('BaseInput', () => {
 
     expect(container.firstChild).toHaveClass('rc-input-group-wrapper-disabled');
   });
+
+  it('variant cls', () => {
+    const { container, rerender } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix="$"
+        classNames={{ variant: 'test-variant' }}
+        disabled
+      >
+        <input />
+      </BaseInput>,
+    );
+
+    expect(container.querySelector('.rc-input-affix-wrapper')).toHaveClass(
+      'test-variant',
+    );
+    expect(container.querySelector('input')).not.toHaveClass('test-variant');
+
+    rerender(
+      <BaseInput
+        prefixCls="rc-input"
+        classNames={{ variant: 'test-variant' }}
+        disabled
+      >
+        <input />
+      </BaseInput>,
+    );
+
+    expect(container.querySelector('.rc-input-affix-wrapper')).toBeFalsy();
+    expect(container.querySelector('input')).toHaveClass('test-variant');
+  });
 });
