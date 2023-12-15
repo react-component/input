@@ -55,7 +55,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
   });
 
   // ================== Prefix & Suffix ================== //
-  if (hasPrefixSuffix(props)) {
+  if (hasAffix) {
     // ================== Clear Icon ================== //
     let clearIcon: ReactNode = null;
     if (allowClear) {
