@@ -25,8 +25,6 @@ export function resolveOnChange<
   }
   let event = e;
 
-  debugger;
-
   if (e.type === 'click') {
     // Clone a new target for event.
     // Avoid the following usage, the setQuery method gets the original value.
