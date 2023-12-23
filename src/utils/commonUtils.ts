@@ -25,6 +25,8 @@ export function resolveOnChange<
   }
   let event = e;
 
+  debugger;
+
   if (e.type === 'click') {
     // Clone a new target for event.
     // Avoid the following usage, the setQuery method gets the original value.
@@ -52,7 +54,7 @@ export function resolveOnChange<
   }
 
   // Trigger by composition event, this means we need force change the input value
-  if (targetValue !== undefined) {
+  if (target.type != 'file' && targetValue !== undefined) {
     const currentTarget = target.cloneNode(true) as E;
 
     event = Object.create(e, {
@@ -60,9 +62,10 @@ export function resolveOnChange<
       currentTarget: { value: currentTarget },
     });
     // https://github.com/ant-design/ant-design/issues/45737
-    if (currentTarget.type !== 'file') {
-      currentTarget.value = targetValue;
-    }
+    // 'file' check move to above
+    // if (currentTarget.type !== 'file') {
+    currentTarget.value = targetValue;
+    // }
     onChange(event as React.ChangeEvent<E>);
     return;
   }

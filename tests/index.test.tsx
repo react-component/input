@@ -90,6 +90,9 @@ describe('Input', () => {
     fireEvent.change(inputEl, {
       target: { files: [file] },
     });
+
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange.mock.calls[0][0].target.files[0]).toBe(file);
   });
 });
 
