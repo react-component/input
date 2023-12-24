@@ -55,7 +55,9 @@ export function resolveOnChange<
   }
 
   // Trigger by composition event, this means we need force change the input value
-  if (target.type != 'file' && targetValue !== undefined) {
+  // https://github.com/ant-design/ant-design/issues/45737
+  // https://github.com/ant-design/ant-design/issues/46598
+  if (target.type !== 'file' && targetValue !== undefined) {
     // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
     // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
     // https://bugs.webkit.org/show_bug.cgi?id=28123
@@ -65,11 +67,7 @@ export function resolveOnChange<
       target: { value: currentTarget },
       currentTarget: { value: currentTarget },
     });
-    // https://github.com/ant-design/ant-design/issues/45737
-    // 'file' check move to above
-    // if (currentTarget.type !== 'file') {
     currentTarget.value = targetValue;
-    // }
     onChange(event as React.ChangeEvent<E>);
     return;
   }
