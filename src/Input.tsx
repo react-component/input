@@ -68,6 +68,14 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const valueLength = countConfig.strategy(formatValue);
 
   const isOutOfRange = !!mergedMax && valueLength > mergedMax;
+  const isExceed = (currentValue: string) => {
+    return (
+      !compositionRef.current &&
+      countConfig.exceedFormatter &&
+      countConfig.max &&
+      countConfig.strategy(currentValue) > countConfig.max
+    );
+  };
 
   // ======================= Ref ========================
   useImperativeHandle(ref, () => ({
@@ -100,14 +108,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   ) => {
     let cutValue = currentValue;
 
-    if (
-      !compositionRef.current &&
-      countConfig.exceedFormatter &&
-      countConfig.max &&
-      countConfig.strategy(currentValue) > countConfig.max
-    ) {
-      cutValue = countConfig.exceedFormatter(currentValue, {
-        max: countConfig.max,
+    if (isExceed(currentValue)) {
+      cutValue = countConfig.exceedFormatter!(currentValue, {
+        max: countConfig.max!,
       });
 
       if (currentValue !== cutValue) {
@@ -138,7 +141,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
-    triggerChange(e, e.currentTarget.value);
+    if (isExceed(e.currentTarget.value))
+      triggerChange(e, e.currentTarget.value);
     onCompositionEnd?.(e);
   };
 
