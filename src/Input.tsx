@@ -141,8 +141,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
-    if (isExceed(e.currentTarget.value))
+    if (isExceed(e.currentTarget.value)) {
       triggerChange(e, e.currentTarget.value);
+    }
     onCompositionEnd?.(e);
   };
 
