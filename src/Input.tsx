@@ -68,14 +68,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const valueLength = countConfig.strategy(formatValue);
 
   const isOutOfRange = !!mergedMax && valueLength > mergedMax;
-  const isExceed = (currentValue: string) => {
-    return (
-      !compositionRef.current &&
-      countConfig.exceedFormatter &&
-      countConfig.max &&
-      countConfig.strategy(currentValue) > countConfig.max
-    );
-  };
 
   // ======================= Ref ========================
   useImperativeHandle(ref, () => ({
@@ -106,24 +98,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       | React.CompositionEvent<HTMLInputElement>,
     currentValue: string,
   ) => {
-    let cutValue = currentValue;
-
-    if (isExceed(currentValue)) {
-      cutValue = countConfig.exceedFormatter!(currentValue, {
-        max: countConfig.max!,
-      });
-
-      if (currentValue !== cutValue) {
-        setSelection([
-          inputRef.current?.selectionStart || 0,
-          inputRef.current?.selectionEnd || 0,
-        ]);
-      }
-    }
-    setValue(cutValue);
-
+    setValue(currentValue);
     if (inputRef.current) {
-      resolveOnChange(inputRef.current, e, onChange, cutValue);
+      resolveOnChange(inputRef.current, e, onChange, currentValue);
     }
   };
 
@@ -133,16 +110,44 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
   }, [selection]);
 
+  const onInternalFormatter = (currentValue: string) => {
+    let cutValue = currentValue;
+    let isExceed = false;
+    if (
+      !compositionRef.current &&
+      countConfig.exceedFormatter &&
+      countConfig.max &&
+      countConfig.strategy(currentValue) > countConfig.max
+    ) {
+      isExceed = true;
+      cutValue = countConfig.exceedFormatter!(currentValue, {
+        max: countConfig.max!,
+      });
+      if (currentValue !== cutValue) {
+        setSelection([
+          inputRef.current?.selectionStart || 0,
+          inputRef.current?.selectionEnd || 0,
+        ]);
+      }
+    }
+    return {
+      cutValue,
+      isExceed,
+    };
+  };
+
   const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    triggerChange(e, e.target.value);
+    const { cutValue } = onInternalFormatter(e.target.value);
+    triggerChange(e, cutValue);
   };
 
   const onInternalCompositionEnd = (
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
-    if (isExceed(e.currentTarget.value)) {
-      triggerChange(e, e.currentTarget.value);
+    const { cutValue, isExceed } = onInternalFormatter(e.currentTarget.value);
+    if (isExceed) {
+      triggerChange(e, cutValue);
     }
     onCompositionEnd?.(e);
   };
