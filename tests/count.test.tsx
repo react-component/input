@@ -109,6 +109,45 @@ describe('Input.Count', () => {
     expect(setSelectionRange).toHaveBeenCalledWith(2, 2);
   });
 
+  it('input using the input method should trigger onChange once', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input onChange={onChange} />);
+    const input = container.querySelector('input')!;
+    fireEvent.compositionStart(input);
+    fireEvent.compositionUpdate(input, { data: '你' });
+    fireEvent.compositionEnd(input, { data: '你好' });
+    fireEvent.input(input, { target: { value: '你好' } });
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('using the input method to enter the cropped content should trigger onChange twice', () => {
+    const onChange = jest.fn();
+    const onCompositionEnd = jest.fn();
+    const { container } = render(
+      <Input
+        count={{
+          show: true,
+          max: 3,
+          exceedFormatter: (val, { max }) =>
+            getSegments(val)
+              .filter((seg) => seg.index + seg.segment.length <= max)
+              .map((seg) => seg.segment)
+              .join(''),
+        }}
+        onChange={onChange}
+        onCompositionEnd={onCompositionEnd}
+      />,
+    );
+    const input = container.querySelector('input')!;
+    fireEvent.compositionStart(input);
+    fireEvent.compositionUpdate(input, { target: { value: '你' } });
+    fireEvent.compositionUpdate(input, { target: { value: '你好' } });
+    fireEvent.compositionUpdate(input, { target: { value: '你好世' } });
+    fireEvent.compositionUpdate(input, { target: { value: '你好世界' } });
+    fireEvent.compositionEnd(input, { target: { value: '你好世界' } });
+    expect(input?.value).toEqual('你好世');
+  });
+
   describe('cls', () => {
     it('raw', () => {
       const { container } = render(

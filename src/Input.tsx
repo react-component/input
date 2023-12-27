@@ -97,6 +97,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       | React.ChangeEvent<HTMLInputElement>
       | React.CompositionEvent<HTMLInputElement>,
     currentValue: string,
+    fromCompositionEnd?: boolean,
   ) => {
     let cutValue = currentValue;
 
@@ -116,6 +117,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           inputRef.current?.selectionEnd || 0,
         ]);
       }
+    } else if (fromCompositionEnd) {
+      // Avoid triggering twice
+      // https://github.com/ant-design/ant-design/issues/46587
+      return;
     }
     setValue(cutValue);
 
@@ -138,7 +143,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
-    triggerChange(e, e.currentTarget.value);
+    triggerChange(e, e.currentTarget.value, true);
     onCompositionEnd?.(e);
   };
 
