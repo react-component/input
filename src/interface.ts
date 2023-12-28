@@ -149,3 +149,7 @@ export interface InputRef {
   select: () => void;
   input: HTMLInputElement | null;
 }
+
+export interface ChangeEventInfo {
+  source: 'compositionEnd' | 'change';
+}
