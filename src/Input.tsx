@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
-import type { InputProps, InputRef } from './interface';
+import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
 import { resolveOnChange, triggerFocus } from './utils/commonUtils';
 
@@ -40,7 +40,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   } = props;
 
   const [focused, setFocused] = useState<boolean>(false);
-  const compositionRef = React.useRef(false);
+  const compositionRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -58,7 +58,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     value === undefined || value === null ? '' : String(value);
 
   // =================== Select Range ===================
-  const [selection, setSelection] = React.useState<
+  const [selection, setSelection] = useState<
     [start: number, end: number] | null
   >(null);
 
@@ -97,6 +97,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       | React.ChangeEvent<HTMLInputElement>
       | React.CompositionEvent<HTMLInputElement>,
     currentValue: string,
+    info: ChangeEventInfo,
   ) => {
     let cutValue = currentValue;
 
@@ -116,6 +117,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           inputRef.current?.selectionEnd || 0,
         ]);
       }
+    } else if (info.source === 'compositionEnd') {
+      // Avoid triggering twice
+      // https://github.com/ant-design/ant-design/issues/46587
+      return;
     }
     setValue(cutValue);
 
@@ -124,21 +129,25 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selection) {
       inputRef.current?.setSelectionRange(...selection);
     }
   }, [selection]);
 
   const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    triggerChange(e, e.target.value);
+    triggerChange(e, e.target.value, {
+      source: 'change',
+    });
   };
 
   const onInternalCompositionEnd = (
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
-    triggerChange(e, e.currentTarget.value);
+    triggerChange(e, e.currentTarget.value, {
+      source: 'compositionEnd',
+    });
     onCompositionEnd?.(e);
   };
 
