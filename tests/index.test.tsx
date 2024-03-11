@@ -349,6 +349,19 @@ describe('Input ref', () => {
     inputSpy.mockRestore();
   });
 
+  it('selectionXXX should pass', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input onChange={onChange} />);
+
+    const inputEl = container.querySelector('input')!;
+    fireEvent.change(inputEl, { target: { value: 'test' } });
+
+    expect(onChange).toHaveBeenCalled();
+    const event = onChange.mock.calls[0][0];
+    expect(event.target.selectionStart).toBe(4);
+    expect(event.target.selectionEnd).toBe(4);
+  });
+
   it('input should work', () => {
     const ref = React.createRef<InputRef>();
     const { container } = render(<Input ref={ref} defaultValue="light" />);
