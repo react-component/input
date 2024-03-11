@@ -9,6 +9,30 @@ export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
   return !!(props.prefix || props.suffix || props.allowClear);
 }
 
+// TODO: It's better to use `Proxy` replace the `element.value`. But we still need support IE11.
+function cloneEvent<
+  EventType extends React.SyntheticEvent<any, any>,
+  Element extends HTMLInputElement | HTMLTextAreaElement,
+>(event: EventType, target: Element, value: any): EventType {
+  // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
+  // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
+  // https://bugs.webkit.org/show_bug.cgi?id=28123
+  const currentTarget = target.cloneNode(true) as Element;
+
+  // click clear icon
+  const newEvent = Object.create(event, {
+    target: { value: currentTarget },
+    currentTarget: { value: currentTarget },
+  });
+
+  // Fill data
+  currentTarget.value = value;
+  currentTarget.selectionStart = target.selectionStart;
+  currentTarget.selectionEnd = target.selectionEnd;
+
+  return newEvent;
+}
+
 export function resolveOnChange<
   E extends HTMLInputElement | HTMLTextAreaElement,
 >(
@@ -38,18 +62,8 @@ export function resolveOnChange<
     //   }}
     // />
 
-    // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
-    // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
-    // https://bugs.webkit.org/show_bug.cgi?id=28123
-    const currentTarget = target.cloneNode(true) as E;
+    event = cloneEvent(e, target, '');
 
-    // click clear icon
-    event = Object.create(e, {
-      target: { value: currentTarget },
-      currentTarget: { value: currentTarget },
-    });
-
-    currentTarget.value = '';
     onChange(event as React.ChangeEvent<E>);
     return;
   }
@@ -58,16 +72,7 @@ export function resolveOnChange<
   // https://github.com/ant-design/ant-design/issues/45737
   // https://github.com/ant-design/ant-design/issues/46598
   if (target.type !== 'file' && targetValue !== undefined) {
-    // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
-    // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
-    // https://bugs.webkit.org/show_bug.cgi?id=28123
-    const currentTarget = target.cloneNode(true) as E;
-
-    event = Object.create(e, {
-      target: { value: currentTarget },
-      currentTarget: { value: currentTarget },
-    });
-    currentTarget.value = targetValue;
+    event = cloneEvent(e, target, targetValue);
     onChange(event as React.ChangeEvent<E>);
     return;
   }
