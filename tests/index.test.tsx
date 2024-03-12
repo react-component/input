@@ -332,34 +332,49 @@ describe('Input ref', () => {
     inputSpy.mockRestore();
   });
 
-  it('setSelectionRange should work', () => {
-    const setSelectionRange = jest.fn();
-    const inputSpy = spyElementPrototypes(HTMLInputElement, {
-      setSelectionRange,
+  describe('selection', () => {
+    it('setSelectionRange should work', () => {
+      const setSelectionRange = jest.fn();
+      const inputSpy = spyElementPrototypes(HTMLInputElement, {
+        setSelectionRange,
+      });
+      const ref = React.createRef<InputRef>();
+      render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
+      ref.current?.setSelectionRange(0, 0);
+      expect(setSelectionRange).toHaveBeenCalledWith(
+        expect.anything(),
+        0,
+        0,
+        undefined,
+      );
+      inputSpy.mockRestore();
     });
-    const ref = React.createRef<InputRef>();
-    render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
-    ref.current?.setSelectionRange(0, 0);
-    expect(setSelectionRange).toHaveBeenCalledWith(
-      expect.anything(),
-      0,
-      0,
-      undefined,
-    );
-    inputSpy.mockRestore();
-  });
 
-  it('selectionXXX should pass', () => {
-    const onChange = jest.fn();
-    const { container } = render(<Input onChange={onChange} />);
+    it('selectionXXX should pass', () => {
+      const onChange = jest.fn();
+      const { container } = render(<Input onChange={onChange} />);
 
-    const inputEl = container.querySelector('input')!;
-    fireEvent.change(inputEl, { target: { value: 'test' } });
+      const inputEl = container.querySelector('input')!;
+      fireEvent.change(inputEl, { target: { value: 'test' } });
 
-    expect(onChange).toHaveBeenCalled();
-    const event = onChange.mock.calls[0][0];
-    expect(event.target.selectionStart).toBe(4);
-    expect(event.target.selectionEnd).toBe(4);
+      expect(onChange).toHaveBeenCalled();
+      const event = onChange.mock.calls[0][0];
+      expect(event.target.selectionStart).toBe(4);
+      expect(event.target.selectionEnd).toBe(4);
+    });
+
+    it('email type not support selection', () => {
+      const onChange = jest.fn();
+      const { container } = render(<Input type="email" onChange={onChange} />);
+
+      fireEvent.change(container.querySelector('input')!, {
+        target: { value: 'test' },
+      });
+      expect(onChange).toHaveBeenCalled();
+      const event = onChange.mock.calls[0][0];
+      expect(event.target.selectionStart).toBeNull();
+      expect(event.target.selectionEnd).toBeNull();
+    });
   });
 
   it('input should work', () => {

@@ -27,8 +27,16 @@ function cloneEvent<
 
   // Fill data
   currentTarget.value = value;
-  currentTarget.selectionStart = target.selectionStart;
-  currentTarget.selectionEnd = target.selectionEnd;
+
+  // Fill selection. Some type like `email` not support selection
+  // https://github.com/ant-design/ant-design/issues/47833
+  if (
+    typeof target.selectionStart === 'number' &&
+    typeof target.selectionEnd === 'number'
+  ) {
+    currentTarget.selectionStart = target.selectionStart;
+    currentTarget.selectionEnd = target.selectionEnd;
+  }
 
   return newEvent;
 }
