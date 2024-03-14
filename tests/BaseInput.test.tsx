@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
 import BaseInput from '../src/BaseInput';
@@ -45,10 +46,12 @@ describe('BaseInput', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('allowClear should work', () => {
+  describe('allowClear should work', () => {
     const onChange = jest.fn();
     const onBlur = jest.fn();
     const onFocus = jest.fn();
+
+    const user = userEvent.setup();
 
     const Demo: FC = () => {
       const [value, setValue] = useState<string>('');
@@ -74,23 +77,53 @@ describe('BaseInput', () => {
       );
     };
 
-    const { container } = render(<Demo />);
+    it('By click', () => {
+      const { container } = render(<Demo />);
 
-    const inputEl = container.querySelector('input');
-    fireEvent.focus(inputEl!);
-    expect(onFocus).toHaveBeenCalledTimes(1);
+      const inputEl = container.querySelector('input');
+      fireEvent.focus(inputEl!);
+      expect(onFocus).toHaveBeenCalledTimes(1);
 
-    fireEvent.change(inputEl!, { target: { value: 'some text' } });
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(inputEl!.value).toBe('some text');
+      fireEvent.change(inputEl!, { target: { value: 'some text' } });
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(inputEl!.value).toBe('some text');
 
-    const clearIcon = container.querySelector('.rc-input-clear-icon');
-    fireEvent.mouseDown(clearIcon!);
-    fireEvent.click(clearIcon!);
-    fireEvent.mouseUp(clearIcon!);
-    expect(onBlur).not.toHaveBeenCalled();
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(inputEl!.value).toBe('');
+      const clearIcon = container.querySelector('.rc-input-clear-icon');
+      fireEvent.mouseDown(clearIcon!);
+      fireEvent.click(clearIcon!);
+      fireEvent.mouseUp(clearIcon!);
+      expect(onBlur).not.toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(inputEl!.value).toBe('');
+    });
+
+    it('By focus and Space', async () => {
+      const { container } = render(<Demo />);
+
+      const inputEl = container.querySelector('input');
+      await user.click(inputEl!);
+
+      await user.type(inputEl!, 'some text');
+      expect(inputEl!.value).toBe('some text');
+
+      await user.tab();
+      await user.keyboard('[Space]');
+      expect(inputEl!.value).toBe('');
+    });
+
+    it('By focus and Enter', async () => {
+      const { container } = render(<Demo />);
+
+      const inputEl = container.querySelector('input');
+      await user.click(inputEl!);
+
+      await user.type(inputEl!, 'some text');
+      expect(inputEl!.value).toBe('some text');
+
+      await user.tab();
+      await user.keyboard('[Enter]');
+      expect(inputEl!.value).toBe('');
+    });
   });
 
   it('should display clearIcon correctly', () => {
