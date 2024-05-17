@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import BaseInput from './BaseInput';
+import BaseInput, { HolderRef } from './BaseInput';
 import useCount from './hooks/useCount';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
@@ -43,6 +43,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const compositionRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const holderRef = useRef<HolderRef>(null);
 
   const focus = (option?: InputFocusOptions) => {
     if (inputRef.current) {
@@ -86,6 +87,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       inputRef.current?.select();
     },
     input: inputRef.current,
+    nativeElement: holderRef.current?.nativeElement || inputRef.current,
   }));
 
   useEffect(() => {

@@ -382,6 +382,7 @@ describe('Input ref', () => {
     const { container } = render(<Input ref={ref} defaultValue="light" />);
     const inputEl = container.querySelector('input')!;
     expect(ref.current?.input).toBe(inputEl);
+    expect(ref.current?.nativeElement).toBe(inputEl);
   });
 });
 

@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
-import BaseInput from '../src/BaseInput';
+import BaseInput, { type HolderRef } from '../src/BaseInput';
 
 describe('BaseInput', () => {
   it('should render perfectly', () => {
@@ -266,5 +266,50 @@ describe('BaseInput', () => {
 
     expect(container.querySelector('.rc-input-affix-wrapper')).toBeFalsy();
     expect(container.querySelector('input')).toHaveClass('test-variant');
+  });
+
+  describe('ref', () => {
+    it('prefix', () => {
+      const holderRef = React.createRef<HolderRef>();
+      const { container } = render(
+        <BaseInput prefixCls="rc-input" prefix="prefix" ref={holderRef}>
+          <input />
+        </BaseInput>,
+      );
+      expect(holderRef.current?.nativeElement).toBe(
+        container.querySelector('.rc-input-affix-wrapper'),
+      );
+    });
+
+    it('addon', () => {
+      const holderRef = React.createRef<HolderRef>();
+      const { container } = render(
+        <BaseInput prefixCls="rc-input" addonAfter="after" ref={holderRef}>
+          <input />
+        </BaseInput>,
+      );
+
+      expect(holderRef.current?.nativeElement).toBe(
+        container.querySelector('.rc-input-group-wrapper'),
+      );
+    });
+
+    it('mix', () => {
+      const holderRef = React.createRef<HolderRef>();
+      const { container } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          suffix="suffix"
+          addonAfter="after"
+          ref={holderRef}
+        >
+          <input />
+        </BaseInput>,
+      );
+
+      expect(holderRef.current?.nativeElement).toBe(
+        container.querySelector('.rc-input-group-wrapper'),
+      );
+    });
   });
 });

@@ -1,10 +1,15 @@
 import clsx from 'classnames';
-import type { FC, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
-const BaseInput: FC<BaseInputProps> = (props) => {
+export interface HolderRef {
+  /** Provider holder ref. Will return `null` if not wrap anything */
+  nativeElement: HTMLElement | null;
+}
+
+const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
   const {
     inputElement: inputEl,
     children,
@@ -53,6 +58,13 @@ const BaseInput: FC<BaseInputProps> = (props) => {
       clsx(inputElement.props.className, !hasAffix && classNames?.variant) ||
       null,
   });
+
+  // ======================== Ref ======================== //
+  const groupRef = useRef<HTMLDivElement>(null);
+
+  React.useImperativeHandle(ref, () => ({
+    nativeElement: groupRef.current || containerRef.current,
+  }));
 
   // ================== Prefix & Suffix ================== //
   if (hasAffix) {
@@ -157,7 +169,7 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     // Need another wrapper for changing display:table to display:inline-block
     // and put style prop in wrapper
     element = (
-      <GroupWrapperComponent className={mergedGroupClassName}>
+      <GroupWrapperComponent className={mergedGroupClassName} ref={groupRef}>
         <WrapperComponent className={mergedWrapperClassName}>
           {addonBefore && (
             <GroupAddonComponent className={addonCls}>
@@ -184,6 +196,6 @@ const BaseInput: FC<BaseInputProps> = (props) => {
     },
     hidden,
   });
-};
+});
 
 export default BaseInput;
