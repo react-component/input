@@ -148,6 +148,7 @@ export interface InputRef {
   ) => void;
   select: () => void;
   input: HTMLInputElement | null;
+  nativeElement: HTMLElement | null;
 }
 
 export interface ChangeEventInfo {
