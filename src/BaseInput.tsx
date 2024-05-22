@@ -79,7 +79,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
           : '✖';
 
       clearIcon = (
-        <span
+        <button
           onClick={handleReset}
           // Do not trigger onBlur when clear input
           // https://github.com/ant-design/ant-design/issues/31200
@@ -88,11 +88,9 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
             [`${clearIconCls}-hidden`]: !needClear,
             [`${clearIconCls}-has-suffix`]: !!suffix,
           })}
-          role="button"
-          tabIndex={-1}
         >
           {iconNode}
-        </span>
+        </button>
       );
     }
 
