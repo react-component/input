@@ -353,6 +353,10 @@ describe('Input ref', () => {
     it('selectionXXX should pass', () => {
       const onChange = jest.fn();
       const { container } = render(<Input onChange={onChange} />);
+      const spySetSelectionRange = jest.spyOn(
+        container.querySelector('input')!,
+        'setSelectionRange',
+      );
 
       const inputEl = container.querySelector('input')!;
       fireEvent.change(inputEl, { target: { value: 'test' } });
@@ -361,6 +365,10 @@ describe('Input ref', () => {
       const event = onChange.mock.calls[0][0];
       expect(event.target.selectionStart).toBe(4);
       expect(event.target.selectionEnd).toBe(4);
+
+      // Call `setSelectionRange`
+      event.target.setSelectionRange(1, 2);
+      expect(spySetSelectionRange).toHaveBeenCalledWith(1, 2);
     });
 
     it('email type not support selection', () => {
