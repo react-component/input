@@ -38,6 +38,10 @@ function cloneEvent<
     currentTarget.selectionEnd = target.selectionEnd;
   }
 
+  currentTarget.setSelectionRange = (start: number, end: number) => {
+    target.setSelectionRange(start, end);
+  };
+
   return newEvent;
 }
 
