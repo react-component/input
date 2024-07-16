@@ -36,6 +36,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     styles,
     onCompositionStart,
     onCompositionEnd,
+    onClear,
     ...rest
   } = props;
 
@@ -173,6 +174,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setValue('');
     focus();
+    onClear?.();
     if (inputRef.current) {
       resolveOnChange(inputRef.current, e, onChange);
     }

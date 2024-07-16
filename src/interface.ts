@@ -136,6 +136,7 @@ export interface InputProps
     count?: CSSProperties;
   };
   count?: CountConfig;
+  onClear?: () => void;
 }
 
 export interface InputRef {
