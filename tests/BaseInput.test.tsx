@@ -315,7 +315,7 @@ describe('BaseInput', () => {
     it('support onClear', () => {
       const onClear = jest.fn();
       const { container } = render(
-        <BaseInput onClear={onClear} allowClear>
+        <BaseInput prefixCls="rc-input" onClear={onClear} allowClear>
           <input value="test" />
         </BaseInput>,
       );
