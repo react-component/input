@@ -320,9 +320,7 @@ describe('BaseInput', () => {
         </BaseInput>,
       );
       fireEvent.click(
-        container.querySelector<HTMLSpanElement>(
-          '.rc-input-suffix .rc-input-clear-icon',
-        )!,
+        container.querySelector<HTMLSpanElement>('.rc-input-clear-icon')!,
       );
       expect(onClear).toHaveBeenCalled();
     });
