@@ -82,8 +82,8 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
       clearIcon = (
         <span
           onClick={(event) => {
-            onClear?.();
             handleReset?.(event);
+            onClear?.();
           }}
           // Do not trigger onBlur when clear input
           // https://github.com/ant-design/ant-design/issues/31200
