@@ -52,6 +52,7 @@ export interface BaseInputProps extends CommonInputProps {
   triggerFocus?: () => void;
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
+  onClear?: React.MouseEventHandler<HTMLSpanElement>;
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;
@@ -136,7 +137,7 @@ export interface InputProps
     count?: CSSProperties;
   };
   count?: CountConfig;
-  onClear?: () => void;
+  onClear?: React.MouseEventHandler<HTMLSpanElement>;
 }
 
 export interface InputRef {

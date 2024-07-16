@@ -8,7 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import BaseInput, { HolderRef } from './BaseInput';
+import type { HolderRef } from './BaseInput';
+import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
@@ -36,7 +37,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     styles,
     onCompositionStart,
     onCompositionEnd,
-    onClear,
     ...rest
   } = props;
 
@@ -174,7 +174,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setValue('');
     focus();
-    onClear?.();
     if (inputRef.current) {
       resolveOnChange(inputRef.current, e, onChange);
     }
