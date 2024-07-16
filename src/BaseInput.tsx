@@ -33,6 +33,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     dataAttrs,
     styles,
     components,
+    onClear,
   } = props;
 
   const inputElement = children ?? inputEl;
@@ -80,7 +81,10 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
 
       clearIcon = (
         <span
-          onClick={handleReset}
+          onClick={(event) => {
+            handleReset?.(event);
+            onClear?.();
+          }}
           // Do not trigger onBlur when clear input
           // https://github.com/ant-design/ant-design/issues/31200
           onMouseDown={(e) => e.preventDefault()}

@@ -311,5 +311,18 @@ describe('BaseInput', () => {
         container.querySelector('.rc-input-group-wrapper'),
       );
     });
+
+    it('support onClear', () => {
+      const onClear = jest.fn();
+      const { container } = render(
+        <BaseInput prefixCls="rc-input" onClear={onClear} allowClear>
+          <input defaultValue="test" />
+        </BaseInput>,
+      );
+      fireEvent.click(
+        container.querySelector<HTMLSpanElement>('.rc-input-clear-icon')!,
+      );
+      expect(onClear).toHaveBeenCalled();
+    });
   });
 });

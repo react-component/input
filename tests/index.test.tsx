@@ -392,6 +392,17 @@ describe('Input ref', () => {
     expect(ref.current?.input).toBe(inputEl);
     expect(ref.current?.nativeElement).toBe(inputEl);
   });
+
+  it('support onClear', () => {
+    const onClear = jest.fn();
+    const { container } = render(
+      <Input onClear={onClear} defaultValue="test" allowClear />,
+    );
+    fireEvent.click(
+      container.querySelector<HTMLSpanElement>('.rc-input-clear-icon')!,
+    );
+    expect(onClear).toHaveBeenCalled();
+  });
 });
 
 describe('resolveChange should work', () => {

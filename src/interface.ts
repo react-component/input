@@ -52,6 +52,7 @@ export interface BaseInputProps extends CommonInputProps {
   triggerFocus?: () => void;
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
+  onClear?: () => void;
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;
@@ -136,6 +137,7 @@ export interface InputProps
     count?: CSSProperties;
   };
   count?: CountConfig;
+  onClear?: () => void;
 }
 
 export interface InputRef {

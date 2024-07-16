@@ -8,7 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import BaseInput, { HolderRef } from './BaseInput';
+import type { HolderRef } from './BaseInput';
+import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import type { InputFocusOptions } from './utils/commonUtils';
