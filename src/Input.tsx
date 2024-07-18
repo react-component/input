@@ -43,7 +43,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const [focused, setFocused] = useState<boolean>(false);
   const compositionRef = useRef(false);
-  const enterRef = useRef(false);
+  const keyLockRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const holderRef = useRef<HolderRef>(null);
@@ -158,15 +158,15 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(e);
-    if (onPressEnter && e.key === 'Enter' && !enterRef.current) {
-      enterRef.current = true;
+    if (onPressEnter && e.key === 'Enter' && !keyLockRef.current) {
+      keyLockRef.current = true;
       onPressEnter(e);
     }
   };
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyUp?.(e);
     if (e.key === 'Enter') {
-      enterRef.current = false;
+      keyLockRef.current = false;
     }
   };
 
