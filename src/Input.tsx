@@ -158,8 +158,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(e);
-    if (onPressEnter && e.key === 'Enter') {
-      if (enterRef.current) return;
+    if (onPressEnter && e.key === 'Enter' && !enterRef.current) {
       enterRef.current = true;
       onPressEnter(e);
     }
