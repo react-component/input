@@ -157,17 +157,17 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    onKeyDown?.(e);
     if (onPressEnter && e.key === 'Enter' && !keyLockRef.current) {
       keyLockRef.current = true;
       onPressEnter(e);
     }
+    onKeyDown?.(e);
   };
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    onKeyUp?.(e);
     if (e.key === 'Enter') {
       keyLockRef.current = false;
     }
+    onKeyUp?.(e);
   };
 
   const handleFocus: React.FocusEventHandler<HTMLInputElement> = (e) => {
