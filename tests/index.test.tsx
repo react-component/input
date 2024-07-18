@@ -40,6 +40,26 @@ describe('Input', () => {
     expect(onPressEnter).toHaveBeenCalled();
   });
 
+  it('should prevent long press of enter', () => {
+    const onKeyDown = jest.fn();
+    const onPressEnter = jest.fn();
+    const onKeyUp = jest.fn();
+    const { container } = render(
+      <Input
+        onKeyDown={onKeyDown}
+        onPressEnter={onPressEnter}
+        onKeyUp={onKeyUp}
+      />,
+    );
+    const inputEl = container.querySelector('input')!;
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.keyUp(inputEl, { key: 'Enter' });
+    expect(onKeyDown).toBeCalledTimes(2);
+    expect(onPressEnter).toBeCalledTimes(1);
+    expect(onKeyUp).toBeCalledTimes(1);
+  });
+
   it('should trigger onChange', () => {
     const onChange = jest.fn();
     const { container } = render(<Input onChange={onChange} />);

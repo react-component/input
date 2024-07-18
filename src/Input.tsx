@@ -23,6 +23,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onBlur,
     onPressEnter,
     onKeyDown,
+    onKeyUp,
     prefixCls = 'rc-input',
     disabled,
     htmlSize,
@@ -42,6 +43,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const [focused, setFocused] = useState<boolean>(false);
   const compositionRef = useRef(false);
+  const keyLockRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const holderRef = useRef<HolderRef>(null);
@@ -155,10 +157,17 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onPressEnter && e.key === 'Enter') {
+    onKeyDown?.(e);
+    if (onPressEnter && e.key === 'Enter' && !keyLockRef.current) {
+      keyLockRef.current = true;
       onPressEnter(e);
     }
-    onKeyDown?.(e);
+  };
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    onKeyUp?.(e);
+    if (e.key === 'Enter') {
+      keyLockRef.current = false;
+    }
   };
 
   const handleFocus: React.FocusEventHandler<HTMLInputElement> = (e) => {
@@ -215,6 +224,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         className={clsx(
           prefixCls,
           {
