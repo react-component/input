@@ -415,6 +415,7 @@ describe('Input ref', () => {
 
   it('support onClear', () => {
     const onClear = jest.fn();
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const { container } = render(
       <Input onClear={onClear} defaultValue="test" allowClear />,
     );
@@ -422,6 +423,8 @@ describe('Input ref', () => {
       container.querySelector<HTMLSpanElement>('.rc-input-clear-icon')!,
     );
     expect(onClear).toHaveBeenCalled();
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
 
