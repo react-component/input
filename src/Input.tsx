@@ -214,6 +214,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         'htmlSize',
         'styles',
         'classNames',
+        'onClear',
       ],
     );
     return (
