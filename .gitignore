@@ -41,3 +41,4 @@ dist/
 .dumi/tmp
 .dumi/tmp-production
 .node
+bun.lockb
