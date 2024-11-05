@@ -94,6 +94,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }));
 
   useEffect(() => {
+    keyLockRef.current && (keyLockRef.current = false);
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
