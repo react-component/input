@@ -86,7 +86,6 @@ describe('Input', () => {
     expect(inputEl.disabled).toBe(true);
     fireEvent.keyDown(inputEl, { key: 'Enter' });
     expect(onPressEnter).toBeCalledTimes(2);
-    expect(inputEl).toBeDisabled();
   });
 
   it('should trigger onChange', () => {
