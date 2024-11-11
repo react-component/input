@@ -80,10 +80,13 @@ describe('Input', () => {
       <Input onPressEnter={onPressEnter} />,
     );
     const inputEl = container.querySelector('input')!;
+    expect(inputEl.disabled).toBe(false);
     fireEvent.keyDown(inputEl, { key: 'Enter' });
     rerender(<Input onPressEnter={onPressEnter} disabled={true} />);
+    expect(inputEl.disabled).toBe(true);
     fireEvent.keyDown(inputEl, { key: 'Enter' });
     expect(onPressEnter).toBeCalledTimes(2);
+    expect(inputEl).toBeDisabled();
   });
 
   it('should trigger onChange', () => {
