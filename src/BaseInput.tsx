@@ -80,7 +80,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
           : '✖';
 
       clearIcon = (
-        <span
+        <button
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();
@@ -92,11 +92,9 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
             [`${clearIconCls}-hidden`]: !needClear,
             [`${clearIconCls}-has-suffix`]: !!suffix,
           })}
-          role="button"
-          tabIndex={-1}
         >
           {iconNode}
-        </span>
+        </button>
       );
     }
 
