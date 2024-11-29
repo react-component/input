@@ -8,6 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import type { HolderRef } from './BaseInput';
 import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
@@ -22,6 +23,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onBlur,
     onPressEnter,
     onKeyDown,
+    onKeyUp,
     prefixCls = 'rc-input',
     disabled,
     htmlSize,
@@ -41,8 +43,10 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const [focused, setFocused] = useState<boolean>(false);
   const compositionRef = useRef(false);
+  const keyLockRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const holderRef = useRef<HolderRef>(null);
 
   const focus = (option?: InputFocusOptions) => {
     if (inputRef.current) {
@@ -86,9 +90,13 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       inputRef.current?.select();
     },
     input: inputRef.current,
+    nativeElement: holderRef.current?.nativeElement || inputRef.current,
   }));
 
   useEffect(() => {
+    if (keyLockRef.current) {
+      keyLockRef.current = false;
+    }
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
@@ -152,10 +160,17 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (onPressEnter && e.key === 'Enter') {
+    if (onPressEnter && e.key === 'Enter' && !keyLockRef.current) {
+      keyLockRef.current = true;
       onPressEnter(e);
     }
     onKeyDown?.(e);
+  };
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      keyLockRef.current = false;
+    }
+    onKeyUp?.(e);
   };
 
   const handleFocus: React.FocusEventHandler<HTMLInputElement> = (e) => {
@@ -164,6 +179,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    if (keyLockRef.current) {
+      keyLockRef.current = false;
+    }
     setFocused(false);
     onBlur?.(e);
   };
@@ -202,6 +220,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         'htmlSize',
         'styles',
         'classNames',
+        'onClear',
       ],
     );
     return (
@@ -212,6 +231,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         className={clsx(
           prefixCls,
           {
