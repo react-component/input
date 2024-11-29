@@ -1,5 +1,5 @@
-import type { BaseInputProps, InputProps } from '../interface';
 import type React from 'react';
+import type { BaseInputProps, InputProps } from '../interface';
 
 export function hasAddon(props: BaseInputProps | InputProps) {
   return !!(props.addonBefore || props.addonAfter);
@@ -7,6 +7,42 @@ export function hasAddon(props: BaseInputProps | InputProps) {
 
 export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
   return !!(props.prefix || props.suffix || props.allowClear);
+}
+
+// TODO: It's better to use `Proxy` replace the `element.value`. But we still need support IE11.
+function cloneEvent<
+  EventType extends React.SyntheticEvent<any, any>,
+  Element extends HTMLInputElement | HTMLTextAreaElement,
+>(event: EventType, target: Element, value: any): EventType {
+  // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
+  // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
+  // https://bugs.webkit.org/show_bug.cgi?id=28123
+  const currentTarget = target.cloneNode(true) as Element;
+
+  // click clear icon
+  const newEvent = Object.create(event, {
+    target: { value: currentTarget },
+    currentTarget: { value: currentTarget },
+  });
+
+  // Fill data
+  currentTarget.value = value;
+
+  // Fill selection. Some type like `email` not support selection
+  // https://github.com/ant-design/ant-design/issues/47833
+  if (
+    typeof target.selectionStart === 'number' &&
+    typeof target.selectionEnd === 'number'
+  ) {
+    currentTarget.selectionStart = target.selectionStart;
+    currentTarget.selectionEnd = target.selectionEnd;
+  }
+
+  currentTarget.setSelectionRange = (...args) => {
+    target.setSelectionRange(...args);
+  };
+
+  return newEvent;
 }
 
 export function resolveOnChange<
@@ -38,27 +74,17 @@ export function resolveOnChange<
     //   }}
     // />
 
-    const currentTarget = target.cloneNode(true) as E;
+    event = cloneEvent(e, target, '');
 
-    // click clear icon
-    event = Object.create(e, {
-      target: { value: currentTarget },
-      currentTarget: { value: currentTarget },
-    });
-
-    currentTarget.value = '';
     onChange(event as React.ChangeEvent<E>);
     return;
   }
 
   // Trigger by composition event, this means we need force change the input value
-  if (targetValue !== undefined) {
-    event = Object.create(e, {
-      target: { value: target },
-      currentTarget: { value: target },
-    });
-
-    target.value = targetValue;
+  // https://github.com/ant-design/ant-design/issues/45737
+  // https://github.com/ant-design/ant-design/issues/46598
+  if (target.type !== 'file' && targetValue !== undefined) {
+    event = cloneEvent(e, target, targetValue);
     onChange(event as React.ChangeEvent<E>);
     return;
   }
@@ -95,11 +121,4 @@ export function triggerFocus(
         element.setSelectionRange(0, len);
     }
   }
-}
-
-export function fixControlledValue<T>(value: T) {
-  if (typeof value === 'undefined' || value === null) {
-    return '';
-  }
-  return String(value);
 }

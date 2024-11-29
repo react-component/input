@@ -1,6 +1,6 @@
 {
   "name": "rc-input",
-  "version": "1.1.0",
+  "version": "1.6.4",
   "description": "React input component",
   "keywords": [
     "react",
@@ -32,15 +32,15 @@
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d .doc",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "gh-pages": "npm run docs:build && npm run docs:deploy",
+    "gh-pages": "GH_PAGES=1 npm run docs:build && npm run docs:deploy",
     "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "pretty-quick": "pretty-quick",
     "lint-staged": "lint-staged",
-    "test": "umi-test test",
-    "coverage": "father test --coverage",
+    "test": "rc-test",
+    "coverage": "rc-test --coverage",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -61,7 +61,7 @@
     "cross-env": "^7.0.2",
     "dumi": "^2.1.14",
     "eslint": "^7.0.0",
-    "father": "^4",
+    "father": "^4.3.7",
     "gh-pages": "^3.1.0",
     "husky": "^8.0.1",
     "less": "^3.10.3",
@@ -70,10 +70,10 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^3.0.0",
     "rc-dialog": "^9.1.0",
+    "rc-test": "^7.0.15",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "typescript": "^4.0.5",
-    "umi-test": "^1.9.7"
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "react": ">=16.0.0",

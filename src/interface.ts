@@ -24,6 +24,9 @@ export interface CommonInputProps {
     affixWrapper?: string;
     prefix?: string;
     suffix?: string;
+    groupWrapper?: string;
+    wrapper?: string;
+    variant?: string;
   };
   styles?: {
     affixWrapper?: CSSProperties;
@@ -35,9 +38,12 @@ export interface CommonInputProps {
 
 type DataAttr = Record<`data-${string}`, string>;
 
+export type ValueType = InputHTMLAttributes<HTMLInputElement>['value'] | bigint;
+
 export interface BaseInputProps extends CommonInputProps {
-  value?: InputHTMLAttributes<HTMLInputElement>['value'];
-  inputElement: ReactElement;
+  value?: ValueType;
+  /** @deprecated Use `children` instead */
+  inputElement?: ReactElement;
   prefixCls?: string;
   className?: string;
   style?: CSSProperties;
@@ -46,6 +52,7 @@ export interface BaseInputProps extends CommonInputProps {
   triggerFocus?: () => void;
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
+  onClear?: () => void;
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;
@@ -56,19 +63,35 @@ export interface BaseInputProps extends CommonInputProps {
     wrapper?: 'span' | 'div';
     groupAddon?: 'span' | 'div';
   };
+  children: ReactElement;
 }
 
-export interface ShowCountProps {
-  formatter: (args: {
-    value: string;
-    count: number;
-    maxLength?: number;
-  }) => ReactNode;
+export type ShowCountFormatter = (args: {
+  value: string;
+  count: number;
+  maxLength?: number;
+}) => ReactNode;
+
+export type ExceedFormatter = (
+  value: string,
+  config: { max: number },
+) => string;
+
+export interface CountConfig {
+  max?: number;
+  strategy?: (value: string) => number;
+  show?: boolean | ShowCountFormatter;
+  /** Trigger when content larger than the `max` limitation */
+  exceedFormatter?: ExceedFormatter;
 }
 
 export interface InputProps
   extends CommonInputProps,
-    Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'type'> {
+    Omit<
+      InputHTMLAttributes<HTMLInputElement>,
+      'size' | 'prefix' | 'type' | 'value'
+    > {
+  value?: ValueType;
   prefixCls?: string;
   // ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#%3Cinput%3E_types
   type?: LiteralUnion<
@@ -97,7 +120,12 @@ export interface InputProps
     string
   >;
   onPressEnter?: KeyboardEventHandler<HTMLInputElement>;
-  showCount?: boolean | ShowCountProps;
+  /** It's better to use `count.show` instead */
+  showCount?:
+    | boolean
+    | {
+        formatter: ShowCountFormatter;
+      };
   autoComplete?: string;
   htmlSize?: number;
   classNames?: CommonInputProps['classNames'] & {
@@ -108,6 +136,8 @@ export interface InputProps
     input?: CSSProperties;
     count?: CSSProperties;
   };
+  count?: CountConfig;
+  onClear?: () => void;
 }
 
 export interface InputRef {
@@ -120,4 +150,9 @@ export interface InputRef {
   ) => void;
   select: () => void;
   input: HTMLInputElement | null;
+  nativeElement: HTMLElement | null;
+}
+
+export interface ChangeEventInfo {
+  source: 'compositionEnd' | 'change';
 }

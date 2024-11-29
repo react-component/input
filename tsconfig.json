@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "baseUrl": "./",
-    "lib": ["dom", "es2017"],
+    "lib": ["dom", "es2017", "es2022", "esnext"],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
@@ -18,5 +18,5 @@
       "rc-input": ["src/index.tsx"]
     }
   },
-  "include": [".dumi/**/*", ".dumirc.ts", "**/*.ts", "**/*.tsx"]
+  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx"]
 }

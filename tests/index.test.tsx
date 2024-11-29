@@ -40,6 +40,54 @@ describe('Input', () => {
     expect(onPressEnter).toHaveBeenCalled();
   });
 
+  it('should prevent long press of enter', () => {
+    const onKeyDown = jest.fn();
+    const onPressEnter = jest.fn();
+    const onKeyUp = jest.fn();
+    const { container } = render(
+      <Input
+        onKeyDown={onKeyDown}
+        onPressEnter={onPressEnter}
+        onKeyUp={onKeyUp}
+      />,
+    );
+    const inputEl = container.querySelector('input')!;
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.keyUp(inputEl, { key: 'Enter' });
+    expect(onKeyDown).toBeCalledTimes(2);
+    expect(onPressEnter).toBeCalledTimes(1);
+    expect(onKeyUp).toBeCalledTimes(1);
+  });
+
+  it('should trigger onPressEnter after trigger onBlur', () => {
+    const onPressEnter = jest.fn();
+    const onBlur = jest.fn();
+    const { container } = render(
+      <Input onPressEnter={onPressEnter} onBlur={onBlur} />,
+    );
+    const inputEl = container.querySelector('input')!;
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.blur(inputEl);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    expect(onBlur).toBeCalled();
+    expect(onPressEnter).toBeCalledTimes(2);
+  });
+
+  it('should trigger onPressEnter after disabled', () => {
+    const onPressEnter = jest.fn();
+    const { container, rerender } = render(
+      <Input onPressEnter={onPressEnter} />,
+    );
+    const inputEl = container.querySelector('input')!;
+    expect(inputEl.disabled).toBe(false);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    rerender(<Input onPressEnter={onPressEnter} disabled={true} />);
+    expect(inputEl.disabled).toBe(true);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    expect(onPressEnter).toBeCalledTimes(2);
+  });
+
   it('should trigger onChange', () => {
     const onChange = jest.fn();
     const { container } = render(<Input onChange={onChange} />);
@@ -75,6 +123,25 @@ describe('Input', () => {
     await user.click(container.querySelector('.rc-input-clear-icon')!);
     expect(document.activeElement).toBe(container.querySelector('input'));
   });
+
+  it('support bigint type', () => {
+    expect(<Input value={BigInt('2222')} />).toBeTruthy();
+  });
+
+  it('should be compatible with type="file"', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input type="file" onChange={onChange} />);
+    const inputEl = container.querySelector('input')!;
+    const file = new File(['(⌐□_□)'], 'file.xml', { type: 'application/xml' });
+    // upload the file by updating the value attribute of the input
+    // I assume : <input type="file" data-testid="fileInput" />
+    fireEvent.change(inputEl, {
+      target: { files: [file] },
+    });
+
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange.mock.calls[0][0].target.files[0]).toBe(file);
+  });
 });
 
 describe('should support showCount', () => {
@@ -96,35 +163,6 @@ describe('should support showCount', () => {
     expect(
       container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
     ).toBe('8 / 5');
-  });
-
-  describe('emoji', () => {
-    it('should minimize value between emoji length and maxLength', () => {
-      const { container } = render(
-        <Input prefixCls="rc-input" maxLength={1} showCount value="👀" />,
-      );
-      expect(container.querySelector('input')?.value).toBe('👀');
-      expect(
-        container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('1 / 1');
-
-      const { container: container1 } = render(
-        <Input prefixCls="rc-input" maxLength={2} showCount value="👀" />,
-      );
-      expect(
-        container1.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('1 / 2');
-    });
-
-    it('slice emoji', () => {
-      const { container } = render(
-        <Input prefixCls="rc-input" maxLength={5} showCount value="1234😂" />,
-      );
-      expect(container.querySelector('input')?.value).toBe('1234😂');
-      expect(
-        container.querySelector('.rc-input-show-count-suffix')?.innerHTML,
-      ).toBe('5 / 5');
-    });
   });
 
   it('count formatter', () => {
@@ -342,21 +380,57 @@ describe('Input ref', () => {
     inputSpy.mockRestore();
   });
 
-  it('setSelectionRange should work', () => {
-    const setSelectionRange = jest.fn();
-    const inputSpy = spyElementPrototypes(HTMLInputElement, {
-      setSelectionRange,
+  describe('selection', () => {
+    it('setSelectionRange should work', () => {
+      const setSelectionRange = jest.fn();
+      const inputSpy = spyElementPrototypes(HTMLInputElement, {
+        setSelectionRange,
+      });
+      const ref = React.createRef<InputRef>();
+      render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
+      ref.current?.setSelectionRange(0, 0);
+      expect(setSelectionRange).toHaveBeenCalledWith(
+        expect.anything(),
+        0,
+        0,
+        undefined,
+      );
+      inputSpy.mockRestore();
     });
-    const ref = React.createRef<InputRef>();
-    render(<Input ref={ref} defaultValue="light" prefixCls="rc-input" />);
-    ref.current?.setSelectionRange(0, 0);
-    expect(setSelectionRange).toHaveBeenCalledWith(
-      expect.anything(),
-      0,
-      0,
-      undefined,
-    );
-    inputSpy.mockRestore();
+
+    it('selectionXXX should pass', () => {
+      const onChange = jest.fn();
+      const { container } = render(<Input onChange={onChange} />);
+      const spySetSelectionRange = jest.spyOn(
+        container.querySelector('input')!,
+        'setSelectionRange',
+      );
+
+      const inputEl = container.querySelector('input')!;
+      fireEvent.change(inputEl, { target: { value: 'test' } });
+
+      expect(onChange).toHaveBeenCalled();
+      const event = onChange.mock.calls[0][0];
+      expect(event.target.selectionStart).toBe(4);
+      expect(event.target.selectionEnd).toBe(4);
+
+      // Call `setSelectionRange`
+      event.target.setSelectionRange(1, 2);
+      expect(spySetSelectionRange).toHaveBeenCalledWith(1, 2);
+    });
+
+    it('email type not support selection', () => {
+      const onChange = jest.fn();
+      const { container } = render(<Input type="email" onChange={onChange} />);
+
+      fireEvent.change(container.querySelector('input')!, {
+        target: { value: 'test' },
+      });
+      expect(onChange).toHaveBeenCalled();
+      const event = onChange.mock.calls[0][0];
+      expect(event.target.selectionStart).toBeNull();
+      expect(event.target.selectionEnd).toBeNull();
+    });
   });
 
   it('input should work', () => {
@@ -364,6 +438,21 @@ describe('Input ref', () => {
     const { container } = render(<Input ref={ref} defaultValue="light" />);
     const inputEl = container.querySelector('input')!;
     expect(ref.current?.input).toBe(inputEl);
+    expect(ref.current?.nativeElement).toBe(inputEl);
+  });
+
+  it('support onClear', () => {
+    const onClear = jest.fn();
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const { container } = render(
+      <Input onClear={onClear} defaultValue="test" allowClear />,
+    );
+    fireEvent.click(
+      container.querySelector<HTMLSpanElement>('.rc-input-clear-icon')!,
+    );
+    expect(onClear).toHaveBeenCalled();
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
   });
 });
 
