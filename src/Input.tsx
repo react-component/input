@@ -94,6 +94,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }));
 
   useEffect(() => {
+    if (keyLockRef.current) {
+      keyLockRef.current = false;
+    }
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
@@ -176,6 +179,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    if (keyLockRef.current) {
+      keyLockRef.current = false;
+    }
     setFocused(false);
     onBlur?.(e);
   };

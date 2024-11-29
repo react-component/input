@@ -60,6 +60,34 @@ describe('Input', () => {
     expect(onKeyUp).toBeCalledTimes(1);
   });
 
+  it('should trigger onPressEnter after trigger onBlur', () => {
+    const onPressEnter = jest.fn();
+    const onBlur = jest.fn();
+    const { container } = render(
+      <Input onPressEnter={onPressEnter} onBlur={onBlur} />,
+    );
+    const inputEl = container.querySelector('input')!;
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    fireEvent.blur(inputEl);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    expect(onBlur).toBeCalled();
+    expect(onPressEnter).toBeCalledTimes(2);
+  });
+
+  it('should trigger onPressEnter after disabled', () => {
+    const onPressEnter = jest.fn();
+    const { container, rerender } = render(
+      <Input onPressEnter={onPressEnter} />,
+    );
+    const inputEl = container.querySelector('input')!;
+    expect(inputEl.disabled).toBe(false);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    rerender(<Input onPressEnter={onPressEnter} disabled={true} />);
+    expect(inputEl.disabled).toBe(true);
+    fireEvent.keyDown(inputEl, { key: 'Enter' });
+    expect(onPressEnter).toBeCalledTimes(2);
+  });
+
   it('should trigger onChange', () => {
     const onChange = jest.fn();
     const { container } = render(<Input onChange={onChange} />);
