@@ -117,6 +117,7 @@ exports[`Input allowClear should change type when click 1`] = `
     >
       <button
         class="rc-input-clear-icon"
+        type="button"
       >
         ✖
       </button>
@@ -140,6 +141,7 @@ exports[`Input allowClear should change type when click 2`] = `
     >
       <button
         class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        type="button"
       >
         ✖
       </button>
@@ -163,6 +165,7 @@ exports[`Input allowClear should not show icon if defaultValue is undefined or e
     >
       <button
         class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        type="button"
       >
         ✖
       </button>
@@ -186,6 +189,7 @@ exports[`Input allowClear should not show icon if defaultValue is undefined or e
     >
       <button
         class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        type="button"
       >
         ✖
       </button>
@@ -209,6 +213,7 @@ exports[`Input allowClear should not show icon if value is undefined or empty st
     >
       <button
         class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        type="button"
       >
         ✖
       </button>
@@ -232,6 +237,7 @@ exports[`Input allowClear should not show icon if value is undefined or empty st
     >
       <button
         class="rc-input-clear-icon rc-input-clear-icon-hidden"
+        type="button"
       >
         ✖
       </button>

@@ -81,6 +81,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
 
       clearIcon = (
         <button
+          type="button"
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();
