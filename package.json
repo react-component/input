@@ -65,7 +65,7 @@
     "gh-pages": "^6.2.0",
     "husky": "^9.1.7",
     "less": "^3.10.3",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^15.2.10",
     "np": "^10.1.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.0.0",
