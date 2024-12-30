@@ -99,6 +99,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     }
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
+  
+  useEffect(() => {
+    if (rest.autoFocus) {
+      focus();
+    }
+  }, [rest.autoFocus]);
 
   const triggerChange = (
     e:
