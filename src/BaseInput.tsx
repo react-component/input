@@ -53,11 +53,13 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
 
   const hasAffix = hasPrefixSuffix(props);
 
-  let element: ReactElement = cloneElement(inputElement, {
+  let element: ReactElement = cloneElement(inputElement as ReactElement<any>, {
     value,
     className:
-      clsx(inputElement.props.className, !hasAffix && classNames?.variant) ||
-      null,
+      clsx(
+        (inputElement as ReactElement<any>).props?.className,
+        !hasAffix && classNames?.variant,
+      ) || null,
   });
 
   // ======================== Ref ======================== //
@@ -191,10 +193,11 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
   }
 
   // `className` and `style` are always on the root element
-  return React.cloneElement(element, {
-    className: clsx(element.props?.className, className) || null,
+  return React.cloneElement(element as ReactElement<any>, {
+    className:
+      clsx((element as ReactElement<any>).props?.className, className) || null,
     style: {
-      ...element.props?.style,
+      ...(element as ReactElement<any>).props?.style,
       ...style,
     },
     hidden,
