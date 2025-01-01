@@ -305,6 +305,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       classes={classes}
       classNames={classNames}
       styles={styles}
+      ref={holderRef}
     >
       {getInputElement()}
     </BaseInput>
