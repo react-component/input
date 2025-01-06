@@ -70,7 +70,7 @@
     "prettier": "^3.4.2",
     "pretty-quick": "^4.0.0",
     "rc-test": "^7.0.15",
-    "react": "^18.0.0",
+    "react": "^19.0.0",
     "react-dom": "^18.0.0",
     "typescript": "^5.7.2"
   },
