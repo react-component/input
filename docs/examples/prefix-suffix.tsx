@@ -1,4 +1,4 @@
-import Input from 'rc-input';
+import Input from '@rc-component/input';
 import type { FC } from 'react';
 import React from 'react';
 import '../../assets/index.less';

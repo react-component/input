@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC } from 'react';
 import React, { useState } from 'react';
 import '../../assets/index.less';
-import Input from 'rc-input';
+import Input from '@rc-component/input';
 
 const Demo: FC = () => {
   const [value, setValue] = useState<string>('');

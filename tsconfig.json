@@ -15,7 +15,6 @@
     "paths": {
       "@/*": ["src/*"],
       "@@/*": [".dumi/tmp/*"],
-      "rc-input": ["src/index.tsx"],
       "@rc-component/input": ["src/index.tsx"]
     }
   },
