@@ -1,6 +1,6 @@
 {
   "name": "@rc-component/input",
-  "version": "1.0.0-0",
+  "version": "1.0.0",
   "description": "React input component",
   "keywords": [
     "react",
