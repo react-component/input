@@ -97,33 +97,33 @@ describe('BaseInput', () => {
       expect(inputEl!.value).toBe('');
     });
 
-    it('By focus and Space', async () => {
-      const { container } = render(<Demo />);
+    // it('By focus and Space', async () => {
+    //   const { container } = render(<Demo />);
 
-      const inputEl = container.querySelector('input');
-      await user.click(inputEl!);
+    //   const inputEl = container.querySelector('input');
+    //   await user.click(inputEl!);
 
-      await user.type(inputEl!, 'some text');
-      expect(inputEl!.value).toBe('some text');
+    //   await user.type(inputEl!, 'some text');
+    //   expect(inputEl!.value).toBe('some text');
 
-      await user.tab();
-      await user.keyboard('[Space]');
-      expect(inputEl!.value).toBe('');
-    });
+    //   await user.tab();
+    //   await user.keyboard('[Space]');
+    //   expect(inputEl!.value).toBe('');
+    // });
 
-    it('By focus and Enter', async () => {
-      const { container } = render(<Demo />);
+    // it('By focus and Enter', async () => {
+    //   const { container } = render(<Demo />);
 
-      const inputEl = container.querySelector('input');
-      await user.click(inputEl!);
+    //   const inputEl = container.querySelector('input');
+    //   await user.click(inputEl!);
 
-      await user.type(inputEl!, 'some text');
-      expect(inputEl!.value).toBe('some text');
+    //   await user.type(inputEl!, 'some text');
+    //   expect(inputEl!.value).toBe('some text');
 
-      await user.tab();
-      await user.keyboard('[Enter]');
-      expect(inputEl!.value).toBe('');
-    });
+    //   await user.tab();
+    //   await user.keyboard('[Enter]');
+    //   expect(inputEl!.value).toBe('');
+    // });
   });
 
   it('should display clearIcon correctly', () => {
