@@ -270,35 +270,128 @@ describe('BaseInput', () => {
     expect(container.firstChild).toHaveClass('rc-input-group-wrapper-disabled');
   });
 
-  it('variant cls', () => {
-    const { container, rerender } = render(
-      <BaseInput
-        prefixCls="rc-input"
-        prefix="$"
-        classNames={{ variant: 'test-variant' }}
-        disabled
-      >
-        <input />
-      </BaseInput>,
-    );
+  describe('variant cls', () => {
+    it('variant cls', () => {
+      const { container, rerender } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          prefix="$"
+          classNames={{ variant: 'test-variant' }}
+          disabled
+        >
+          <input />
+        </BaseInput>,
+      );
 
-    expect(container.querySelector('.rc-input-affix-wrapper')).toHaveClass(
-      'test-variant',
-    );
-    expect(container.querySelector('input')).not.toHaveClass('test-variant');
+      expect(container.querySelector('.rc-input-affix-wrapper')).toHaveClass(
+        'test-variant',
+      );
+      expect(container.querySelector('input')).not.toHaveClass('test-variant');
 
-    rerender(
-      <BaseInput
-        prefixCls="rc-input"
-        classNames={{ variant: 'test-variant' }}
-        disabled
-      >
-        <input />
-      </BaseInput>,
-    );
+      rerender(
+        <BaseInput
+          prefixCls="rc-input"
+          classNames={{ variant: 'test-variant' }}
+          disabled
+        >
+          <input />
+        </BaseInput>,
+      );
 
-    expect(container.querySelector('.rc-input-affix-wrapper')).toBeFalsy();
-    expect(container.querySelector('input')).toHaveClass('test-variant');
+      expect(container.querySelector('.rc-input-affix-wrapper')).toBeFalsy();
+      expect(container.querySelector('input')).toHaveClass('test-variant');
+    });
+
+    it('should handle empty className correctly', () => {
+      const { container } = render(
+        <BaseInput prefixCls="rc-input">
+          <input className="" />
+        </BaseInput>,
+      );
+      expect(container.querySelector('input')?.className).toBe('');
+    });
+
+    it('should merge classNames correctly', () => {
+      const { container } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          className="global-class"
+          classNames={{ variant: 'variant-class' }}
+        >
+          <input className="input-class" />
+        </BaseInput>,
+      );
+      expect(container.querySelector('input')?.className).toBe(
+        'input-class variant-class global-class',
+      );
+    });
+
+    it('should apply styles correctly', () => {
+      const { container } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          style={{ color: 'red' }}
+          styles={{
+            affixWrapper: { backgroundColor: 'blue' },
+            prefix: { fontSize: '12px' },
+          }}
+          prefix="$"
+        >
+          <input style={{ padding: '4px' }} />
+        </BaseInput>,
+      );
+
+      const affixWrapper = container.querySelector('.rc-input-affix-wrapper');
+      const prefix = container.querySelector('.rc-input-prefix');
+      const input = container.querySelector('input');
+
+      expect(affixWrapper).toHaveStyle({ backgroundColor: 'blue' });
+      expect(prefix).toHaveStyle({ fontSize: '12px' });
+      expect(input).toHaveStyle({ padding: '4px' });
+    });
+
+    it('should handle data attributes', () => {
+      const { container } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          dataAttrs={{
+            affixWrapper: { 'data-testid': 'affix-wrapper' },
+          }}
+          prefix="$"
+        >
+          <input />
+        </BaseInput>,
+      );
+
+      expect(
+        container.querySelector('.rc-input-affix-wrapper'),
+      ).toHaveAttribute('data-testid', 'affix-wrapper');
+    });
+
+    it('should handle custom components', () => {
+      const { container } = render(
+        <BaseInput
+          prefixCls="rc-input"
+          components={{
+            affixWrapper: 'div',
+            groupWrapper: 'div',
+            wrapper: 'div',
+            groupAddon: 'div',
+          }}
+          prefix="$"
+          addonBefore="Before"
+        >
+          <input />
+        </BaseInput>,
+      );
+
+      expect(container.querySelector('.rc-input-affix-wrapper')?.tagName).toBe(
+        'DIV',
+      );
+      expect(container.querySelector('.rc-input-group-wrapper')?.tagName).toBe(
+        'DIV',
+      );
+    });
   });
 
   describe('ref', () => {
