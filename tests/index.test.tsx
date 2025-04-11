@@ -454,6 +454,42 @@ describe('Input ref', () => {
     expect(errorSpy).not.toHaveBeenCalled();
     errorSpy.mockRestore();
   });
+
+  describe('nativeElement', () => {
+    it('is input', () => {
+      const ref = React.createRef<InputRef>();
+      render(<Input ref={ref} prefixCls="rc-input" />);
+      expect(ref.current?.nativeElement).toHaveClass('rc-input');
+    });
+
+    it('is affix wrapper', () => {
+      const ref = React.createRef<InputRef>();
+      render(
+        <Input
+          ref={ref}
+          prefixCls="rc-input"
+          prefix={'prefix'}
+          suffix={'suffix'}
+        />,
+      );
+      expect(ref.current?.nativeElement).toHaveClass('rc-input-affix-wrapper');
+    });
+
+    it('is group wrapper', () => {
+      const ref = React.createRef<InputRef>();
+      render(
+        <Input
+          ref={ref}
+          prefixCls="rc-input"
+          prefix={'prefix'}
+          suffix={'suffix'}
+          addonBefore={'addonBefore'}
+          addonAfter={'addonAfter'}
+        />,
+      );
+      expect(ref.current?.nativeElement).toHaveClass('rc-input-group-wrapper');
+    });
+  });
 });
 
 describe('resolveChange should work', () => {
