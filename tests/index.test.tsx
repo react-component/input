@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
-import React from 'react';
+import React, { ElementType } from 'react';
 import Input from '../src';
 import type { InputRef } from '../src/interface';
 import { resolveOnChange } from '../src/utils/commonUtils';
@@ -503,4 +503,41 @@ describe('resolveChange should work', () => {
   );
   fireEvent.compositionEnd(container.querySelector('textarea')!);
   expect(onChange).toHaveBeenCalled();
+});
+
+describe('Input IME behavior', () => {
+  it('should ignore Enter during composition', () => {
+    const onPressEnter = jest.fn();
+    const { container } = render(<Input onPressEnter={onPressEnter} />);
+    const input = container.querySelector('input')!;
+
+    fireEvent.compositionStart(input);
+
+    fireEvent.keyDown(input, {
+      key: 'Enter',
+      keyCode: 229,
+      isComposing: true,
+      nativeEvent: { isComposing: true },
+    });
+
+    fireEvent.compositionUpdate(input, { data: '开始' });
+
+    expect(onPressEnter).not.toHaveBeenCalled();
+
+    fireEvent.compositionEnd(input);
+    fireEvent.keyDown(input, {
+      key: 'Enter',
+      nativeEvent: { isComposing: false },
+    });
+    expect(onPressEnter).toHaveBeenCalledTimes(1);
+  });
+
+  it('should work with actual IME input', async () => {
+    const user = userEvent.setup();
+    const onPressEnter = jest.fn();
+    const { container } = render(<Input onPressEnter={onPressEnter} />);
+
+    await user.type(container.querySelector('input')!, 'abc{enter}');
+    expect(onPressEnter).toHaveBeenCalled();
+  });
 });
