@@ -61,7 +61,7 @@
     "coveralls": "^3.0.6",
     "cross-env": "^7.0.2",
     "dumi": "^2.1.14",
-    "eslint": "^8.0.0",
+    "eslint": "^9.31.0",
     "father": "^4.3.7",
     "gh-pages": "^6.2.0",
     "husky": "^9.1.7",
