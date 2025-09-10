@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import useMergedState from '@rc-component/util/lib/hooks/useMergedState';
+import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
 import omit from '@rc-component/util/lib/omit';
 import React, {
   forwardRef,
@@ -55,9 +55,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   // ====================== Value =======================
-  const [value, setValue] = useMergedState(props.defaultValue, {
-    value: props.value,
-  });
+  const [value, setValue] = useControlledState(props.defaultValue, props.value);
   const formatValue =
     value === undefined || value === null ? '' : String(value);
 
