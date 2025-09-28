@@ -1,4 +1,4 @@
-import clsx from 'classnames';
+import { clsx } from 'clsx';
 import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
 import omit from '@rc-component/util/lib/omit';
 import React, {

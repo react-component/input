@@ -1,4 +1,4 @@
-import clsx from 'classnames';
+import { clsx } from 'clsx';
 import type { ReactElement, ReactNode } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import type { BaseInputProps } from './interface';
