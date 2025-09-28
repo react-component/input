@@ -59,7 +59,7 @@
     "@types/react-dom": "^19.0.1",
     "@umijs/fabric": "^4.0.0",
     "coveralls": "^3.0.6",
-    "cross-env": "^7.0.2",
+    "cross-env": "^10.0.0",
     "dumi": "^2.1.14",
     "eslint": "^8.0.0",
     "father": "^4.3.7",
