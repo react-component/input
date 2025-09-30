@@ -71,7 +71,7 @@
     "pretty-quick": "^4.0.0",
     "rc-test": "^7.0.15",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react-dom": "^19.1.1",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
