@@ -12,8 +12,11 @@ import type { HolderRef } from './BaseInput';
 import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
-import type { InputFocusOptions } from './utils/commonUtils';
-import { resolveOnChange, triggerFocus } from './utils/commonUtils';
+import { resolveOnChange } from './utils/commonUtils';
+import {
+  triggerFocus,
+  type InputFocusOptions,
+} from '@rc-component/util/lib/Dom/focus';
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {

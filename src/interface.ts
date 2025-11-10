@@ -6,8 +6,8 @@ import type {
   ReactElement,
   ReactNode,
 } from 'react';
-import type { InputFocusOptions } from './utils/commonUtils';
 import type { LiteralUnion } from './utils/types';
+import type { InputFocusOptions } from '@rc-component/util/lib/Dom/focus';
 
 export interface CommonInputProps {
   prefix?: ReactNode;
