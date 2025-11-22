@@ -112,11 +112,15 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   ) => {
     const cutValue = getExceedValue(currentValue, compositionRef.current);
 
-    if (info.source === 'compositionEnd' && currentValue === cutValue) {
-      // Avoid triggering twice
-      // https://github.com/ant-design/ant-design/issues/46587
+    if (info.source === 'compositionEnd') {
+      // Always update internal state on compositionEnd, but skip onChange.
+      // The browser fires an input/change event after compositionEnd, which
+      // will call onInternalChange → triggerChange again and trigger onChange.
+      // Skipping here prevents double-firing (#46587).
+      setValue(cutValue);
       return;
     }
+
     setValue(cutValue);
 
     if (inputRef.current) {
