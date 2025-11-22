@@ -126,14 +126,15 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           inputRef.current?.selectionEnd || 0,
         ]);
       }
-    } else if (info.source === 'compositionEnd') {
-      // Avoid triggering twice
-      // https://github.com/ant-design/ant-design/issues/46587
-      return;
     }
+
+    // Always update the value state
     setValue(cutValue);
 
-    if (inputRef.current) {
+    // Only trigger onChange if value has actually changed
+    // This prevents double-firing (issue #46587) while still allowing
+    // external wrappers like react-number-format to work (issue #46999)
+    if (inputRef.current && cutValue !== formatValue) {
       resolveOnChange(inputRef.current, e, onChange, cutValue);
     }
   };
