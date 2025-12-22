@@ -54,7 +54,7 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.0.0-beta",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.5.2",
+    "@types/node": "^25.0.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.1",
     "@umijs/fabric": "^4.0.0",
