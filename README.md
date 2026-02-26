@@ -1,4 +1,4 @@
-# rc-input ⌨️
+# @rc-component/input ⌨️
 
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
@@ -7,8 +7,8 @@
 [![bundle size][bundlephobia-image]][bundlephobia-url]
 [![dumi][dumi-image]][dumi-url]
 
-[npm-image]: http://img.shields.io/npm/v/rc-input.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-input
+[npm-image]: http://img.shields.io/npm/v/@rc-component/input.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/@rc-component/input
 [travis-image]: https://img.shields.io/travis/react-component/input/master?style=flat-square
 [travis-url]: https://travis-ci.com/react-component/input
 [github-actions-image]: https://github.com/react-component/input/actions/workflows/main.yml/badge.svg
@@ -19,21 +19,21 @@
 [david-image]: https://david-dm.org/react-component/input/status.svg?style=flat-square
 [david-dev-url]: https://david-dm.org/react-component/input?type=dev
 [david-dev-image]: https://david-dm.org/react-component/input/dev-status.svg?style=flat-square
-[download-image]: https://img.shields.io/npm/dm/rc-input.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-input
-[bundlephobia-url]: https://bundlephobia.com/package/rc-input
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/rc-input
+[download-image]: https://img.shields.io/npm/dm/@rc-component/input.svg?style=flat-square
+[download-url]: https://npmjs.org/package/@rc-component/input
+[bundlephobia-url]: https://bundlephobia.com/package/@rc-component/input
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/input
 [dumi-url]: https://github.com/umijs/dumi
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 
 ## Install
 
-[![rc-input](https://nodei.co/npm/rc-input.png)](https://npmjs.org/package/rc-input)
+[![@rc-component/input](https://nodei.co/npm/@rc-component/input.png)](https://npmjs.org/package/@rc-component/input)
 
 ## Usage
 
 ```js
-import Input from 'rc-input';
+import Input from '@rc-component/input';
 import { render } from 'react-dom';
 
 render(<Input placeholder="input" allowClear />, mountNode);
@@ -46,9 +46,9 @@ render(<Input placeholder="input" allowClear />, mountNode);
 | prefixCls             | string                                                                             | rc-input |                                                                                                                                                                     |
 | className             | string                                                                             | ''       | additional class name of input                                                                                                                                      |
 | style                 | React.CSSProperties                                                                |          | style properties of input                                                                                                                                           |
-| affixWrapperClassName | string                                                                             | -        | className with 'rc-input-affix-wrapper'                                                                                                                             |
-| groupClassName        | string                                                                             | -        | className with 'rc-input-group-wrapper'                                                                                                                             |
-| wrapperClassName      | string                                                                             | -        | className with 'rc-input-wrapper'                                                                                                                                   |
+| affixWrapperClassName | string                                                                             | -        | className with '@rc-component/input-affix-wrapper'                                                                                                                             |
+| groupClassName        | string                                                                             | -        | className with '@rc-component/input-group-wrapper'                                                                                                                             |
+| wrapperClassName      | string                                                                             | -        | className with '@rc-component/input-wrapper'                                                                                                                                   |
 | addonAfter            | ReactNode                                                                          | -        | The label text displayed after (on the right side of) the input field                                                                                               |
 | addonBefore           | ReactNode                                                                          | -        | The label text displayed before (on the left side of) the input field                                                                                               |
 | allowClear            | boolean &#124; { clearIcon: ReactNode }                                                                            | false    | If allow to remove input content with clear icon                                                                                                                    |
@@ -85,8 +85,6 @@ useEffect(() => {
 | blur     | `() => void`                            | The input loses focus when called |
 | input    | `HTMLInputElement \| null`              | The origin input element          |
 
-
-
 ## Development
 
 ```
@@ -96,4 +94,4 @@ npm start
 
 ## License
 
-rc-input is released under the MIT license.
+@rc-component/input is released under the MIT license.
