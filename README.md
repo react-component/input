@@ -22,7 +22,7 @@
 [download-image]: https://img.shields.io/npm/dm/@rc-component/input.svg?style=flat-square
 [download-url]: https://npmjs.org/package/@rc-component/input
 [bundlephobia-url]: https://bundlephobia.com/package/@rc-component/input
-[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/@rc-component/input
+[bundlephobia-image]: https://img.shields.io/bundlephobia/minzip/@rc-component/input?style=flat-square
 [dumi-url]: https://github.com/umijs/dumi
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 
