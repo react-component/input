@@ -11,8 +11,8 @@
 [npm-url]: http://npmjs.org/package/rc-input
 [travis-image]: https://img.shields.io/travis/react-component/input/master?style=flat-square
 [travis-url]: https://travis-ci.com/react-component/input
-[github-actions-image]: https://github.com/react-component/input/workflows/CI/badge.svg
-[github-actions-url]: https://github.com/react-component/input/actions
+[github-actions-image]: https://github.com/react-component/input/actions/workflows/main.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/input/actions/workflows/main.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/input/master.svg?style=flat-square
 [codecov-url]: https://app.codecov.io/gh/react-component/input
 [david-url]: https://david-dm.org/react-component/input
