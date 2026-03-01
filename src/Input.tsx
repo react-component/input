@@ -46,6 +46,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const [focused, setFocused] = useState<boolean>(false);
   const compositionRef = useRef(false);
+  const compositionEndedRef = useRef(false);
   const keyLockRef = useRef(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -126,10 +127,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           inputRef.current?.selectionEnd || 0,
         ]);
       }
-    } else if (info.source === 'compositionEnd') {
-      // Avoid triggering twice
-      // https://github.com/ant-design/ant-design/issues/46587
-      return;
     }
     setValue(cutValue);
 
@@ -145,6 +142,13 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }, [selection]);
 
   const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (compositionEndedRef.current) {
+      // Ignore duplicated `change`/`input` right after `compositionend`
+      // https://github.com/ant-design/ant-design/issues/46587
+      compositionEndedRef.current = false;
+      return;
+    }
+
     triggerChange(e, e.target.value, {
       source: 'change',
     });
@@ -154,6 +158,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     e: React.CompositionEvent<HTMLInputElement>,
   ) => {
     compositionRef.current = false;
+    compositionEndedRef.current = true;
     triggerChange(e, e.currentTarget.value, {
       source: 'compositionEnd',
     });

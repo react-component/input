@@ -540,4 +540,20 @@ describe('Input IME behavior', () => {
     await user.type(container.querySelector('input')!, 'abc{enter}');
     expect(onPressEnter).toHaveBeenCalled();
   });
+
+  it('should emit compositionEnd change but ignore duplicated change event', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input onChange={onChange} />);
+    const input = container.querySelector('input')!;
+
+    fireEvent.compositionStart(input);
+    input.value = '123';
+    fireEvent.compositionEnd(input);
+
+    // Some environments/libraries dispatch an extra `change` after compositionEnd.
+    fireEvent.change(input, { target: { value: '123' } });
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange.mock.calls[0][0].type).toBe('compositionend');
+  });
 });
