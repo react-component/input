@@ -78,7 +78,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
         !disabled &&
         !readOnly &&
         value &&
-        (allowClear === true || !allowClear.disabled);
+        !(typeof allowClear === 'object' && allowClear.disabled);
       const clearIconCls = `${prefixCls}-clear-icon`;
       const iconNode =
         typeof allowClear === 'object' && allowClear?.clearIcon
