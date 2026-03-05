@@ -33,7 +33,7 @@ export interface CommonInputProps {
     prefix?: CSSProperties;
     suffix?: CSSProperties;
   };
-  allowClear?: boolean | { clearIcon?: ReactNode };
+  allowClear?: boolean | { disabled?: boolean; clearIcon?: ReactNode };
 }
 
 type DataAttr = Record<`data-${string}`, string>;
@@ -86,7 +86,8 @@ export interface CountConfig {
 }
 
 export interface InputProps
-  extends CommonInputProps,
+  extends
+    CommonInputProps,
     Omit<
       InputHTMLAttributes<HTMLInputElement>,
       'size' | 'prefix' | 'type' | 'value'
