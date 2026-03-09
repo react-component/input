@@ -278,6 +278,17 @@ describe('Input allowClear', () => {
     });
   });
 
+  it('should not support allowClear when allowClear is disabled', () => {
+    const { container } = render(
+      <Input
+        prefixCls="rc-input"
+        allowClear={{ disabled: true }}
+        defaultValue="111"
+      />,
+    );
+    expect(container.querySelector('.rc-input-clear-icon-hidden')).toBeTruthy();
+  });
+
   it('classNames and styles should work', () => {
     const { container } = render(
       <>
