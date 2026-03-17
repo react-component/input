@@ -236,6 +236,7 @@ describe('BaseInput', () => {
         prefixCls="rc-input"
         prefix="prefix"
         addonBefore="addon"
+        allowClear
         styles={{
           affixWrapper: {
             color: 'red',
@@ -243,9 +244,12 @@ describe('BaseInput', () => {
           prefix: {
             color: 'blue',
           },
+          clear: {
+            color: 'green',
+          },
         }}
       >
-        <input />
+        <input defaultValue="test" />
       </BaseInput>,
     );
 
@@ -258,6 +262,11 @@ describe('BaseInput', () => {
       container.container.querySelector<HTMLSpanElement>('.rc-input-prefix')
         ?.style.color,
     ).toBe('blue');
+    expect(
+      container.container.querySelector('.rc-input-clear-icon'),
+    ).toHaveStyle({
+      color: 'green',
+    });
   });
 
   it('with addon and disabled', () => {
