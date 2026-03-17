@@ -3,7 +3,7 @@
 exports[`Input allowClear classNames and styles should work 1`] = `
 <div>
   <span
-    class="rc-input-affix-wrapper custom-class"
+    class="rc-input-affix-wrapper rc-input-affix-wrapper-input-with-clear-btn custom-class"
     style="background-color: red;"
   >
     <span
@@ -22,6 +22,14 @@ exports[`Input allowClear classNames and styles should work 1`] = `
       class="rc-input-suffix custom-suffix"
       style="color: yellow;"
     >
+      <button
+        class="rc-input-clear-icon rc-input-clear-icon-has-suffix custom-clear"
+        style="color: orange;"
+        tabindex="-1"
+        type="button"
+      >
+        ✖
+      </button>
       <span
         class="rc-input-show-count-suffix rc-input-show-count-has-suffix custom-count"
         style="color: green;"

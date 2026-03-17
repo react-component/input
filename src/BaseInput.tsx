@@ -96,10 +96,15 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
           // Do not trigger onBlur when clear input
           // https://github.com/ant-design/ant-design/issues/31200
           onMouseDown={(e) => e.preventDefault()}
-          className={clsx(clearIconCls, {
-            [`${clearIconCls}-hidden`]: !needClear,
-            [`${clearIconCls}-has-suffix`]: !!suffix,
-          })}
+          className={clsx(
+            clearIconCls,
+            {
+              [`${clearIconCls}-hidden`]: !needClear,
+              [`${clearIconCls}-has-suffix`]: !!suffix,
+            },
+            classNames?.clear,
+          )}
+          style={styles?.clear}
         >
           {iconNode}
         </button>

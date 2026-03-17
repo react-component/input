@@ -298,18 +298,21 @@ describe('Input allowClear', () => {
           prefixCls="rc-input"
           prefix="prefix"
           suffix="suffix"
+          allowClear
           className="custom-class"
           style={{ backgroundColor: 'red' }}
           classNames={{
             input: 'custom-input',
             prefix: 'custom-prefix',
             suffix: 'custom-suffix',
+            clear: 'custom-clear',
             count: 'custom-count',
           }}
           styles={{
             input: { color: 'red' },
             prefix: { color: 'blue' },
             suffix: { color: 'yellow' },
+            clear: { color: 'orange' },
             count: { color: 'green' },
           }}
         />
@@ -362,6 +365,12 @@ describe('Input allowClear', () => {
         />
       </>,
     );
+    expect(container.querySelector('.rc-input-clear-icon')).toHaveClass(
+      'custom-clear',
+    );
+    expect(container.querySelector('.rc-input-clear-icon')).toHaveStyle({
+      color: 'orange',
+    });
     expect(container).toMatchSnapshot();
   });
 });

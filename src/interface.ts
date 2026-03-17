@@ -24,6 +24,7 @@ export interface CommonInputProps {
     affixWrapper?: string;
     prefix?: string;
     suffix?: string;
+    clear?: string;
     groupWrapper?: string;
     wrapper?: string;
     variant?: string;
@@ -32,6 +33,7 @@ export interface CommonInputProps {
     affixWrapper?: CSSProperties;
     prefix?: CSSProperties;
     suffix?: CSSProperties;
+    clear?: CSSProperties;
   };
   allowClear?: boolean | { disabled?: boolean; clearIcon?: ReactNode };
 }
