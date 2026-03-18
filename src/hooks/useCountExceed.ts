@@ -16,12 +16,18 @@ export default function useCountExceed<
   const [selection, setSelection] = React.useState<
     [start: number, end: number] | null
   >(null);
+  const getTargetRef = React.useRef(getTarget);
+
+  React.useEffect(() => {
+    getTargetRef.current = getTarget;
+  }, [getTarget]);
 
   React.useEffect(() => {
     if (selection) {
-      getTarget()?.setSelectionRange(...selection);
+      getTargetRef.current()?.setSelectionRange(...selection);
+      setSelection(null);
     }
-  }, [getTarget, selection]);
+  }, [selection]);
 
   const getExceedValue = React.useCallback(
     (currentValue: string, isComposing: boolean) => {
@@ -39,15 +45,15 @@ export default function useCountExceed<
 
         if (currentValue !== nextValue) {
           setSelection([
-            getTarget()?.selectionStart || 0,
-            getTarget()?.selectionEnd || 0,
+            getTargetRef.current()?.selectionStart || 0,
+            getTargetRef.current()?.selectionEnd || 0,
           ]);
         }
       }
 
       return nextValue;
     },
-    [countConfig, getTarget],
+    [countConfig],
   );
 
   return getExceedValue;
