@@ -1,10 +1,11 @@
-import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
 import { clsx } from 'clsx';
-import type { ReactNode } from 'react';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import type { HolderRef } from './BaseInput';
 import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
+import useCountDisplay from './hooks/useCountDisplay';
+import useCountExceed from './hooks/useCountExceed';
+import useMergedValue from './hooks/useMergedValue';
 import type {
   ResizableTextAreaRef,
   TextAreaProps,
@@ -45,10 +46,6 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     },
     ref,
   ) => {
-    const [value, setValue] = useControlledState(defaultValue, customValue);
-    const formatValue =
-      value === undefined || value === null ? '' : String(value);
-
     const [focused, setFocused] = React.useState<boolean>(false);
 
     const compositionRef = React.useRef(false);
@@ -61,6 +58,18 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     const holderRef = useRef<HolderRef>(null);
     const resizableTextAreaRef = useRef<ResizableTextAreaRef>(null);
     const getTextArea = () => resizableTextAreaRef.current?.textArea!;
+
+    const { setValue, formatValue } = useMergedValue(defaultValue, customValue);
+    const countConfig = useCount(count, showCount);
+    const { mergedMax, isOutOfRange, dataCount } = useCountDisplay({
+      countConfig,
+      value: formatValue,
+      maxLength,
+    });
+    const getExceedValue = useCountExceed({
+      countConfig,
+      getTarget: () => resizableTextAreaRef.current?.textArea || null,
+    });
 
     const focus = () => {
       getTextArea().focus();
@@ -79,28 +88,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       setFocused((prev) => !disabled && prev);
     }, [disabled]);
 
-    // =========================== Select Range ===========================
-    const [selection, setSelection] = React.useState<
-      [start: number, end: number] | null
-    >(null);
-
-    React.useEffect(() => {
-      if (selection) {
-        getTextArea().setSelectionRange(...selection);
-      }
-    }, [selection]);
-
     // ============================== Count ===============================
-    const countConfig = useCount(count, showCount);
-    const mergedMax = countConfig.max ?? maxLength;
-
-    // Max length value
-    const hasMaxLength = Number(mergedMax) > 0;
-
-    const valueLength = countConfig.strategy(formatValue);
-
-    const isOutOfRange = !!mergedMax && valueLength > mergedMax;
-
     // ============================== Change ==============================
     const triggerChange = (
       e:
@@ -108,25 +96,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         | React.CompositionEvent<HTMLTextAreaElement>,
       currentValue: string,
     ) => {
-      let cutValue = currentValue;
-
-      if (
-        !compositionRef.current &&
-        countConfig.exceedFormatter &&
-        countConfig.max &&
-        countConfig.strategy(currentValue) > countConfig.max
-      ) {
-        cutValue = countConfig.exceedFormatter(currentValue, {
-          max: countConfig.max,
-        });
-
-        if (currentValue !== cutValue) {
-          setSelection([
-            getTextArea().selectionStart || 0,
-            getTextArea().selectionEnd || 0,
-          ]);
-        }
-      }
+      const cutValue = getExceedValue(currentValue, compositionRef.current);
       setValue(cutValue);
 
       resolveOnChange(e.currentTarget, e, onChange, cutValue);
@@ -177,18 +147,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     };
 
     let suffixNode = suffix;
-    let dataCount: ReactNode;
     if (countConfig.show) {
-      if (countConfig.showFormatter) {
-        dataCount = countConfig.showFormatter({
-          value: formatValue,
-          count: valueLength,
-          maxLength: mergedMax,
-        });
-      } else {
-        dataCount = `${valueLength}${hasMaxLength ? ` / ${mergedMax}` : ''}`;
-      }
-
       suffixNode = (
         <>
           {suffixNode}

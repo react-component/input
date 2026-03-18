@@ -148,6 +148,24 @@ describe('Input.Count', () => {
     expect(input?.value).toEqual('你好世');
   });
 
+  it('count.max should take priority over maxLength', () => {
+    const { container } = render(
+      <Input
+        maxLength={20}
+        count={{
+          show: true,
+          max: 5,
+        }}
+        value="123456"
+      />,
+    );
+
+    expect(
+      container.querySelector('.rc-input-show-count-suffix')?.textContent,
+    ).toEqual('6 / 5');
+    expect(container.querySelector('.rc-input-out-of-range')).toBeTruthy();
+  });
+
   describe('cls', () => {
     it('raw', () => {
       const { container } = render(

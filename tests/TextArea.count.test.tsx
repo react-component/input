@@ -113,6 +113,24 @@ describe('TextArea.Count', () => {
     expect(setSelectionRange).toHaveBeenCalledWith(2, 2);
   });
 
+  it('count.max should take priority over maxLength', () => {
+    const { container } = render(
+      <TextArea
+        maxLength={20}
+        count={{
+          show: true,
+          max: 5,
+        }}
+        value="123456"
+      />,
+    );
+
+    expect(container.querySelector('.rc-textarea-suffix')?.textContent).toEqual(
+      '6 / 5',
+    );
+    expect(container.querySelector('.rc-textarea-out-of-range')).toBeTruthy();
+  });
+
   describe('cls', () => {
     it('raw', () => {
       const { container } = render(
