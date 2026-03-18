@@ -1,5 +1,4 @@
 import * as React from 'react';
-import type { CountConfig } from '../interface';
 import type { inCountRange } from './useCount';
 
 type ForcedCountConfig = Parameters<typeof inCountRange>[1];

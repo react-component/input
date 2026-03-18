@@ -57,11 +57,11 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     // =============================== Ref ================================
     const holderRef = useRef<HolderRef>(null);
     const resizableTextAreaRef = useRef<ResizableTextAreaRef>(null);
-    const getTextArea = () => resizableTextAreaRef.current?.textArea!;
+    const getTextArea = () => resizableTextAreaRef.current?.textArea || null;
 
     const { setValue, formatValue } = useMergedValue(defaultValue, customValue);
     const countConfig = useCount(count, showCount);
-    const { mergedMax, isOutOfRange, dataCount } = useCountDisplay({
+    const { isOutOfRange, dataCount } = useCountDisplay({
       countConfig,
       value: formatValue,
       maxLength,
@@ -72,14 +72,14 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     });
 
     const focus = () => {
-      getTextArea().focus();
+      getTextArea()?.focus();
     };
 
     useImperativeHandle(ref, () => ({
       resizableTextArea: resizableTextAreaRef.current!,
       focus,
       blur: () => {
-        getTextArea().blur();
+        getTextArea()?.blur();
       },
       nativeElement: holderRef.current?.nativeElement || getTextArea(),
     }));
@@ -143,7 +143,10 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     const handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       setValue('');
       focus();
-      resolveOnChange(getTextArea(), e, onChange);
+      const textarea = getTextArea();
+      if (textarea) {
+        resolveOnChange(textarea, e, onChange);
+      }
     };
 
     let suffixNode = suffix;

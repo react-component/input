@@ -66,7 +66,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   );
 
   const countConfig = useCount(count, showCount);
-  const { mergedMax, isOutOfRange, dataCount } = useCountDisplay({
+  const { isOutOfRange, dataCount } = useCountDisplay({
     countConfig,
     value: formatValue,
     maxLength,
