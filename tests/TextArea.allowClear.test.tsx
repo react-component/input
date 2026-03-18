@@ -11,11 +11,12 @@ describe('should support allowClear', () => {
     fireEvent.change(container.querySelector('textarea')!, {
       target: { value: '111' },
     });
+    const clearIcon = container.querySelector('.rc-textarea-clear-icon');
+
     expect(container.querySelector('textarea')?.value).toEqual('111');
-    expect(
-      container.querySelector('.rc-textarea-clear-icon-hidhen'),
-    ).toBeFalsy();
-    fireEvent.click(container.querySelector('.rc-textarea-clear-icon')!);
+    expect(clearIcon).toBeTruthy();
+    expect(clearIcon).not.toHaveClass('rc-textarea-clear-icon-hidden');
+    fireEvent.click(clearIcon!);
     expect(
       container.querySelector('.rc-textarea-clear-icon-hidden'),
     ).toBeTruthy();
