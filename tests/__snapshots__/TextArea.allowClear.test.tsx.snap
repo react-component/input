@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should support allowClear should not show icon if defaultValue is undefined, null or empty string 1`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
+
+exports[`should support allowClear should not show icon if defaultValue is undefined, null or empty string 2`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
+
+exports[`should support allowClear should not show icon if defaultValue is undefined, null or empty string 3`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
+
+exports[`should support allowClear should not show icon if value is undefined, null or empty string 1`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
+
+exports[`should support allowClear should not show icon if value is undefined, null or empty string 2`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
+
+exports[`should support allowClear should not show icon if value is undefined, null or empty string 3`] = `
+<span
+  class="rc-textarea-affix-wrapper rc-textarea-textarea-allow-clear"
+>
+  <textarea
+    class="rc-textarea"
+  />
+  <span
+    class="rc-textarea-suffix"
+  >
+    <button
+      class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
+      tabindex="-1"
+      type="button"
+    >
+      ✖
+    </button>
+  </span>
+</span>
+`;
