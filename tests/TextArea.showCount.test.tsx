@@ -1,8 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import Input from '../src';
-
-const TextArea = Input.TextArea;
+import { TextArea } from '../src';
 
 describe('should support showCount', () => {
   it('maxLength', () => {

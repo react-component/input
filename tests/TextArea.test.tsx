@@ -1,14 +1,12 @@
 // @ts-nocheck
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import Input from '../src';
+import { TextArea } from '../src';
 import type { TextAreaProps, TextAreaRef } from '../src';
 import calculateAutoSizeStyle, {
   calculateNodeStyling,
 } from '../src/calculateNodeHeight';
 import { triggerResize, wait } from './utils';
-
-const TextArea = Input.TextArea;
 
 describe('TextArea', () => {
   const originalGetComputedStyle = window.getComputedStyle;
