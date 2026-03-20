@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
-import Input, { type TextAreaProps } from '@rc-component/input';
+import { TextArea, type TextAreaProps } from '@rc-component/input';
 import React, { useState, type ChangeEvent, type KeyboardEvent } from 'react';
-
-const TextArea = Input.TextArea;
 
 export default function App() {
   const [value, setValue] = useState('');
