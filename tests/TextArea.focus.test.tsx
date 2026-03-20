@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { TextArea } from '../src';
-import type { TextAreaRef } from '../src';
+import { TextArea, type TextAreaRef } from '../src';
 
 describe('focus and blur', () => {
   let focused = false;
