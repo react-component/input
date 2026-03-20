@@ -2,9 +2,6 @@ import BaseInput from './BaseInput';
 import Input from './Input';
 import TextArea from './TextArea';
 
-export { BaseInput };
-export { default as ResizableTextArea } from './ResizableTextArea';
-
 export type {
   AutoSizeType,
   InputProps,
@@ -14,14 +11,8 @@ export type {
   TextAreaRef,
 } from './interface';
 
-type CompoundedInput = typeof Input & {
-  TextArea: typeof TextArea;
-};
+export { default as ResizableTextArea } from './ResizableTextArea';
 
-const TypedInput = Input as CompoundedInput;
+export { BaseInput, TextArea };
 
-TypedInput.TextArea = TextArea;
-
-export { TextArea };
-
-export default TypedInput;
+export default Input;
