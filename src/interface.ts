@@ -5,6 +5,7 @@ import type {
   MouseEventHandler,
   ReactElement,
   ReactNode,
+  TextareaHTMLAttributes,
 } from 'react';
 import type { LiteralUnion } from './utils/types';
 import type { InputFocusOptions } from '@rc-component/util/lib/Dom/focus';
@@ -158,4 +159,47 @@ export interface InputRef {
 
 export interface ChangeEventInfo {
   source: 'compositionEnd' | 'change';
+}
+
+export interface AutoSizeType {
+  minRows?: number;
+  maxRows?: number;
+}
+
+// To compatible with origin usage. We have to wrap this
+export interface ResizableTextAreaRef {
+  textArea: HTMLTextAreaElement;
+}
+
+export type ValueOrTextAreaValue =
+  | TextareaHTMLAttributes<HTMLTextAreaElement>['value']
+  | bigint;
+
+export type TextAreaProps = Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'onResize' | 'value'
+> & {
+  value?: ValueOrTextAreaValue;
+  prefixCls?: string;
+  className?: string;
+  style?: CSSProperties;
+  autoSize?: boolean | AutoSizeType;
+  onPressEnter?: KeyboardEventHandler<HTMLTextAreaElement>;
+  onResize?: (size: { width: number; height: number }) => void;
+  classNames?: CommonInputProps['classNames'] & {
+    textarea?: string;
+    count?: string;
+  };
+  styles?: CommonInputProps['styles'] & {
+    textarea?: CSSProperties;
+    count?: CSSProperties;
+  };
+} & Pick<BaseInputProps, 'allowClear' | 'suffix'> &
+  Pick<InputProps, 'showCount' | 'count' | 'onClear'>;
+
+export interface TextAreaRef {
+  resizableTextArea: ResizableTextAreaRef;
+  focus: () => void;
+  blur: () => void;
+  nativeElement: HTMLElement | null;
 }

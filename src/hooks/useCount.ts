@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { InputProps } from '..';
 import type { CountConfig, ShowCountFormatter } from '../interface';
 
-type ForcedCountConfig = Omit<CountConfig, 'show'> &
+export type ForcedCountConfig = Omit<CountConfig, 'show'> &
   Pick<Required<CountConfig>, 'strategy'> & {
     show: boolean;
     showFormatter?: ShowCountFormatter;

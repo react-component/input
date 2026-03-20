@@ -109,6 +109,35 @@ describe('Input.Count', () => {
     expect(setSelectionRange).toHaveBeenCalledWith(2, 2);
   });
 
+  it('should not restore selection again on unrelated rerender', () => {
+    const count = {
+      show: true,
+      max: 3,
+      exceedFormatter: (val: string, { max }: { max: number }) =>
+        val.slice(0, max),
+    };
+    const { container, rerender } = render(
+      <Input count={count} defaultValue="123" />,
+    );
+
+    const input = container.querySelector('input')!;
+    const setSelectionRange = jest.spyOn(input, 'setSelectionRange');
+
+    fireEvent.change(input, {
+      target: {
+        selectionStart: 2,
+        selectionEnd: 2,
+        value: '1a23',
+      },
+    });
+
+    expect(setSelectionRange).toHaveBeenCalledTimes(1);
+
+    rerender(<Input count={count} defaultValue="123" className="rerender" />);
+
+    expect(setSelectionRange).toHaveBeenCalledTimes(1);
+  });
+
   it('input using the input method should trigger onChange once', () => {
     const onChange = jest.fn();
     const { container } = render(<Input onChange={onChange} />);
@@ -146,6 +175,24 @@ describe('Input.Count', () => {
     fireEvent.compositionUpdate(input, { target: { value: '你好世界' } });
     fireEvent.compositionEnd(input, { target: { value: '你好世界' } });
     expect(input?.value).toEqual('你好世');
+  });
+
+  it('count.max should take priority over maxLength', () => {
+    const { container } = render(
+      <Input
+        maxLength={20}
+        count={{
+          show: true,
+          max: 5,
+        }}
+        value="123456"
+      />,
+    );
+
+    expect(
+      container.querySelector('.rc-input-show-count-suffix')?.textContent,
+    ).toEqual('6 / 5');
+    expect(container.querySelector('.rc-input-out-of-range')).toBeTruthy();
   });
 
   describe('cls', () => {

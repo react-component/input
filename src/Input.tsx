@@ -1,5 +1,4 @@
 import { clsx } from 'clsx';
-import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
 import omit from '@rc-component/util/lib/omit';
 import React, {
   forwardRef,
@@ -11,6 +10,9 @@ import React, {
 import type { HolderRef } from './BaseInput';
 import BaseInput from './BaseInput';
 import useCount from './hooks/useCount';
+import useCountDisplay from './hooks/useCountDisplay';
+import useCountExceed from './hooks/useCountExceed';
+import useMergedValue from './hooks/useMergedValue';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import { resolveOnChange } from './utils/commonUtils';
 import {
@@ -58,21 +60,21 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   // ====================== Value =======================
-  const [value, setValue] = useControlledState(props.defaultValue, props.value);
-  const formatValue =
-    value === undefined || value === null ? '' : String(value);
+  const { setValue, formatValue } = useMergedValue(
+    props.defaultValue,
+    props.value,
+  );
 
-  // =================== Select Range ===================
-  const [selection, setSelection] = useState<
-    [start: number, end: number] | null
-  >(null);
-
-  // ====================== Count =======================
   const countConfig = useCount(count, showCount);
-  const mergedMax = countConfig.max || maxLength;
-  const valueLength = countConfig.strategy(formatValue);
-
-  const isOutOfRange = !!mergedMax && valueLength > mergedMax;
+  const { isOutOfRange, dataCount } = useCountDisplay({
+    countConfig,
+    value: formatValue,
+    maxLength,
+  });
+  const getExceedValue = useCountExceed({
+    countConfig,
+    getTarget: () => inputRef.current,
+  });
 
   // ======================= Ref ========================
   useImperativeHandle(ref, () => ({
@@ -108,25 +110,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     currentValue: string,
     info: ChangeEventInfo,
   ) => {
-    let cutValue = currentValue;
+    const cutValue = getExceedValue(currentValue, compositionRef.current);
 
-    if (
-      !compositionRef.current &&
-      countConfig.exceedFormatter &&
-      countConfig.max &&
-      countConfig.strategy(currentValue) > countConfig.max
-    ) {
-      cutValue = countConfig.exceedFormatter(currentValue, {
-        max: countConfig.max,
-      });
-
-      if (currentValue !== cutValue) {
-        setSelection([
-          inputRef.current?.selectionStart || 0,
-          inputRef.current?.selectionEnd || 0,
-        ]);
-      }
-    } else if (info.source === 'compositionEnd') {
+    if (info.source === 'compositionEnd' && currentValue === cutValue) {
       // Avoid triggering twice
       // https://github.com/ant-design/ant-design/issues/46587
       return;
@@ -137,12 +123,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       resolveOnChange(inputRef.current, e, onChange, cutValue);
     }
   };
-
-  useEffect(() => {
-    if (selection) {
-      inputRef.current?.setSelectionRange(...selection);
-    }
-  }, [selection]);
 
   const onInternalChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     triggerChange(e, e.target.value, {
@@ -260,17 +240,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const getSuffix = () => {
     // Max length value
-    const hasMaxLength = Number(mergedMax) > 0;
-
     if (suffix || countConfig.show) {
-      const dataCount = countConfig.showFormatter
-        ? countConfig.showFormatter({
-            value: formatValue,
-            count: valueLength,
-            maxLength: mergedMax,
-          })
-        : `${valueLength}${hasMaxLength ? ` / ${mergedMax}` : ''}`;
-
       return (
         <>
           {countConfig.show && (

@@ -1,8 +1,18 @@
 import BaseInput from './BaseInput';
 import Input from './Input';
+import TextArea from './TextArea';
 
-export { BaseInput };
+export type {
+  AutoSizeType,
+  InputProps,
+  InputRef,
+  ResizableTextAreaRef,
+  TextAreaProps,
+  TextAreaRef,
+} from './interface';
 
-export type { InputProps, InputRef } from './interface';
+export { default as ResizableTextArea } from './ResizableTextArea';
+
+export { BaseInput, TextArea };
 
 export default Input;
