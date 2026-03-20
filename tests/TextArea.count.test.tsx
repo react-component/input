@@ -1,8 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import Input from '../src';
-
-const TextArea = Input.TextArea;
+import { TextArea } from '../src';
 
 const getSegments = (val: string) => [...new Intl.Segmenter().segment(val)];
 

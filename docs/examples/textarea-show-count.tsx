@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
-import Input from '@rc-component/input';
+import { TextArea } from '@rc-component/input';
 import React, { useState, type ChangeEvent } from 'react';
 import '../../assets/index.less';
-
-const TextArea = Input.TextArea;
 
 export default function App() {
   const [value, setValue] = useState('hello\nworld');

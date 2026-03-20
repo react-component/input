@@ -1,9 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import type { ChangeEventHandler, TextareaHTMLAttributes } from 'react';
 import React from 'react';
-import Input from '../src';
-
-const TextArea = Input.TextArea;
+import { TextArea } from '../src';
 
 describe('should support allowClear', () => {
   it('should change type when click', () => {
