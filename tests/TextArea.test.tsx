@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { TextArea } from '../src';
-import type { TextAreaProps, TextAreaRef } from '../src';
+import { TextArea, type TextAreaProps, type TextAreaRef } from '../src';
 import calculateAutoSizeStyle, {
   calculateNodeStyling,
 } from '../src/calculateNodeHeight';
