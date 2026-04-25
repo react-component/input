@@ -12,7 +12,6 @@ exports[`should support allowClear should not show icon if defaultValue is undef
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
@@ -33,7 +32,6 @@ exports[`should support allowClear should not show icon if defaultValue is undef
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
@@ -54,7 +52,6 @@ exports[`should support allowClear should not show icon if defaultValue is undef
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
@@ -75,7 +72,6 @@ exports[`should support allowClear should not show icon if value is undefined, n
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
@@ -96,7 +92,6 @@ exports[`should support allowClear should not show icon if value is undefined, n
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
@@ -117,7 +112,6 @@ exports[`should support allowClear should not show icon if value is undefined, n
   >
     <button
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
-      tabindex="-1"
       type="button"
     >
       ✖
