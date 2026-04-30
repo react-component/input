@@ -51,8 +51,6 @@ describe('BaseInput', () => {
     const onBlur = jest.fn();
     const onFocus = jest.fn();
 
-    const user = userEvent.setup();
-
     const Demo: FC = () => {
       const [value, setValue] = useState<string>('');
 
@@ -97,33 +95,27 @@ describe('BaseInput', () => {
       expect(inputEl!.value).toBe('');
     });
 
-    // it('By focus and Space', async () => {
-    //   const { container } = render(<Demo />);
+    it.each(['[Space]', '[Enter]'])('By focus and %s', async (key) => {
+      const user = userEvent.setup();
+      const { container } = render(<Demo />);
 
-    //   const inputEl = container.querySelector('input');
-    //   await user.click(inputEl!);
+      const inputEl = container.querySelector('input');
+      await user.click(inputEl!);
 
-    //   await user.type(inputEl!, 'some text');
-    //   expect(inputEl!.value).toBe('some text');
+      await user.type(inputEl!, 'some text');
+      expect(inputEl!.value).toBe('some text');
 
-    //   await user.tab();
-    //   await user.keyboard('[Space]');
-    //   expect(inputEl!.value).toBe('');
-    // });
+      await user.tab();
 
-    // it('By focus and Enter', async () => {
-    //   const { container } = render(<Demo />);
+      const clearIcon = container.querySelector<HTMLButtonElement>(
+        '.rc-input-clear-icon',
+      )!;
+      expect(document.activeElement).toBe(clearIcon);
+      expect(clearIcon.tabIndex).toBe(0);
 
-    //   const inputEl = container.querySelector('input');
-    //   await user.click(inputEl!);
-
-    //   await user.type(inputEl!, 'some text');
-    //   expect(inputEl!.value).toBe('some text');
-
-    //   await user.tab();
-    //   await user.keyboard('[Enter]');
-    //   expect(inputEl!.value).toBe('');
-    // });
+      await user.keyboard(key);
+      expect(inputEl!.value).toBe('');
+    });
   });
 
   it('should display clearIcon correctly', () => {
