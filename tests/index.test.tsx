@@ -397,3 +397,62 @@ describe('resolveChange should work', () => {
   fireEvent.compositionEnd(container.querySelector('textarea')!);
   expect(onChange).toHaveBeenCalled();
 });
+
+describe('onChange event target', () => {
+  // https://github.com/ant-design/ant-design/issues/46999
+  it('onChange target should be the real mounted input (not a detached clone) on clear', () => {
+    const onChange = jest.fn();
+    const { container } = render(
+      <Input
+        prefixCls="rc-input"
+        allowClear
+        defaultValue="hello"
+        onChange={onChange}
+      />,
+    );
+    const input = container.querySelector('input')!;
+
+    fireEvent.click(container.querySelector('.rc-input-clear-icon')!);
+
+    expect(onChange).toHaveBeenCalled();
+    const event = onChange.mock.calls[0][0];
+    expect(event.target).toBe(input);
+    expect(event.currentTarget).toBe(input);
+    expect(document.contains(event.target)).toBe(true);
+    expect(event.target.value).toBe('');
+  });
+
+  it('onChange target should be the real mounted input for normal typing', () => {
+    const onChange = jest.fn();
+    const { container } = render(<Input onChange={onChange} />);
+    const input = container.querySelector('input')!;
+
+    fireEvent.change(input, { target: { value: 'test' } });
+
+    expect(onChange).toHaveBeenCalled();
+    const event = onChange.mock.calls[0][0];
+    expect(event.target).toBe(input);
+    expect(document.contains(event.target)).toBe(true);
+  });
+
+  it('onChange target should be the real mounted input when exceedFormatter is active', () => {
+    const onChange = jest.fn();
+    const { container } = render(
+      <Input
+        count={{ max: 3, exceedFormatter: (val) => val.slice(0, 3) }}
+        onChange={onChange}
+      />,
+    );
+    const input = container.querySelector('input')!;
+
+    fireEvent.change(input, { target: { value: 'abcdef' } });
+
+    expect(onChange).toHaveBeenCalled();
+    const event = onChange.mock.calls[0][0];
+    expect(event.target).toBe(input);
+    expect(event.currentTarget).toBe(input);
+    expect(document.contains(event.target)).toBe(true);
+    // exceedFormatter should trim the value
+    expect(event.target.value).toBe('abc');
+  });
+});

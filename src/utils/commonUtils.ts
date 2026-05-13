@@ -9,36 +9,19 @@ export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
   return !!(props.prefix || props.suffix || props.allowClear);
 }
 
-// TODO: It's better to use `Proxy` replace the `element.value`. But we still need support IE11.
-function cloneEvent<
+// Create a normalized event that points target/currentTarget at the real mounted
+// element instead of a detached cloneNode. This keeps document.contains(e.target)
+// returning true, which third-party wrappers like react-number-format rely on.
+function createNormalizedEvent<
   EventType extends React.SyntheticEvent<any, any>,
   Element extends HTMLInputElement | HTMLTextAreaElement,
 >(event: EventType, target: Element, value: any): EventType {
-  // A bug report filed on WebKit's Bugzilla tracker, dating back to 2009, specifically addresses the issue of cloneNode() not copying files of <input type="file"> elements.
-  // As of the last update, this bug was still marked as "NEW," indicating that it might not have been resolved yet​​.
-  // https://bugs.webkit.org/show_bug.cgi?id=28123
-  const currentTarget = target.cloneNode(true) as Element;
+  target.value = value;
 
-  // click clear icon
-  const newEvent = Object.create(event, {
-    target: { value: currentTarget },
-    currentTarget: { value: currentTarget },
-  });
-
-  // Fill data
-  currentTarget.value = value;
-
-  // Fill selection. Some type like `email` not support selection
-  // https://github.com/ant-design/ant-design/issues/47833
-  if (
-    typeof target.selectionStart === 'number' &&
-    typeof target.selectionEnd === 'number'
-  ) {
-    currentTarget.selectionStart = target.selectionStart;
-    currentTarget.selectionEnd = target.selectionEnd;
-  }
-
-  return newEvent;
+  return Object.create(event, {
+    target: { value: target, enumerable: true, configurable: true },
+    currentTarget: { value: target, enumerable: true, configurable: true },
+  }) as EventType;
 }
 
 export function resolveOnChange<
@@ -55,36 +38,25 @@ export function resolveOnChange<
   if (!onChange) {
     return;
   }
-  let event = e;
 
   if (e.type === 'click') {
-    // Clone a new target for event.
-    // Avoid the following usage, the setQuery method gets the original value.
-    //
-    // const [query, setQuery] = React.useState('');
-    // <Input
-    //   allowClear
-    //   value={query}
-    //   onChange={(e)=> {
-    //     setQuery((prevStatus) => e.target.value);
-    //   }}
-    // />
-
-    event = cloneEvent(e, target, '');
-
-    onChange(event as React.ChangeEvent<E>);
+    // When clearing, the click event's native target is the clear icon, not the
+    // input. We set target.value = '' so that e.target.value reads as the
+    // cleared value, then redirect target/currentTarget back to the real input.
+    onChange(createNormalizedEvent(e, target, ''));
     return;
   }
 
-  // Trigger by composition event, this means we need force change the input value
+  // Trigger by composition event or exceedFormatter, this means we need force
+  // change the event target value
   // https://github.com/ant-design/ant-design/issues/45737
   // https://github.com/ant-design/ant-design/issues/46598
   if (target.type !== 'file' && targetValue !== undefined) {
-    event = cloneEvent(e, target, targetValue);
-    onChange(event as React.ChangeEvent<E>);
+    onChange(createNormalizedEvent(e, target, targetValue));
     return;
   }
-  onChange(event as React.ChangeEvent<E>);
+
+  onChange(e as React.ChangeEvent<E>);
 }
 
 export interface InputFocusOptions extends FocusOptions {

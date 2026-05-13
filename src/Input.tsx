@@ -117,15 +117,18 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           inputRef.current?.selectionEnd || 0,
         ]);
       }
+    } else if (info.source === 'compositionEnd') {
+      // Always update internal state on compositionEnd, but skip onChange.
+      // The browser fires an input/change event after compositionEnd, which
+      // will call onInternalChange → triggerChange again and trigger onChange.
+      // Skipping here prevents double-firing (#46587).
+      setValue(cutValue);
+      return;
     }
 
-    // Always update the value state
     setValue(cutValue);
 
-    // Only trigger onChange if value has actually changed
-    // This prevents double-firing (issue #46587) while still allowing
-    // external wrappers like react-number-format to work (issue #46999)
-    if (inputRef.current && cutValue !== formatValue) {
+    if (inputRef.current) {
       resolveOnChange(inputRef.current, e, onChange, cutValue);
     }
   };
