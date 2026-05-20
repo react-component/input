@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import omit from '@rc-component/util/lib/omit';
+import { omit, triggerFocus, type InputFocusOptions } from '@rc-component/util';
 import React, {
   forwardRef,
   useEffect,
@@ -15,10 +15,6 @@ import useCountExceed from './hooks/useCountExceed';
 import useMergedValue from './hooks/useMergedValue';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import { resolveOnChange } from './utils/commonUtils';
-import {
-  triggerFocus,
-  type InputFocusOptions,
-} from '@rc-component/util/lib/Dom/focus';
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {

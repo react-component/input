@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { spyElementPrototypes } from '@rc-component/util/lib/test/domHook';
 import React, { ElementType } from 'react';
+import { spyElementPrototypes } from '@rc-component/util';
 import Input from '../src';
 import type { InputRef } from '../src/interface';
 import { resolveOnChange } from '../src/utils/commonUtils';

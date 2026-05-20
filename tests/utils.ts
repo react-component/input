@@ -1,9 +1,6 @@
 // @ts-nocheck
 import { act } from '@testing-library/react';
-import {
-  _rs as onEsResize,
-  _rs as onLibResize,
-} from '@rc-component/resize-observer/lib/utils/observerUtil';
+import { _rs as onResize } from '@rc-component/resize-observer';
 
 export function triggerResize(
   target,
@@ -14,9 +11,7 @@ export function triggerResize(
 
   target.getBoundingClientRect = () => ({ width, height });
   // @ts-ignore
-  onLibResize([{ target }]);
-  // @ts-ignore
-  onEsResize([{ target }]);
+  onResize([{ target }]);
 
   target.style.height = `${height}px`;
   target.getBoundingClientRect = originGetBoundingClientRect;
