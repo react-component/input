@@ -96,11 +96,10 @@ export function resolveOnChange<
   if (target.type !== 'file' && targetValue !== undefined) {
     if (target.value !== targetValue) {
       event = cloneEvent(e, target, targetValue);
-      onChange(event as React.ChangeEvent<E>);
-      return;
+    } else {
+      event = cloneEventWithTarget(e, target);
     }
-
-    onChange(cloneEventWithTarget(e, target) as React.ChangeEvent<E>);
+    onChange(event as React.ChangeEvent<E>);
     return;
   }
   onChange(event as React.ChangeEvent<E>);
