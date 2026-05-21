@@ -1,8 +1,6 @@
-import ResizeObserver from '@rc-component/resize-observer';
-import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
-import useLayoutEffect from '@rc-component/util/lib/hooks/useLayoutEffect';
-import raf from '@rc-component/util/lib/raf';
 import { clsx } from 'clsx';
+import ResizeObserver from '@rc-component/resize-observer';
+import { raf, useControlledState, useLayoutEffect } from '@rc-component/util';
 import * as React from 'react';
 import type { ResizableTextAreaRef, TextAreaProps } from './interface';
 import calculateAutoSizeStyle from './calculateNodeHeight';

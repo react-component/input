@@ -7,8 +7,8 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
+import type { InputFocusOptions } from '@rc-component/util';
 import type { LiteralUnion } from './utils/types';
-import type { InputFocusOptions } from '@rc-component/util/lib/Dom/focus';
 
 export interface CommonInputProps {
   prefix?: ReactNode;

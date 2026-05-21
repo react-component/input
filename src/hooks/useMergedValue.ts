@@ -1,4 +1,4 @@
-import useControlledState from '@rc-component/util/lib/hooks/useControlledState';
+import { useControlledState } from '@rc-component/util';
 
 type MergedValue = string | number | readonly string[] | bigint | undefined;
 
