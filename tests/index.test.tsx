@@ -439,6 +439,19 @@ describe('Input ref', () => {
       expect(spySetSelectionRange).toHaveBeenCalledWith(1, 2);
     });
 
+    it('onChange target should be the mounted input when value is unchanged by formatter', () => {
+      const onChange = jest.fn();
+      const { container } = render(<Input onChange={onChange} />);
+      const inputEl = container.querySelector('input')!;
+
+      fireEvent.change(inputEl, { target: { value: 'test' } });
+
+      const event = onChange.mock.calls[0][0];
+      expect(event.target).toBe(inputEl);
+      expect(event.currentTarget).toBe(inputEl);
+      expect(document.contains(event.target)).toBe(true);
+    });
+
     it('email type not support selection', () => {
       const onChange = jest.fn();
       const { container } = render(<Input type="email" onChange={onChange} />);

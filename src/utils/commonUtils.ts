@@ -45,6 +45,16 @@ function cloneEvent<
   return newEvent;
 }
 
+function cloneEventWithTarget<
+  EventType extends React.SyntheticEvent<any, any>,
+  Element extends HTMLInputElement | HTMLTextAreaElement,
+>(event: EventType, target: Element): EventType {
+  return Object.create(event, {
+    target: { value: target },
+    currentTarget: { value: target },
+  });
+}
+
 export function resolveOnChange<
   E extends HTMLInputElement | HTMLTextAreaElement,
 >(
@@ -84,7 +94,11 @@ export function resolveOnChange<
   // https://github.com/ant-design/ant-design/issues/45737
   // https://github.com/ant-design/ant-design/issues/46598
   if (target.type !== 'file' && targetValue !== undefined) {
-    event = cloneEvent(e, target, targetValue);
+    if (target.value !== targetValue) {
+      event = cloneEvent(e, target, targetValue);
+    } else {
+      event = cloneEventWithTarget(e, target);
+    }
     onChange(event as React.ChangeEvent<E>);
     return;
   }
