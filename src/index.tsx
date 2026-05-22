@@ -1,7 +1,6 @@
 import BaseInput from './BaseInput';
 import Input from './Input';
 import TextArea from './TextArea';
-import type { HolderRef } from './BaseInput';
 
 export type {
   AutoSizeType,
@@ -12,7 +11,7 @@ export type {
   TextAreaProps,
   TextAreaRef,
 } from './interface';
-export type { HolderRef };
+export type { HolderRef } from './BaseInput';
 
 export { default as ResizableTextArea } from './ResizableTextArea';
 
