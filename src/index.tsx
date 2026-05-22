@@ -4,12 +4,14 @@ import TextArea from './TextArea';
 
 export type {
   AutoSizeType,
+  BaseInputProps,
   InputProps,
   InputRef,
   ResizableTextAreaRef,
   TextAreaProps,
   TextAreaRef,
 } from './interface';
+export type { HolderRef } from './BaseInput';
 
 export { default as ResizableTextArea } from './ResizableTextArea';
 
