@@ -144,7 +144,7 @@ describe('TextArea.Count', () => {
     expect(textarea.value).toEqual('zhu');
     expect(count?.textContent).toEqual('0 / 5');
 
-    fireEvent.compositionEnd(textarea, { currentTarget: { value: '竹' } });
+    fireEvent.compositionEnd(textarea, { target: { value: '竹' } });
     fireEvent.input(textarea, { target: { value: '竹' } });
 
     expect(textarea.value).toEqual('竹');
