@@ -149,6 +149,28 @@ describe('Input.Count', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
+  it('should base showCount on committed value during IME composition', () => {
+    const { container } = render(
+      <Input count={{ show: true, max: 5 }} defaultValue="" />,
+    );
+    const input = container.querySelector('input')!;
+    const count = container.querySelector('.rc-input-show-count-suffix');
+
+    expect(count?.textContent).toEqual('0 / 5');
+
+    fireEvent.compositionStart(input);
+    fireEvent.change(input, { target: { value: 'zhu' } });
+
+    expect(input.value).toEqual('zhu');
+    expect(count?.textContent).toEqual('0 / 5');
+
+    fireEvent.compositionEnd(input, { currentTarget: { value: '竹' } });
+    fireEvent.input(input, { target: { value: '竹' } });
+
+    expect(input.value).toEqual('竹');
+    expect(count?.textContent).toEqual('1 / 5');
+  });
+
   it('using the input method to enter the cropped content should trigger onChange twice', () => {
     const onChange = jest.fn();
     const onCompositionEnd = jest.fn();

@@ -60,11 +60,14 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     props.defaultValue,
     props.value,
   );
+  // Count-related state should reflect the committed value during IME composition
+  // instead of the intermediate phonetic text.
+  const [countValue, setCountValue] = useState(formatValue);
 
   const countConfig = useCount(count, showCount);
   const { isOutOfRange, dataCount } = useCountDisplay({
     countConfig,
-    value: formatValue,
+    value: countValue,
     maxLength,
   });
   const getExceedValue = useCountExceed({
@@ -99,6 +102,12 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     setFocused((prev) => (prev && disabled ? false : prev));
   }, [disabled]);
 
+  useEffect(() => {
+    if (!compositionRef.current) {
+      setCountValue(formatValue);
+    }
+  }, [formatValue]);
+
   const triggerChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -114,6 +123,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       return;
     }
     setValue(cutValue);
+    if (!compositionRef.current) {
+      setCountValue(cutValue);
+    }
 
     if (inputRef.current) {
       resolveOnChange(inputRef.current, e, onChange, cutValue);
@@ -227,6 +239,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         type={type}
         onCompositionStart={(e) => {
           compositionRef.current = true;
+          setCountValue(formatValue);
           onCompositionStart?.(e);
         }}
         onCompositionEnd={onInternalCompositionEnd}

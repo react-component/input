@@ -60,10 +60,13 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     const getTextArea = () => resizableTextAreaRef.current?.textArea || null;
 
     const { setValue, formatValue } = useMergedValue(defaultValue, customValue);
+    // Count-related state should reflect the committed value during IME composition
+    // instead of the intermediate phonetic text.
+    const [countValue, setCountValue] = React.useState(formatValue);
     const countConfig = useCount(count, showCount);
     const { isOutOfRange, dataCount } = useCountDisplay({
       countConfig,
-      value: formatValue,
+      value: countValue,
       maxLength,
     });
     const getExceedValue = useCountExceed({
@@ -88,6 +91,12 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       setFocused((prev) => !disabled && prev);
     }, [disabled]);
 
+    useEffect(() => {
+      if (!compositionRef.current) {
+        setCountValue(formatValue);
+      }
+    }, [formatValue]);
+
     // ============================== Count ===============================
     // ============================== Change ==============================
     const triggerChange = (
@@ -98,6 +107,9 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     ) => {
       const cutValue = getExceedValue(currentValue, compositionRef.current);
       setValue(cutValue);
+      if (!compositionRef.current) {
+        setCountValue(cutValue);
+      }
 
       resolveOnChange(e.currentTarget, e, onChange, cutValue);
     };
@@ -107,6 +119,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       HTMLTextAreaElement
     > = (e) => {
       compositionRef.current = true;
+      setCountValue(formatValue);
       onCompositionStart?.(e);
     };
 

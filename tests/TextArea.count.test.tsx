@@ -129,6 +129,28 @@ describe('TextArea.Count', () => {
     expect(container.querySelector('.rc-textarea-out-of-range')).toBeTruthy();
   });
 
+  it('should base showCount on committed value during IME composition', () => {
+    const { container } = render(
+      <TextArea count={{ show: true, max: 5 }} defaultValue="" />,
+    );
+    const textarea = container.querySelector('textarea')!;
+    const count = container.querySelector('.rc-textarea-data-count');
+
+    expect(count?.textContent).toEqual('0 / 5');
+
+    fireEvent.compositionStart(textarea);
+    fireEvent.change(textarea, { target: { value: 'zhu' } });
+
+    expect(textarea.value).toEqual('zhu');
+    expect(count?.textContent).toEqual('0 / 5');
+
+    fireEvent.compositionEnd(textarea, { currentTarget: { value: '竹' } });
+    fireEvent.input(textarea, { target: { value: '竹' } });
+
+    expect(textarea.value).toEqual('竹');
+    expect(count?.textContent).toEqual('1 / 5');
+  });
+
   describe('cls', () => {
     it('raw', () => {
       const { container } = render(
