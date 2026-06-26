@@ -45,4 +45,3 @@ docs-dist/
 .node
 bun.lockb
 .vercel
-.vercel
