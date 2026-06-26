@@ -116,6 +116,7 @@ Then open the dumi dev server in your browser.
 ### Refs
 
 ```tsx | pure
+import React from 'react';
 import Input, {
   TextArea,
   type InputRef,

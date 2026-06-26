@@ -77,11 +77,6 @@
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,md,json}": [
       "prettier --write --ignore-unknown"
