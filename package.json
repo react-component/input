@@ -34,7 +34,6 @@
     "docs:deploy": "gh-pages -d docs-dist",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "gh-pages": "GH_PAGES=1 npm run docs:build && npm run docs:deploy",
-    "now-build": "npm run docs:build",
     "prepublishOnly": "npm run compile && rc-np",
     "postpublish": "npm run gh-pages",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
