@@ -1,0 +1,6 @@
+name: ✅ test
+on: [push, pull_request]
+jobs:
+  test:
+    uses: react-component/rc-test/.github/workflows/test-utoo.yml@main
+    secrets: inherit

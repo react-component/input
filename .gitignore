@@ -31,6 +31,7 @@ pnpm-lock.yaml
 coverage/
 .doc
 dist/
+docs-dist/
 
 # umi
 .umi
@@ -43,3 +44,5 @@ dist/
 .dumi/tmp-production
 .node
 bun.lockb
+.vercel
+.vercel

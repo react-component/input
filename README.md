@@ -1,4 +1,9 @@
-# @rc-component/input ⌨️
+<div align="center">
+  <h1>@rc-component/input</h1>
+  <p>⌨️ Low-level React input primitives for building polished text fields and textareas.</p>
+</div>
+
+<div align="center">
 
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
@@ -7,142 +12,162 @@
 [![bundle size][bundlephobia-image]][bundlephobia-url]
 [![dumi][dumi-image]][dumi-url]
 
-[npm-image]: http://img.shields.io/npm/v/@rc-component/input.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/@rc-component/input
-[travis-image]: https://img.shields.io/travis/react-component/input/master?style=flat-square
-[travis-url]: https://travis-ci.com/react-component/input
-[github-actions-image]: https://github.com/react-component/input/actions/workflows/main.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/input/actions/workflows/main.yml
+</div>
+
+<div align="center">
+  <sub>
+    Part of the <a href="https://ant.design">Ant Design</a> ecosystem
+    <img
+      alt="Ant Design"
+      height="14"
+      src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+    />
+  </sub>
+</div>
+
+## Highlights
+
+- Composable `Input`, `TextArea`, and `BaseInput` primitives.
+- Affix, addon, clear icon, prefix, suffix, and character count support.
+- Autosizing textarea with resize callbacks and imperative refs.
+- TypeScript definitions and semantic `classNames` / `styles` slots.
+- Used by Ant Design as the shared input foundation.
+
+## Install
+
+```bash
+npm install @rc-component/input
+```
+
+## Usage
+
+```tsx | pure
+import Input from '@rc-component/input';
+
+export default () => <Input allowClear placeholder="Type something" />;
+```
+
+```tsx | pure
+import { TextArea } from '@rc-component/input';
+
+export default () => <TextArea autoSize showCount maxLength={100} />;
+```
+
+## Examples
+
+Run the examples locally:
+
+```bash
+npm install
+npm start
+```
+
+Then open the dumi dev server in your browser.
+
+## API
+
+### Input
+
+| Property     | Type                                                       | Default    | Description                                                     |
+| ------------ | ---------------------------------------------------------- | ---------- | --------------------------------------------------------------- |
+| addonAfter   | `ReactNode`                                                | -          | Element displayed after the input.                              |
+| addonBefore  | `ReactNode`                                                | -          | Element displayed before the input.                             |
+| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`    | Show a clear button for the current value.                      |
+| className    | `string`                                                   | -          | Class name for the input element.                               |
+| classNames   | `InputProps['classNames']`                                 | -          | Semantic class names for input slots.                           |
+| count        | `CountConfig`                                              | -          | Custom count strategy, limit, visibility, and exceed formatter. |
+| defaultValue | `string \| number \| readonly string[] \| bigint`          | -          | Initial input value.                                            |
+| disabled     | `boolean`                                                  | `false`    | Disable the input.                                              |
+| htmlSize     | `number`                                                   | -          | Native input `size` attribute.                                  |
+| maxLength    | `number`                                                   | -          | Native input `maxLength` attribute.                             |
+| prefix       | `ReactNode`                                                | -          | Prefix content inside the input wrapper.                        |
+| prefixCls    | `string`                                                   | `rc-input` | Class name prefix.                                              |
+| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`    | Show character count. Prefer `count.show` for new code.         |
+| styles       | `InputProps['styles']`                                     | -          | Semantic styles for input slots.                                |
+| suffix       | `ReactNode`                                                | -          | Suffix content inside the input wrapper.                        |
+| type         | `InputProps['type']`                                       | `text`     | Native input type. Use `TextArea` for textarea behavior.        |
+| value        | `string \| number \| readonly string[] \| bigint`          | -          | Controlled input value.                                         |
+| onChange     | `React.ChangeEventHandler<HTMLInputElement>`               | -          | Triggered when the value changes.                               |
+| onClear      | `() => void`                                               | -          | Triggered when the clear button is clicked.                     |
+| onPressEnter | `React.KeyboardEventHandler<HTMLInputElement>`             | -          | Triggered when Enter is pressed.                                |
+
+### TextArea
+
+| Property     | Type                                                       | Default       | Description                                                     |
+| ------------ | ---------------------------------------------------------- | ------------- | --------------------------------------------------------------- |
+| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`       | Show a clear button for the current value.                      |
+| autoSize     | `boolean \| { minRows?: number; maxRows?: number }`        | `false`       | Auto resize height by content.                                  |
+| className    | `string`                                                   | -             | Class name for the textarea.                                    |
+| classNames   | `TextAreaProps['classNames']`                              | -             | Semantic class names for textarea slots.                        |
+| count        | `CountConfig`                                              | -             | Custom count strategy, limit, visibility, and exceed formatter. |
+| defaultValue | `string \| number \| readonly string[] \| bigint`          | -             | Initial textarea value.                                         |
+| maxLength    | `number`                                                   | -             | Native textarea `maxLength` attribute.                          |
+| prefixCls    | `string`                                                   | `rc-textarea` | Class name prefix.                                              |
+| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`       | Show character count. Prefer `count.show` for new code.         |
+| style        | `React.CSSProperties`                                      | -             | Inline styles for the textarea.                                 |
+| styles       | `TextAreaProps['styles']`                                  | -             | Semantic styles for textarea slots.                             |
+| suffix       | `ReactNode`                                                | -             | Suffix content inside the textarea wrapper.                     |
+| value        | `string \| number \| readonly string[] \| bigint`          | -             | Controlled textarea value.                                      |
+| onChange     | `React.ChangeEventHandler<HTMLTextAreaElement>`            | -             | Triggered when the value changes.                               |
+| onClear      | `() => void`                                               | -             | Triggered when the clear button is clicked.                     |
+| onPressEnter | `React.KeyboardEventHandler<HTMLTextAreaElement>`          | -             | Triggered when Enter is pressed.                                |
+| onResize     | `(size: { width: number; height: number }) => void`        | -             | Triggered when textarea size changes.                           |
+
+### Refs
+
+```tsx | pure
+import Input, {
+  TextArea,
+  type InputRef,
+  type TextAreaRef,
+} from '@rc-component/input';
+
+const inputRef = React.useRef<InputRef>(null);
+const textareaRef = React.useRef<TextAreaRef>(null);
+
+inputRef.current?.focus();
+textareaRef.current?.blur();
+```
+
+| Ref           | Methods                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------- |
+| `InputRef`    | `focus(options)`, `blur()`, `select()`, `setSelectionRange()`, `input`, `nativeElement` |
+| `TextAreaRef` | `focus()`, `blur()`, `resizableTextArea`, `nativeElement`                               |
+
+## Development
+
+```bash
+npm install
+npm start
+npm test
+npm run tsc
+npm run compile
+npm run build
+```
+
+## Release
+
+The package is published with [`@rc-component/np`](https://github.com/react-component/np):
+
+```bash
+npm run prepublishOnly
+```
+
+This runs the package build before the release helper.
+
+## License
+
+`@rc-component/input` is released under the MIT license.
+
+[npm-image]: https://img.shields.io/npm/v/@rc-component/input.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/@rc-component/input
+[github-actions-image]: https://github.com/react-component/input/actions/workflows/react-component-ci.yml/badge.svg
+[github-actions-url]: https://github.com/react-component/input/actions/workflows/react-component-ci.yml
 [codecov-image]: https://img.shields.io/codecov/c/github/react-component/input/master.svg?style=flat-square
 [codecov-url]: https://app.codecov.io/gh/react-component/input
-[david-url]: https://david-dm.org/react-component/input
-[david-image]: https://david-dm.org/react-component/input/status.svg?style=flat-square
-[david-dev-url]: https://david-dm.org/react-component/input?type=dev
-[david-dev-image]: https://david-dm.org/react-component/input/dev-status.svg?style=flat-square
 [download-image]: https://img.shields.io/npm/dm/@rc-component/input.svg?style=flat-square
 [download-url]: https://npmjs.org/package/@rc-component/input
 [bundlephobia-url]: https://bundlephobia.com/package/@rc-component/input
 [bundlephobia-image]: https://img.shields.io/bundlephobia/minzip/@rc-component/input?style=flat-square
 [dumi-url]: https://github.com/umijs/dumi
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
-
-## Install
-
-[![@rc-component/input](https://nodei.co/npm/@rc-component/input.png)](https://npmjs.org/package/@rc-component/input)
-
-## Usage
-
-```js
-import Input from '@rc-component/input';
-import { render } from 'react-dom';
-
-render(<Input placeholder="input" allowClear />, mountNode);
-```
-
-```js
-import { TextArea } from '@rc-component/input';
-import { render } from 'react-dom';
-
-render(<TextArea autoSize showCount />, mountNode);
-```
-
-## API
-
-| Property              | Type                                                                                              | Default  | Description                                                                                                                                                                    |
-| --------------------- | ------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| prefixCls             | string                                                                                            | rc-input |                                                                                                                                                                                |
-| className             | string                                                                                            | ''       | additional class name of input                                                                                                                                                 |
-| style                 | React.CSSProperties                                                                               |          | style properties of input                                                                                                                                                      |
-| affixWrapperClassName | string                                                                                            | -        | className with '@rc-component/input-affix-wrapper'                                                                                                                             |
-| groupClassName        | string                                                                                            | -        | className with '@rc-component/input-group-wrapper'                                                                                                                             |
-| wrapperClassName      | string                                                                                            | -        | className with '@rc-component/input-wrapper'                                                                                                                                   |
-| addonAfter            | ReactNode                                                                                         | -        | The label text displayed after (on the right side of) the input field                                                                                                          |
-| addonBefore           | ReactNode                                                                                         | -        | The label text displayed before (on the left side of) the input field                                                                                                          |
-| allowClear            | boolean &#124; { clearIcon: ReactNode }                                                           | false    | If allow to remove input content with clear icon                                                                                                                               |
-| bordered              | boolean                                                                                           | true     | Whether has border style                                                                                                                                                       |
-| defaultValue          | string                                                                                            | -        | The initial input content                                                                                                                                                      |
-| disabled              | boolean                                                                                           | false    | Whether the input is disabled                                                                                                                                                  |
-| id                    | string                                                                                            | -        | The ID for input                                                                                                                                                               |
-| maxLength             | number                                                                                            | -        | The max length                                                                                                                                                                 |
-| showCount             | boolean &#124; { formatter: ({ value: string, count: number, maxLength?: number }) => ReactNode } | false    | Whether show text count                                                                                                                                                        |
-| prefix                | ReactNode                                                                                         | -        | The prefix icon for the Input                                                                                                                                                  |
-| suffix                | ReactNode                                                                                         | -        | The suffix icon for the Input                                                                                                                                                  |
-| type                  | string                                                                                            | `text`   | The type of input, see: [MDN](https://developer.mozilla.org/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types) (use the named `TextArea` export instead of `type="textarea"`) |
-| value                 | string                                                                                            | -        | The input content value                                                                                                                                                        |
-| onChange              | function(e)                                                                                       | -        | Callback when user input                                                                                                                                                       |
-| onPressEnter          | function(e)                                                                                       | -        | The callback function that is triggered when Enter key is pressed                                                                                                              |
-
-## TextArea
-
-`rc-textarea` has been migrated into `@rc-component/input`. Use the named `TextArea` export for all textarea-related features.
-
-```js
-import { TextArea } from '@rc-component/input';
-
-<TextArea showCount maxLength={100} />;
-<TextArea allowClear autoSize />;
-```
-
-| Property     | Type                        | Default     | Description                                                                                    |
-| ------------ | --------------------------- | ----------- | ---------------------------------------------------------------------------------------------- |
-| prefixCls    | string                      | rc-textarea |                                                                                                |
-| className    | string                      | ''          | additional class name of textarea                                                              |
-| style        | React.CSSProperties         | -           | style properties of textarea                                                                   |
-| autoSize     | boolean \| object           | -           | Height autosize feature, can be set to `true\|false` or an object `{ minRows: 2, maxRows: 6 }` |
-| allowClear   | boolean \| { clearIcon }    | false       | If allow to remove textarea content with clear icon                                            |
-| showCount    | boolean \| { formatter }    | false       | Whether show text count                                                                        |
-| count        | CountConfig                 | -           | Custom count strategy / max / exceed formatter                                                 |
-| onPressEnter | function(e)                 | -           | The callback function that is triggered when Enter key is pressed                              |
-| onResize     | function({ width, height }) | -           | The callback function that is triggered when resize                                            |
-
-## inputRef
-
-```tsx | pure
-const inputRef = useRef(null);
-
-useEffect(() => {
-  inputRef.current.focus(); // the input will get focus
-  inputRef.current.blur(); // the input will lose focus
-  console.log(inputRef.current.input); // The origin input element
-}, []);
-// ....
-<Input ref={inputRef} />;
-```
-
-| Property | Type                                    | Description                       |
-| -------- | --------------------------------------- | --------------------------------- |
-| focus    | `(options?: InputFocusOptions) => void` | The input get focus when called   |
-| blur     | `() => void`                            | The input loses focus when called |
-| input    | `HTMLInputElement \| null`              | The origin input element          |
-
-## textareaRef
-
-```tsx | pure
-const textareaRef = useRef(null);
-
-useEffect(() => {
-  textareaRef.current.focus();
-  textareaRef.current.blur();
-  console.log(textareaRef.current.resizableTextArea);
-}, []);
-
-<TextArea ref={textareaRef} />;
-```
-
-| Property          | Type                   | Description                              |
-| ----------------- | ---------------------- | ---------------------------------------- |
-| focus             | `() => void`           | The textarea get focus when called       |
-| blur              | `() => void`           | The textarea loses focus when called     |
-| resizableTextArea | `ResizableTextAreaRef` | Wrapped resizable textarea instance      |
-| nativeElement     | `HTMLElement \| null`  | The outer holder element or textarea DOM |
-
-## Development
-
-```
-npm install
-npm start
-```
-
-## License
-
-@rc-component/input is released under the MIT license.
