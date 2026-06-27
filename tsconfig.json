@@ -4,7 +4,12 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "baseUrl": "./",
-    "lib": ["dom", "es2017", "es2022", "esnext"],
+    "lib": [
+      "dom",
+      "es2017",
+      "es2022",
+      "esnext"
+    ],
     "jsx": "react",
     "strict": true,
     "esModuleInterop": true,
@@ -13,10 +18,21 @@
     "skipLibCheck": true,
     "declaration": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": [".dumi/tmp/*"],
-      "@rc-component/input": ["src/index.tsx"]
-    }
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        ".dumi/tmp/*"
+      ],
+      "@rc-component/input": [
+        "src/index.tsx"
+      ]
+    },
+    "ignoreDeprecations": "5.0"
   },
-  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    ".dumirc.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

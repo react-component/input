@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 const basePath = process.env.GH_PAGES ? '/input/' : '/';
-const publicPath = process.env.GH_PAGES ? '/input/' : '/';
+const publicPath = basePath;
 
 export default defineConfig({
   mfsu: false,
