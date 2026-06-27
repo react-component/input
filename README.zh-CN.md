@@ -1,11 +1,11 @@
 <div align="center">
   <h1>@rc-component/input</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
+  <p><sub>Ant Design 生态的一部分。</sub></p>
   <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-  <p>⌨️ Low-level React input primitives for building polished text fields and textareas.</p>
+  <p>⌨️ React 输入框基础组件，支持前后缀、清除按钮、计数和组合输入。</p>
 </div>
 
-<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
 
 <div align="center">
@@ -20,21 +20,21 @@
 </div>
 
 
-## Highlights
+## 特性
 
-- Composable `Input`, `TextArea`, and `BaseInput` primitives.
-- Affix, addon, clear icon, prefix, suffix, and character count support.
-- Autosizing textarea with resize callbacks and imperative refs.
-- TypeScript definitions and semantic `classNames` / `styles` slots.
-- Used by Ant Design as the shared input foundation.
+- 提供可组合的 `Input`、`TextArea` 和 `BaseInput` 基础组件。
+- 支持前后缀、附加内容、清除图标和字符计数。
+- `TextArea` 支持自适应高度、尺寸变化回调和命令式 ref。
+- 提供 TypeScript 类型定义和语义化 `classNames` / `styles` 插槽。
+- 被 Ant Design 用作共享的 input 基础能力。
 
-## Install
+## 安装
 
 ```bash
 npm install @rc-component/input
 ```
 
-## Usage
+## 使用
 
 ```tsx | pure
 import Input from '@rc-component/input';
@@ -48,22 +48,22 @@ import { TextArea } from '@rc-component/input';
 export default () => <TextArea autoSize showCount maxLength={100} />;
 ```
 
-## Examples
+## 示例
 
-Run the examples locally:
+本地运行示例：
 
 ```bash
 npm install
 npm start
 ```
 
-Then open the dumi dev server in your browser.
+然后在浏览器中打开 dumi 开发服务地址。
 
 ## API
 
 ### Input
 
-| Property     | Type                                                       | Default    | Description                                                     |
+| 参数     | 类型                                                       | 默认值    | 说明                                                     |
 | ------------ | ---------------------------------------------------------- | ---------- | --------------------------------------------------------------- |
 | addonAfter   | `ReactNode`                                                | -          | Element displayed after the input.                              |
 | addonBefore  | `ReactNode`                                                | -          | Element displayed before the input.                             |
@@ -88,7 +88,7 @@ Then open the dumi dev server in your browser.
 
 ### TextArea
 
-| Property     | Type                                                       | Default       | Description                                                     |
+| 参数     | 类型                                                       | 默认值       | 说明                                                     |
 | ------------ | ---------------------------------------------------------- | ------------- | --------------------------------------------------------------- |
 | allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`       | Show a clear button for the current value.                      |
 | autoSize     | `boolean \| { minRows?: number; maxRows?: number }`        | `false`       | Auto resize height by content.                                  |
@@ -130,7 +130,7 @@ textareaRef.current?.blur();
 | `InputRef`    | `focus(options)`, `blur()`, `select()`, `setSelectionRange()`, `input`, `nativeElement` |
 | `TextAreaRef` | `focus()`, `blur()`, `resizableTextArea`, `nativeElement`                               |
 
-## Development
+## 本地开发
 
 ```bash
 npm install
@@ -141,7 +141,7 @@ npm run compile
 npm run build
 ```
 
-## Release
+## 发布
 
 ```bash
 npm run prepublishOnly
@@ -149,7 +149,7 @@ npm run prepublishOnly
 
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 
-## License
+## 许可证
 
 @rc-component/input is released under the [MIT](./LICENSE.md) license.
 
