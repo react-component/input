@@ -65,15 +65,15 @@ npm start
 | addonAfter   | `ReactNode`                                                | -          | 输入后显示的元素。                               |
 | addonBefore  | `ReactNode`                                                | -          | 输入之前显示的元素。                             |
 | allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`    | 显示当前值的清除按钮。                           |
-| className    | `string`                                                   | -          | 输入元素的className称。                          |
-| classNames   | `InputProps['classNames']`                                 | -          | 输入槽的语义className称。                        |
+| className    | `string`                                                   | -          | 输入元素的 className。                           |
+| classNames   | `InputProps['classNames']`                                 | -          | 输入槽的语义 className。                         |
 | count        | `CountConfig`                                              | -          | 自定义计数策略、限制、可见性和超出格式化程序。   |
 | defaultValue | `string \| number \| readonly string[] \| bigint`          | -          | 初始输入值。                                     |
 | disabled     | `boolean`                                                  | `false`    | 禁用输入。                                       |
 | htmlSize     | `number`                                                   | -          | 本机输入 `size` 属性。                           |
 | maxLength    | `number`                                                   | -          | 本机输入 `maxLength` 属性。                      |
 | prefix       | `ReactNode`                                                | -          | 输入包装器内的前缀内容。                         |
-| prefixCls    | `string`                                                   | `rc-input` | className前缀。                                  |
+| prefixCls    | `string`                                                   | `rc-input` | className 前缀。                                 |
 | showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`    | 显示字符数。新代码首选 `count.show`。            |
 | styles       | `InputProps['styles']`                                     | -          | 输入槽的语义样式。                               |
 | suffix       | `ReactNode`                                                | -          | 输入包装器内的后缀内容。                         |
@@ -89,12 +89,12 @@ npm start
 | ------------ | ---------------------------------------------------------- | ------------- | ---------------------------------------------- |
 | allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`       | 显示当前值的清除按钮。                         |
 | autoSize     | `boolean \| { minRows?: number; maxRows?: number }`        | `false`       | 根据内容自动调整高度。                         |
-| className    | `string`                                                   | -             | 文本区域的className称。                        |
-| classNames   | `TextAreaProps['classNames']`                              | -             | 文本区域槽的语义className称。                  |
+| className    | `string`                                                   | -             | 文本区域的 className。                         |
+| classNames   | `TextAreaProps['classNames']`                              | -             | 文本区域槽的语义 className。                   |
 | count        | `CountConfig`                                              | -             | 自定义计数策略、限制、可见性和超出格式化程序。 |
 | defaultValue | `string \| number \| readonly string[] \| bigint`          | -             | 初始文本区域值。                               |
 | maxLength    | `number`                                                   | -             | 本机文本区域 `maxLength` 属性。                |
-| prefixCls    | `string`                                                   | `rc-textarea` | className前缀。                                |
+| prefixCls    | `string`                                                   | `rc-textarea` | className 前缀。                               |
 | showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`       | 显示字符数。新代码首选 `count.show`。          |
 | style        | `React.CSSProperties`                                      | -             | 文本区域的内联样式。                           |
 | styles       | `TextAreaProps['styles']`                                  | -             | 文本区域槽的语义样式。                         |
