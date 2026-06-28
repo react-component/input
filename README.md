@@ -2,20 +2,18 @@
   <h1>@rc-component/input</h1>
   <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Part of the Ant Design ecosystem.</sub></p>
   <p>📦 ⌨️ Low-level React input primitives for building polished text fields and textareas.</p>
+
+  <p>
+    <a href="https://npmjs.org/package/@rc-component/input"><img alt="NPM version" src="https://img.shields.io/npm/v/@rc-component/input.svg?style=flat-square"></a>
+    <a href="https://npmjs.org/package/@rc-component/input"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@rc-component/input.svg?style=flat-square"></a>
+    <a href="https://github.com/react-component/input/actions/workflows/react-component-ci.yml"><img alt="build status" src="https://github.com/react-component/input/actions/workflows/react-component-ci.yml/badge.svg"></a>
+    <a href="https://app.codecov.io/gh/react-component/input"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/react-component/input/master.svg?style=flat-square"></a>
+    <a href="https://bundlephobia.com/package/@rc-component/input"><img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/@rc-component/input?style=flat-square"></a>
+    <a href="https://github.com/umijs/dumi"><img alt="dumi" src="https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square"></a>
+  </p>
 </div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
-
-<div align="center">
-
-[![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Codecov][codecov-image]][codecov-url]
-[![bundle size][bundlephobia-image]][bundlephobia-url]
-[![dumi][dumi-image]][dumi-url]
-
-</div>
 
 ## Highlights
 
@@ -151,16 +149,3 @@ The release flow is handled by `@rc-component/np` through the `rc-np` command af
 ## License
 
 @rc-component/input is released under the [MIT](./LICENSE) license.
-
-[npm-image]: https://img.shields.io/npm/v/@rc-component/input.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/@rc-component/input
-[github-actions-image]: https://github.com/react-component/input/actions/workflows/react-component-ci.yml/badge.svg
-[github-actions-url]: https://github.com/react-component/input/actions/workflows/react-component-ci.yml
-[codecov-image]: https://img.shields.io/codecov/c/github/react-component/input/master.svg?style=flat-square
-[codecov-url]: https://app.codecov.io/gh/react-component/input
-[download-image]: https://img.shields.io/npm/dm/@rc-component/input.svg?style=flat-square
-[download-url]: https://npmjs.org/package/@rc-component/input
-[bundlephobia-url]: https://bundlephobia.com/package/@rc-component/input
-[bundlephobia-image]: https://img.shields.io/bundlephobia/minzip/@rc-component/input?style=flat-square
-[dumi-url]: https://github.com/umijs/dumi
-[dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
