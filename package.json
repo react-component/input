@@ -41,7 +41,7 @@
     "test": "rc-test",
     "tsc": "tsc --noEmit",
     "coverage": "rc-test --coverage",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@rc-component/resize-observer": "^1.1.1",
@@ -78,9 +78,7 @@
     "react-dom": ">=16.0.0"
   },
   "lint-staged": {
-    "**/*.{js,jsx,tsx,ts,md,json}": [
-      "prettier --write --ignore-unknown"
-    ]
+    "*": "prettier --write --ignore-unknown"
   },
   "cnpm": {
     "mode": "npm"
