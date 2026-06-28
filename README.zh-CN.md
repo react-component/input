@@ -6,7 +6,6 @@
 
 <p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
-
 <div align="center">
 
 [![NPM version][npm-image]][npm-url]
@@ -17,7 +16,6 @@
 [![dumi][dumi-image]][dumi-url]
 
 </div>
-
 
 ## 特性
 
@@ -62,50 +60,50 @@ npm start
 
 ### Input
 
-| 参数     | 类型                                                       | 默认值    | 说明                                                     |
-| ------------ | ---------------------------------------------------------- | ---------- | --------------------------------------------------------------- |
-| addonAfter   | `ReactNode`                                                | -          | 输入后显示的元素。                              |
+| 参数         | 类型                                                       | 默认值     | 说明                                             |
+| ------------ | ---------------------------------------------------------- | ---------- | ------------------------------------------------ |
+| addonAfter   | `ReactNode`                                                | -          | 输入后显示的元素。                               |
 | addonBefore  | `ReactNode`                                                | -          | 输入之前显示的元素。                             |
-| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`    | 显示当前值的清除按钮。                      |
-| className    | `string`                                                   | -          | 输入元素的className称。                               |
-| classNames   | `InputProps['classNames']`                                 | -          | 输入槽的语义className称。                           |
-| count        | `CountConfig`                                              | -          | 自定义计数策略、限制、可见性和超出格式化程序。 |
-| defaultValue | `string \| number \| readonly string[] \| bigint`          | -          | 初始输入值。                                            |
-| disabled     | `boolean`                                                  | `false`    | 禁用输入。                                              |
-| htmlSize     | `number`                                                   | -          | 本机输入 `size` 属性。                                  |
-| maxLength    | `number`                                                   | -          | 本机输入 `maxLength` 属性。                             |
-| 前缀       | `ReactNode`                                                | -          | 输入包装器内的前缀内容。                        |
-| prefixCls    | `string`                                                   | `rc-input` | className前缀。                                              |
-| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`    | 显示字符数。新代码首选 `count.show`。         |
-| styles       | `InputProps['styles']`                                     | -          | 输入槽的语义样式。                                |
-| 后缀       | `ReactNode`                                                | -          | 输入包装器内的后缀内容。                        |
-| type         | `InputProps['type']`                                       | `text`     | 本机输入类型。使用 `TextArea` 进行文本区域行为。        |
-| 价值        | `string \| number \| readonly string[] \| bigint`          | -          | 受控输入值。                                         |
-| onChange     | `React.ChangeEventHandler<HTMLInputElement>`               | -          | 当值改变时触发。                               |
-| onClear      | `() => void`                                               | -          | 单击清除按钮时触发。                     |
-| onPressEnter | `React.KeyboardEventHandler<HTMLInputElement>`             | -          | 当按下 Enter 时触发。                                |
+| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`    | 显示当前值的清除按钮。                           |
+| className    | `string`                                                   | -          | 输入元素的className称。                          |
+| classNames   | `InputProps['classNames']`                                 | -          | 输入槽的语义className称。                        |
+| count        | `CountConfig`                                              | -          | 自定义计数策略、限制、可见性和超出格式化程序。   |
+| defaultValue | `string \| number \| readonly string[] \| bigint`          | -          | 初始输入值。                                     |
+| disabled     | `boolean`                                                  | `false`    | 禁用输入。                                       |
+| htmlSize     | `number`                                                   | -          | 本机输入 `size` 属性。                           |
+| maxLength    | `number`                                                   | -          | 本机输入 `maxLength` 属性。                      |
+| prefix       | `ReactNode`                                                | -          | 输入包装器内的前缀内容。                         |
+| prefixCls    | `string`                                                   | `rc-input` | className前缀。                                  |
+| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`    | 显示字符数。新代码首选 `count.show`。            |
+| styles       | `InputProps['styles']`                                     | -          | 输入槽的语义样式。                               |
+| suffix       | `ReactNode`                                                | -          | 输入包装器内的后缀内容。                         |
+| type         | `InputProps['type']`                                       | `text`     | 本机输入类型。使用 `TextArea` 进行文本区域行为。 |
+| value        | `string \| number \| readonly string[] \| bigint`          | -          | 受控输入值。                                     |
+| onChange     | `React.ChangeEventHandler<HTMLInputElement>`               | -          | 当值改变时触发。                                 |
+| onClear      | `() => void`                                               | -          | 单击清除按钮时触发。                             |
+| onPressEnter | `React.KeyboardEventHandler<HTMLInputElement>`             | -          | 当按下 Enter 时触发。                            |
 
 ### TextArea
 
-| 参数     | 类型                                                       | 默认值       | 说明                                                     |
-| ------------ | ---------------------------------------------------------- | ------------- | --------------------------------------------------------------- |
-| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`       | 显示当前值的清除按钮。                      |
-| autoSize     | `boolean \| { minRows?: number; maxRows?: number }`        | `false`       | 根据内容自动调整高度。                                  |
-| className    | `string`                                                   | -             | 文本区域的className称。                                    |
-| classNames   | `TextAreaProps['classNames']`                              | -             | 文本区域槽的语义className称。                        |
+| 参数         | 类型                                                       | 默认值        | 说明                                           |
+| ------------ | ---------------------------------------------------------- | ------------- | ---------------------------------------------- |
+| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode }` | `false`       | 显示当前值的清除按钮。                         |
+| autoSize     | `boolean \| { minRows?: number; maxRows?: number }`        | `false`       | 根据内容自动调整高度。                         |
+| className    | `string`                                                   | -             | 文本区域的className称。                        |
+| classNames   | `TextAreaProps['classNames']`                              | -             | 文本区域槽的语义className称。                  |
 | count        | `CountConfig`                                              | -             | 自定义计数策略、限制、可见性和超出格式化程序。 |
-| defaultValue | `string \| number \| readonly string[] \| bigint`          | -             | 初始文本区域值。                                         |
-| maxLength    | `number`                                                   | -             | 本机文本区域 `maxLength` 属性。                          |
-| prefixCls    | `string`                                                   | `rc-textarea` | className前缀。                                              |
-| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`       | 显示字符数。新代码首选 `count.show`。         |
-| 风格        | `React.CSSProperties`                                      | -             | 文本区域的内联样式。                                 |
-| styles       | `TextAreaProps['styles']`                                  | -             | 文本区域槽的语义样式。                             |
-| 后缀       | `ReactNode`                                                | -             | textarea 包装器内的后缀内容。                     |
-| 价值        | `string \| number \| readonly string[] \| bigint`          | -             | 受控文本区域值。                                      |
+| defaultValue | `string \| number \| readonly string[] \| bigint`          | -             | 初始文本区域值。                               |
+| maxLength    | `number`                                                   | -             | 本机文本区域 `maxLength` 属性。                |
+| prefixCls    | `string`                                                   | `rc-textarea` | className前缀。                                |
+| showCount    | `boolean \| { formatter: ShowCountFormatter }`             | `false`       | 显示字符数。新代码首选 `count.show`。          |
+| style        | `React.CSSProperties`                                      | -             | 文本区域的内联样式。                           |
+| styles       | `TextAreaProps['styles']`                                  | -             | 文本区域槽的语义样式。                         |
+| suffix       | `ReactNode`                                                | -             | textarea 包装器内的后缀内容。                  |
+| value        | `string \| number \| readonly string[] \| bigint`          | -             | 受控文本区域值。                               |
 | onChange     | `React.ChangeEventHandler<HTMLTextAreaElement>`            | -             | 当值改变时触发。                               |
-| onClear      | `() => void`                                               | -             | 单击清除按钮时触发。                     |
-| onPressEnter | `React.KeyboardEventHandler<HTMLTextAreaElement>`          | -             | 当按下 Enter 时触发。                                |
-| onResize     | `(size: { width: number; height: number }) => void`        | -             | 当文本区域大小改变时触发。                           |
+| onClear      | `() => void`                                               | -             | 单击清除按钮时触发。                           |
+| onPressEnter | `React.KeyboardEventHandler<HTMLTextAreaElement>`          | -             | 当按下 Enter 时触发。                          |
+| onResize     | `(size: { width: number; height: number }) => void`        | -             | 当文本区域大小改变时触发。                     |
 
 ### Refs
 
@@ -124,7 +122,7 @@ inputRef.current?.focus();
 textareaRef.current?.blur();
 ```
 
-| Ref           | 方法                                                                                 |
+| Ref           | 方法                                                                                    |
 | ------------- | --------------------------------------------------------------------------------------- |
 | `InputRef`    | `focus(options)`, `blur()`, `select()`, `setSelectionRange()`, `input`, `nativeElement` |
 | `TextAreaRef` | `focus()`, `blur()`, `resizableTextArea`, `nativeElement`                               |
