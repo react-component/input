@@ -1,6 +1,6 @@
 <div align="center">
   <h1>@rc-component/input</h1>
-  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
+  <p><sub><a href="https://ant.design"><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /></a> Ant Design 生态的一部分。</sub></p>
   <p>📦 ⌨️ React 输入框基础组件，支持前后缀、清除按钮、计数和组合输入。</p>
 
   <p>
