@@ -1,5 +1,4 @@
-import { fireEvent } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import type { ChangeEventHandler, TextareaHTMLAttributes } from 'react';
 import React from 'react';
 import { TextArea } from '../src';
