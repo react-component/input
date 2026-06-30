@@ -1,5 +1,6 @@
+import { fireEvent } from '@testing-library/dom';
 // @ts-nocheck
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { TextArea, type TextAreaRef } from '../src';
 
