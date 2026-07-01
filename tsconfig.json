@@ -5,7 +5,7 @@
     "moduleResolution": "bundler",
     "lib": ["dom", "es2017", "es2022", "esnext"],
     "jsx": "react",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -15,13 +15,7 @@
       "@/*": ["./src/*"],
       "@@/*": ["./.dumi/tmp/*"],
       "@rc-component/input": ["./src/index.tsx"]
-    },
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "strictPropertyInitialization": false,
-    "strictFunctionTypes": false,
-    "noImplicitThis": false,
-    "strictBindCallApply": false
+    }
   },
   "include": [
     "global.d.ts",
