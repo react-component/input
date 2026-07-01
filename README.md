@@ -48,7 +48,7 @@ export default () => <TextArea autoSize showCount maxLength={100} />;
 Run the local dumi site:
 
 ```bash
-ut install
+npm install
 npm start
 ```
 
@@ -128,7 +128,7 @@ textareaRef.current?.blur();
 ## Development
 
 ```bash
-ut install
+npm install
 npm start
 npm test
 npm run tsc
