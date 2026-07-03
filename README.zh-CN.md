@@ -106,18 +106,15 @@ npm start
 ### Refs
 
 ```tsx | pure
-import React from 'react';
-import Input, {
-  TextArea,
-  type InputRef,
-  type TextAreaRef,
-} from '@rc-component/input';
+import type { InputRef, TextAreaRef } from '@rc-component/input';
 
-const inputRef = React.useRef<InputRef>(null);
-const textareaRef = React.useRef<TextAreaRef>(null);
+function focusInput(inputRef: InputRef | null) {
+  inputRef?.focus();
+}
 
-inputRef.current?.focus();
-textareaRef.current?.blur();
+function blurTextArea(textareaRef: TextAreaRef | null) {
+  textareaRef?.blur();
+}
 ```
 
 | Ref           | 方法                                                                                    |
