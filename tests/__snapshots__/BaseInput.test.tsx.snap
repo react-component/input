@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`BaseInput addon should render properly 1`] = `
 <div>
@@ -14,9 +14,7 @@ exports[`BaseInput addon should render properly 1`] = `
         >
           addonBefore
         </span>
-        <input
-          value=""
-        />
+        <input />
       </span>
     </span>
     <br />
@@ -27,9 +25,7 @@ exports[`BaseInput addon should render properly 1`] = `
       <span
         class="rc-input-wrapper rc-input-group"
       >
-        <input
-          value=""
-        />
+        <input />
         <span
           class="rc-input-group-addon"
         >
@@ -52,18 +48,14 @@ exports[`BaseInput prefix and suffix should render properly 1`] = `
       >
         prefix
       </span>
-      <input
-        value=""
-      />
+      <input />
     </span>
     <br />
     <br />
     <span
       class="rc-input-affix-wrapper"
     >
-      <input
-        value=""
-      />
+      <input />
       <span
         class="rc-input-suffix"
       >
@@ -95,9 +87,7 @@ exports[`BaseInput should correct render with prefix and addon 1`] = `
         >
           prefix
         </span>
-        <input
-          value=""
-        />
+        <input />
       </span>
     </span>
   </span>
@@ -106,9 +96,7 @@ exports[`BaseInput should correct render with prefix and addon 1`] = `
 
 exports[`BaseInput should render perfectly 1`] = `
 <div>
-  <input
-    value=""
-  />
+  <input />
 </div>
 `;
 
@@ -133,9 +121,7 @@ exports[`BaseInput support use div as basic element 1`] = `
         >
           prefix
         </span>
-        <input
-          value=""
-        />
+        <input />
       </div>
     </div>
   </div>

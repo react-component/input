@@ -1,6 +1,6 @@
 <div align="center">
   <h1>@rc-component/input</h1>
-  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Part of the Ant Design ecosystem.</sub></p>
+  <p><sub><a href="https://ant.design"><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /></a> Part of the Ant Design ecosystem.</sub></p>
   <p>📦 ⌨️ Low-level React input primitives for building polished text fields and textareas.</p>
 
   <p>
@@ -106,18 +106,15 @@ Then open `http://localhost:8000`.
 ### Refs
 
 ```tsx | pure
-import React from 'react';
-import Input, {
-  TextArea,
-  type InputRef,
-  type TextAreaRef,
-} from '@rc-component/input';
+import type { InputRef, TextAreaRef } from '@rc-component/input';
 
-const inputRef = React.useRef<InputRef>(null);
-const textareaRef = React.useRef<TextAreaRef>(null);
+function focusInput(inputRef: InputRef | null) {
+  inputRef?.focus();
+}
 
-inputRef.current?.focus();
-textareaRef.current?.blur();
+function blurTextArea(textareaRef: TextAreaRef | null) {
+  textareaRef?.blur();
+}
 ```
 
 | Ref           | Methods                                                                                 |
