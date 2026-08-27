@@ -46,6 +46,45 @@ describe('BaseInput', () => {
     expect(container).toMatchSnapshot();
   });
 
+  it('should render numeric zero affixes and addons', () => {
+    const { container, rerender } = render(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix={0}
+        suffix={0}
+        addonBefore={0}
+        addonAfter={0}
+      >
+        <input />
+      </BaseInput>,
+    );
+
+    expect(container.querySelector('.rc-input-prefix')).toHaveTextContent('0');
+    expect(container.querySelector('.rc-input-suffix')).toHaveTextContent('0');
+    expect(container.querySelectorAll('.rc-input-group-addon')).toHaveLength(2);
+    expect(
+      container.querySelector('.rc-input-group-wrapper'),
+    ).toHaveTextContent('0000');
+
+    rerender(
+      <BaseInput
+        prefixCls="rc-input"
+        prefix={null}
+        suffix={false}
+        addonAfter={false}
+      >
+        <input />
+      </BaseInput>,
+    );
+
+    expect(
+      container.querySelector('.rc-input-affix-wrapper'),
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('.rc-input-group-wrapper'),
+    ).not.toBeInTheDocument();
+  });
+
   describe('allowClear should work', () => {
     const onChange = jest.fn();
     const onBlur = jest.fn();

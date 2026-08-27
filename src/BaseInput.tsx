@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import type { ReactElement, ReactNode } from 'react';
 import React, { cloneElement, useRef } from 'react';
 import type { BaseInputProps } from './interface';
-import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
+import { hasAddon, hasContent, hasPrefixSuffix } from './utils/commonUtils';
 
 export interface HolderRef {
   /** Provider holder ref. Will return `null` if not wrap anything */
@@ -99,7 +99,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
             clearIconCls,
             {
               [`${clearIconCls}-hidden`]: !needClear,
-              [`${clearIconCls}-has-suffix`]: !!suffix,
+              [`${clearIconCls}-has-suffix`]: hasContent(suffix),
             },
             classNames?.clear,
           )}
@@ -119,14 +119,14 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
         [`${affixWrapperPrefixCls}-focused`]: focused, // Not used, but keep it
         [`${affixWrapperPrefixCls}-readonly`]: readOnly,
         [`${affixWrapperPrefixCls}-input-with-clear-btn`]:
-          suffix && allowClear && value,
+          hasContent(suffix) && allowClear && value,
       },
       classes?.affixWrapper,
       classNames?.affixWrapper,
       classNames?.variant,
     );
 
-    const suffixNode = (suffix || allowClear) && (
+    const suffixNode = (hasContent(suffix) || allowClear) && (
       <span
         className={clsx(`${prefixCls}-suffix`, classNames?.suffix)}
         style={styles?.suffix}
@@ -144,7 +144,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
         {...dataAttrs?.affixWrapper}
         ref={containerRef}
       >
-        {prefix && (
+        {hasContent(prefix) && (
           <span
             className={clsx(`${prefixCls}-prefix`, classNames?.prefix)}
             style={styles?.prefix}
@@ -185,13 +185,13 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     element = (
       <GroupWrapperComponent className={mergedGroupClassName} ref={groupRef}>
         <WrapperComponent className={mergedWrapperClassName}>
-          {addonBefore && (
+          {hasContent(addonBefore) && (
             <GroupAddonComponent className={addonCls}>
               {addonBefore}
             </GroupAddonComponent>
           )}
           {element}
-          {addonAfter && (
+          {hasContent(addonAfter) && (
             <GroupAddonComponent className={addonCls}>
               {addonAfter}
             </GroupAddonComponent>
