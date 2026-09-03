@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@rc-component/resize-observer": "^1.1.1",
-    "@rc-component/util": "^1.11.1",
+    "@rc-component/util": "^1.13.0",
     "clsx": "^2.1.1"
   },
   "devDependencies": {

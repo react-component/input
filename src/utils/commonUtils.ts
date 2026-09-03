@@ -1,12 +1,19 @@
 import type React from 'react';
+import { isReactRenderable } from '@rc-component/util';
 import type { BaseInputProps, InputProps } from '../interface';
 
 export function hasAddon(props: BaseInputProps | InputProps) {
-  return !!(props.addonBefore || props.addonAfter);
+  return (
+    isReactRenderable(props.addonBefore) || isReactRenderable(props.addonAfter)
+  );
 }
 
 export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
-  return !!(props.prefix || props.suffix || props.allowClear);
+  return (
+    isReactRenderable(props.prefix) ||
+    isReactRenderable(props.suffix) ||
+    Boolean(props.allowClear)
+  );
 }
 
 // TODO: It's better to use `Proxy` replace the `element.value`. But we still need support IE11.
