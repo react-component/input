@@ -5,6 +5,10 @@ import TextArea from './TextArea';
 export type {
   AutoSizeType,
   BaseInputProps,
+  InputMask,
+  InputMaskDefinitions,
+  InputMaskPattern,
+  InputMaskState,
   InputProps,
   InputRef,
   ResizableTextAreaRef,

@@ -30,7 +30,7 @@ export default function useCountExceed<
   }, [selection]);
 
   const getExceedValue = React.useCallback(
-    (currentValue: string, isComposing: boolean) => {
+    (currentValue: string, isComposing: boolean, restoreSelection = true) => {
       let nextValue = currentValue;
 
       if (
@@ -43,7 +43,7 @@ export default function useCountExceed<
           max: countConfig.max,
         });
 
-        if (currentValue !== nextValue) {
+        if (restoreSelection && currentValue !== nextValue) {
           setSelection([
             getTargetRef.current()?.selectionStart || 0,
             getTargetRef.current()?.selectionEnd || 0,
