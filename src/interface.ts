@@ -88,6 +88,18 @@ export interface CountConfig {
   exceedFormatter?: ExceedFormatter;
 }
 
+export interface InputMaskState {
+  value: string;
+  selection: { start: number; end: number } | null;
+}
+
+export type InputMaskPattern = string | readonly (string | RegExp)[];
+
+export type InputMask =
+  InputMaskPattern | ((state: InputMaskState) => InputMaskPattern);
+
+export type InputMaskDefinitions = Readonly<Record<string, RegExp | null>>;
+
 export interface InputProps
   extends
     CommonInputProps,
@@ -142,6 +154,15 @@ export interface InputProps
   };
   count?: CountConfig;
   onClear?: () => void;
+  /** `0`: digit, `X`: Latin letter, `*`: alphanumeric. Escape literals with `\\`. */
+  mask?: InputMask;
+  /** Custom single-character rules. Use `null` to make a default token literal. */
+  maskDefinitions?: InputMaskDefinitions;
+  /**
+   * Placeholder for unfilled positions.
+   * Omit or use `undefined`, `null` or `''` to hide placeholders.
+   */
+  maskPlaceholder?: string | null;
 }
 
 export interface InputRef {
@@ -172,8 +193,7 @@ export interface ResizableTextAreaRef {
 }
 
 export type ValueOrTextAreaValue =
-  | TextareaHTMLAttributes<HTMLTextAreaElement>['value']
-  | bigint;
+  TextareaHTMLAttributes<HTMLTextAreaElement>['value'] | bigint;
 
 export type TextAreaProps = Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
