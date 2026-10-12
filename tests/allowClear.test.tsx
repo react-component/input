@@ -6,7 +6,67 @@ import Input, { TextArea } from '../src';
 describe.each([
   ['Input', Input],
   ['TextArea', TextArea],
-] as const)('%s allowClear tabIndex', (_, Component) => {
+] as const)('%s allowClear', (_, Component) => {
+  it.each([false, undefined])(
+    'distinguishes allowClear=%s from a disabled clear button',
+    (allowClear) => {
+      const { container, getByRole, queryByRole, rerender } = render(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={allowClear}
+        />,
+      );
+      expect(queryByRole('button')).toBeNull();
+      expect(container.firstChild).not.toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={{ disabled: true, clearIcon: 'clear', tabIndex: -1 }}
+        />,
+      );
+      const clearButton = getByRole('button');
+      expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('clear');
+      expect(clearButton.tabIndex).toBe(-1);
+      expect(container.firstChild).toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear
+        />,
+      );
+      expect(getByRole('button')).toBe(clearButton);
+      expect(clearButton).not.toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('✖');
+      expect(clearButton.tabIndex).toBe(0);
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={allowClear}
+        />,
+      );
+      expect(queryByRole('button')).toBeNull();
+      expect(container.firstChild).not.toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+    },
+  );
+
   it.each([true, {}, { tabIndex: 0 }])(
     'keeps the clear button keyboard accessible with %j',
     async (allowClear) => {

@@ -26,7 +26,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     readOnly,
     focused,
     triggerFocus,
-    allowClear: customizeAllowClear,
+    allowClear,
     value,
     handleReset,
     hidden,
@@ -38,7 +38,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     onClear,
   } = props;
 
-  const allowClear = useAllowClear(customizeAllowClear);
+  const [showAllowClear, allowClearConfig] = useAllowClear(allowClear);
   const inputElement = children ?? inputEl;
 
   const AffixWrapperComponent = components?.affixWrapper || 'span';
@@ -76,17 +76,18 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
   if (hasAffix) {
     // ================== Clear Icon ================== //
     let clearIcon: ReactNode = null;
-    if (allowClear) {
-      const needClear = !disabled && !readOnly && value && !allowClear.disabled;
+    if (showAllowClear) {
+      const needClear =
+        !disabled && !readOnly && value && !allowClearConfig.disabled;
       const clearIconCls = `${prefixCls}-clear-icon`;
-      const iconNode = isReactRenderable(allowClear.clearIcon)
-        ? allowClear.clearIcon
+      const iconNode = isReactRenderable(allowClearConfig.clearIcon)
+        ? allowClearConfig.clearIcon
         : '✖';
 
       clearIcon = (
         <button
           type="button"
-          tabIndex={allowClear.tabIndex}
+          tabIndex={allowClearConfig.tabIndex}
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();
@@ -118,14 +119,14 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
         [`${affixWrapperPrefixCls}-focused`]: focused, // Not used, but keep it
         [`${affixWrapperPrefixCls}-readonly`]: readOnly,
         [`${affixWrapperPrefixCls}-input-with-clear-btn`]:
-          isReactRenderable(suffix) && allowClear && value,
+          isReactRenderable(suffix) && showAllowClear && value,
       },
       classes?.affixWrapper,
       classNames?.affixWrapper,
       classNames?.variant,
     );
 
-    const suffixNode = (isReactRenderable(suffix) || allowClear) && (
+    const suffixNode = (isReactRenderable(suffix) || showAllowClear) && (
       <span
         className={clsx(`${prefixCls}-suffix`, classNames?.suffix)}
         style={styles?.suffix}

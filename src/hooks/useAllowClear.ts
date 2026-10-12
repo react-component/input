@@ -4,11 +4,9 @@ import type { CommonInputProps } from '../interface';
 export default function useAllowClear(
   allowClear: CommonInputProps['allowClear'],
 ) {
-  return React.useMemo(() => {
-    if (!allowClear) {
-      return undefined;
-    }
-
-    return typeof allowClear === 'object' ? allowClear : {};
-  }, [allowClear]);
+  return React.useMemo(
+    () =>
+      [!!allowClear, typeof allowClear === 'object' ? allowClear : {}] as const,
+    [allowClear],
+  );
 }
