@@ -36,7 +36,8 @@ export interface CommonInputProps {
     suffix?: CSSProperties;
     clear?: CSSProperties;
   };
-  allowClear?: boolean | { disabled?: boolean; clearIcon?: ReactNode };
+  allowClear?:
+    boolean | { disabled?: boolean; clearIcon?: ReactNode; tabIndex?: number };
 }
 
 type DataAttr = Record<`data-${string}`, string>;
@@ -172,8 +173,7 @@ export interface ResizableTextAreaRef {
 }
 
 export type ValueOrTextAreaValue =
-  | TextareaHTMLAttributes<HTMLTextAreaElement>['value']
-  | bigint;
+  TextareaHTMLAttributes<HTMLTextAreaElement>['value'] | bigint;
 
 export type TextAreaProps = Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,

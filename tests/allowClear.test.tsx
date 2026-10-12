@@ -1,0 +1,134 @@
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import Input, { TextArea } from '../src';
+
+describe.each([
+  ['Input', Input],
+  ['TextArea', TextArea],
+] as const)('%s allowClear', (_, Component) => {
+  it.each([false, undefined])(
+    'distinguishes allowClear=%s from a disabled clear button',
+    (allowClear) => {
+      const { container, getByRole, queryByRole, rerender } = render(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={allowClear}
+        />,
+      );
+      expect(queryByRole('button')).toBeNull();
+      expect(container.firstChild).not.toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={{ disabled: true, clearIcon: 'clear', tabIndex: -1 }}
+        />,
+      );
+      const clearButton = getByRole('button');
+      expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('clear');
+      expect(clearButton.tabIndex).toBe(-1);
+      expect(container.firstChild).toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear
+        />,
+      );
+      expect(getByRole('button')).toBe(clearButton);
+      expect(clearButton).not.toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('✖');
+      expect(clearButton.tabIndex).toBe(0);
+
+      rerender(
+        <Component
+          prefixCls="rc-input"
+          defaultValue="test"
+          suffix="suffix"
+          allowClear={allowClear}
+        />,
+      );
+      expect(queryByRole('button')).toBeNull();
+      expect(container.firstChild).not.toHaveClass(
+        'rc-input-affix-wrapper-input-with-clear-btn',
+      );
+    },
+  );
+
+  it.each([true, {}, { tabIndex: 0 }])(
+    'keeps the clear button keyboard accessible with %j',
+    async (allowClear) => {
+      const user = userEvent.setup();
+      const { getByRole } = render(
+        <Component defaultValue="test" allowClear={allowClear} />,
+      );
+
+      await user.tab();
+      expect(getByRole('textbox')).toHaveFocus();
+      await user.tab();
+      expect(getByRole('button')).toHaveFocus();
+      await user.keyboard('[Enter]');
+      expect(getByRole('textbox')).toHaveValue('');
+      expect(getByRole('textbox')).toHaveFocus();
+    },
+  );
+
+  it('skips the clear button in both tab directions while allowing click to clear', async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const onClear = jest.fn();
+    const { getAllByRole, getByRole } = render(
+      <>
+        <Component
+          defaultValue="test"
+          allowClear={{ tabIndex: -1 }}
+          onChange={onChange}
+          onClear={onClear}
+        />
+        <Component />
+      </>,
+    );
+    const [first, second] = getAllByRole('textbox');
+
+    await user.tab();
+    expect(first).toHaveFocus();
+    await user.tab();
+    expect(second).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(first).toHaveFocus();
+
+    await user.click(getByRole('button'));
+    expect(first).toHaveValue('');
+    expect(first).toHaveFocus();
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onClear).toHaveBeenCalledTimes(1);
+  });
+
+  it('updates the clear button tabIndex independently of the input', () => {
+    const { getByRole, rerender } = render(
+      <Component
+        defaultValue="test"
+        tabIndex={3}
+        allowClear={{ tabIndex: 2 }}
+      />,
+    );
+    expect(getByRole('button').tabIndex).toBe(2);
+    expect(getByRole('textbox').tabIndex).toBe(3);
+
+    rerender(<Component defaultValue="test" tabIndex={3} allowClear />);
+    expect(getByRole('button').tabIndex).toBe(0);
+    expect(getByRole('textbox').tabIndex).toBe(3);
+  });
+});
