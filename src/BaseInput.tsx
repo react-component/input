@@ -90,6 +90,9 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
       clearIcon = (
         <button
           type="button"
+          tabIndex={
+            typeof allowClear === 'object' ? allowClear.tabIndex : undefined
+          }
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();
