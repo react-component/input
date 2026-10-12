@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import { isReactRenderable } from '@rc-component/util';
 import type { ReactElement, ReactNode } from 'react';
 import React, { cloneElement, useRef } from 'react';
+import useAllowClear from './hooks/useAllowClear';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
@@ -25,7 +26,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     readOnly,
     focused,
     triggerFocus,
-    allowClear,
+    allowClear: customizeAllowClear,
     value,
     handleReset,
     hidden,
@@ -37,6 +38,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     onClear,
   } = props;
 
+  const allowClear = useAllowClear(customizeAllowClear);
   const inputElement = children ?? inputEl;
 
   const AffixWrapperComponent = components?.affixWrapper || 'span';
@@ -75,24 +77,16 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     // ================== Clear Icon ================== //
     let clearIcon: ReactNode = null;
     if (allowClear) {
-      const needClear =
-        !disabled &&
-        !readOnly &&
-        value &&
-        !(typeof allowClear === 'object' && allowClear.disabled);
+      const needClear = !disabled && !readOnly && value && !allowClear.disabled;
       const clearIconCls = `${prefixCls}-clear-icon`;
-      const iconNode =
-        typeof allowClear === 'object' &&
-        isReactRenderable(allowClear?.clearIcon)
-          ? allowClear.clearIcon
-          : '✖';
+      const iconNode = isReactRenderable(allowClear.clearIcon)
+        ? allowClear.clearIcon
+        : '✖';
 
       clearIcon = (
         <button
           type="button"
-          tabIndex={
-            typeof allowClear === 'object' ? allowClear.tabIndex : undefined
-          }
+          tabIndex={allowClear.tabIndex}
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();
