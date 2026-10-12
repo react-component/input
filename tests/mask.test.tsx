@@ -338,6 +338,43 @@ describe('Input.mask', () => {
     expect(input.value).toBe('');
   });
 
+  it.each([-1, 0])(
+    'preserves allowClear configuration with tabIndex=%s when showing and clearing a mask',
+    async (tabIndex) => {
+      const onChange = jest.fn();
+      const onClear = jest.fn();
+      const { input, getByRole } = renderInput({
+        allowClear: { clearIcon: 'clear', tabIndex },
+        maskPlaceholder: '_',
+        onChange,
+        onClear,
+      });
+      const clearButton = getByRole('button');
+
+      await userEvent.click(input);
+      expect(input.value).toBe('__-__');
+      expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('clear');
+      expect(clearButton.tabIndex).toBe(tabIndex);
+
+      await userEvent.keyboard('0');
+      expect(input.value).toBe('0_-__');
+      expect(clearButton).not.toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton.tabIndex).toBe(tabIndex);
+
+      await userEvent.click(clearButton);
+      expect(input.value).toBe('__-__');
+      expect(input).toHaveFocus();
+      expect(input.selectionStart).toBe(0);
+      expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
+      expect(clearButton).toHaveTextContent('clear');
+      expect(clearButton.tabIndex).toBe(tabIndex);
+      expect(onChange).toHaveBeenCalledTimes(2);
+      expect(onChange.mock.calls[1][0].target.value).toBe('');
+      expect(onClear).toHaveBeenCalledTimes(1);
+    },
+  );
+
   it.each([
     { maskPlaceholder: undefined, values: ['1', '12-', '12-3', '12-34'] },
     { maskPlaceholder: '_', values: ['1_-__', '12-__', '12-3_', '12-34'] },

@@ -36,7 +36,8 @@ export interface CommonInputProps {
     suffix?: CSSProperties;
     clear?: CSSProperties;
   };
-  allowClear?: boolean | { disabled?: boolean; clearIcon?: ReactNode };
+  allowClear?:
+    boolean | { disabled?: boolean; clearIcon?: ReactNode; tabIndex?: number };
 }
 
 type DataAttr = Record<`data-${string}`, string>;
