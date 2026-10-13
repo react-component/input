@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { useAllowClear } from '@rc-component/util';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import type { HolderRef } from './BaseInput';
 import BaseInput from './BaseInput';
@@ -171,7 +172,8 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       }
     };
 
-    const isPureTextArea = !autoSize && !showCount && !allowClear;
+    const clearConfig = useAllowClear(allowClear);
+    const isPureTextArea = !autoSize && !showCount && clearConfig.disabled;
 
     return (
       <BaseInput
@@ -185,7 +187,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
           ...classNames,
           affixWrapper: clsx(classNames?.affixWrapper, {
             [`${prefixCls}-show-count`]: showCount,
-            [`${prefixCls}-textarea-allow-clear`]: allowClear,
+            [`${prefixCls}-textarea-allow-clear`]: !clearConfig.disabled,
           }),
         }}
         disabled={disabled}

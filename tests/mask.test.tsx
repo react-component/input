@@ -343,26 +343,34 @@ describe('Input.mask', () => {
     async (tabIndex) => {
       const onChange = jest.fn();
       const onClear = jest.fn();
+      const onFocus = jest.fn();
+      const onBlur = jest.fn();
       const { input, getByRole } = renderInput({
-        allowClear: { clearIcon: 'clear', tabIndex },
+        allowClear: { clearIcon: 'clear', tabIndex, label: 'Erase' },
         maskPlaceholder: '_',
         onChange,
         onClear,
+        onFocus,
+        onBlur,
       });
-      const clearButton = getByRole('button');
+      const clearButton = getByRole('button', { name: 'Erase' });
 
       await userEvent.click(input);
       expect(input.value).toBe('__-__');
+      expect(input).toHaveFocus();
       expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
       expect(clearButton).toHaveTextContent('clear');
       expect(clearButton.tabIndex).toBe(tabIndex);
 
       await userEvent.keyboard('0');
+      expect(getByRole('textbox')).toBe(input);
+      expect(input).toHaveFocus();
       expect(input.value).toBe('0_-__');
       expect(clearButton).not.toHaveClass('rc-input-clear-icon-hidden');
       expect(clearButton.tabIndex).toBe(tabIndex);
 
       await userEvent.click(clearButton);
+      expect(getByRole('textbox')).toBe(input);
       expect(input.value).toBe('__-__');
       expect(input).toHaveFocus();
       expect(input.selectionStart).toBe(0);
@@ -372,6 +380,45 @@ describe('Input.mask', () => {
       expect(onChange).toHaveBeenCalledTimes(2);
       expect(onChange.mock.calls[1][0].target.value).toBe('');
       expect(onClear).toHaveBeenCalledTimes(1);
+      expect(onFocus).toHaveBeenCalledTimes(1);
+      expect(onBlur).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([undefined, '_'])(
+    'preserves the input node and focus when deleting the last character with placeholder=%s',
+    async (maskPlaceholder) => {
+      const { input, getByRole } = renderInput({
+        mask: '+00',
+        maskPlaceholder,
+        allowClear: true,
+      });
+      await userEvent.type(input, '0');
+      expect(getByRole('textbox')).toBe(input);
+      expect(input).toHaveFocus();
+      await userEvent.keyboard('{Backspace}');
+      expect(getByRole('textbox')).toBe(input);
+      expect(input).toHaveFocus();
+      expect(input.value).toBe(maskPlaceholder ? '+__' : '+');
+      expect(getByRole('button')).toHaveClass('rc-input-clear-icon-hidden');
+      await userEvent.keyboard('1');
+      expect(input.value).toBe(maskPlaceholder ? '+1_' : '+1');
+      expect(getByRole('button')).not.toHaveClass('rc-input-clear-icon-hidden');
+    },
+  );
+
+  it.each([false, { disabled: true }])(
+    'respects explicitly disabled clearing with a mask: %j',
+    async (allowClear) => {
+      const { input, container, queryByRole } = renderInput({
+        allowClear,
+        maskPlaceholder: '_',
+      });
+      await userEvent.type(input, '1234');
+      expect(input.value).toBe('12-34');
+      expect(input).toHaveFocus();
+      expect(queryByRole('button')).toBeNull();
+      expect(container.querySelector('.rc-input-affix-wrapper')).toBeNull();
     },
   );
 

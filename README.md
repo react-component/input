@@ -58,31 +58,31 @@ Then open `http://localhost:8000`.
 
 ### Input
 
-| Property        | Type                                                                          | Default    | Description                                                                                     |
-| --------------- | ----------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------- |
-| addonAfter      | `ReactNode`                                                                   | -          | Element displayed after the input.                                                              |
-| addonBefore     | `ReactNode`                                                                   | -          | Element displayed before the input.                                                             |
-| allowClear      | `boolean \| { disabled?: boolean; clearIcon?: ReactNode; tabIndex?: number }` | `false`    | Show a clear button for the current value. Set `tabIndex: -1` to skip it during Tab navigation. |
-| className       | `string`                                                                      | -          | Class name for the input element.                                                               |
-| classNames      | `InputProps['classNames']`                                                    | -          | Semantic class names for input slots.                                                           |
-| count           | `CountConfig`                                                                 | -          | Custom count strategy, limit, visibility, and exceed formatter.                                 |
-| defaultValue    | `string \| number \| readonly string[] \| bigint`                             | -          | Initial input value.                                                                            |
-| disabled        | `boolean`                                                                     | `false`    | Disable the input.                                                                              |
-| htmlSize        | `number`                                                                      | -          | Native input `size` attribute.                                                                  |
-| maxLength       | `number`                                                                      | -          | Native input `maxLength` attribute.                                                             |
-| mask            | `InputMask`                                                                   | -          | String, array or dynamic input mask.                                                            |
-| maskDefinitions | `InputMaskDefinitions`                                                        | -          | Custom character rules that override or extend the defaults.                                    |
-| maskPlaceholder | `string \| null`                                                              | -          | Placeholder for unfilled mask positions.                                                        |
-| prefix          | `ReactNode`                                                                   | -          | Prefix content inside the input wrapper.                                                        |
-| prefixCls       | `string`                                                                      | `rc-input` | Class name prefix.                                                                              |
-| showCount       | `boolean \| { formatter: ShowCountFormatter }`                                | `false`    | Show character count. Prefer `count.show` for new code.                                         |
-| styles          | `InputProps['styles']`                                                        | -          | Semantic styles for input slots.                                                                |
-| suffix          | `ReactNode`                                                                   | -          | Suffix content inside the input wrapper.                                                        |
-| type            | `InputProps['type']`                                                          | `text`     | Native input type. Use `TextArea` for textarea behavior.                                        |
-| value           | `string \| number \| readonly string[] \| bigint`                             | -          | Controlled input value.                                                                         |
-| onChange        | `React.ChangeEventHandler<HTMLInputElement>`                                  | -          | Triggered when the value changes.                                                               |
-| onClear         | `() => void`                                                                  | -          | Triggered when the clear button is clicked.                                                     |
-| onPressEnter    | `React.KeyboardEventHandler<HTMLInputElement>`                                | -          | Triggered when Enter is pressed.                                                                |
+| Property        | Type                                              | Default    | Description                                                                                     |
+| --------------- | ------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------- |
+| addonAfter      | `ReactNode`                                       | -          | Element displayed after the input.                                                              |
+| addonBefore     | `ReactNode`                                       | -          | Element displayed before the input.                                                             |
+| allowClear      | `boolean \| AllowClearConfig`                     | `false`    | Show a clear button for the current value. Set `tabIndex: -1` to skip it during Tab navigation. |
+| className       | `string`                                          | -          | Class name for the input element.                                                               |
+| classNames      | `InputProps['classNames']`                        | -          | Semantic class names for input slots.                                                           |
+| count           | `CountConfig`                                     | -          | Custom count strategy, limit, visibility, and exceed formatter.                                 |
+| defaultValue    | `string \| number \| readonly string[] \| bigint` | -          | Initial input value.                                                                            |
+| disabled        | `boolean`                                         | `false`    | Disable the input.                                                                              |
+| htmlSize        | `number`                                          | -          | Native input `size` attribute.                                                                  |
+| maxLength       | `number`                                          | -          | Native input `maxLength` attribute.                                                             |
+| mask            | `InputMask`                                       | -          | String, array or dynamic input mask.                                                            |
+| maskDefinitions | `InputMaskDefinitions`                            | -          | Custom character rules that override or extend the defaults.                                    |
+| maskPlaceholder | `string \| null`                                  | -          | Placeholder for unfilled mask positions.                                                        |
+| prefix          | `ReactNode`                                       | -          | Prefix content inside the input wrapper.                                                        |
+| prefixCls       | `string`                                          | `rc-input` | Class name prefix.                                                                              |
+| showCount       | `boolean \| { formatter: ShowCountFormatter }`    | `false`    | Show character count. Prefer `count.show` for new code.                                         |
+| styles          | `InputProps['styles']`                            | -          | Semantic styles for input slots.                                                                |
+| suffix          | `ReactNode`                                       | -          | Suffix content inside the input wrapper.                                                        |
+| type            | `InputProps['type']`                              | `text`     | Native input type. Use `TextArea` for textarea behavior.                                        |
+| value           | `string \| number \| readonly string[] \| bigint` | -          | Controlled input value.                                                                         |
+| onChange        | `React.ChangeEventHandler<HTMLInputElement>`      | -          | Triggered when the value changes.                                                               |
+| onClear         | `() => void`                                      | -          | Triggered when the clear button is clicked.                                                     |
+| onPressEnter    | `React.KeyboardEventHandler<HTMLInputElement>`    | -          | Triggered when Enter is pressed.                                                                |
 
 #### Input masks
 
@@ -118,25 +118,25 @@ import Input from '@rc-component/input';
 
 ### TextArea
 
-| Property     | Type                                                                          | Default       | Description                                                                                     |
-| ------------ | ----------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
-| allowClear   | `boolean \| { disabled?: boolean; clearIcon?: ReactNode; tabIndex?: number }` | `false`       | Show a clear button for the current value. Set `tabIndex: -1` to skip it during Tab navigation. |
-| autoSize     | `boolean \| { minRows?: number; maxRows?: number }`                           | `false`       | Auto resize height by content.                                                                  |
-| className    | `string`                                                                      | -             | Class name for the textarea.                                                                    |
-| classNames   | `TextAreaProps['classNames']`                                                 | -             | Semantic class names for textarea slots.                                                        |
-| count        | `CountConfig`                                                                 | -             | Custom count strategy, limit, visibility, and exceed formatter.                                 |
-| defaultValue | `string \| number \| readonly string[] \| bigint`                             | -             | Initial textarea value.                                                                         |
-| maxLength    | `number`                                                                      | -             | Native textarea `maxLength` attribute.                                                          |
-| prefixCls    | `string`                                                                      | `rc-textarea` | Class name prefix.                                                                              |
-| showCount    | `boolean \| { formatter: ShowCountFormatter }`                                | `false`       | Show character count. Prefer `count.show` for new code.                                         |
-| style        | `React.CSSProperties`                                                         | -             | Inline styles for the textarea.                                                                 |
-| styles       | `TextAreaProps['styles']`                                                     | -             | Semantic styles for textarea slots.                                                             |
-| suffix       | `ReactNode`                                                                   | -             | Suffix content inside the textarea wrapper.                                                     |
-| value        | `string \| number \| readonly string[] \| bigint`                             | -             | Controlled textarea value.                                                                      |
-| onChange     | `React.ChangeEventHandler<HTMLTextAreaElement>`                               | -             | Triggered when the value changes.                                                               |
-| onClear      | `() => void`                                                                  | -             | Triggered when the clear button is clicked.                                                     |
-| onPressEnter | `React.KeyboardEventHandler<HTMLTextAreaElement>`                             | -             | Triggered when Enter is pressed.                                                                |
-| onResize     | `(size: { width: number; height: number }) => void`                           | -             | Triggered when textarea size changes.                                                           |
+| Property     | Type                                                | Default       | Description                                                                                     |
+| ------------ | --------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------- |
+| allowClear   | `boolean \| AllowClearConfig`                       | `false`       | Show a clear button for the current value. Set `tabIndex: -1` to skip it during Tab navigation. |
+| autoSize     | `boolean \| { minRows?: number; maxRows?: number }` | `false`       | Auto resize height by content.                                                                  |
+| className    | `string`                                            | -             | Class name for the textarea.                                                                    |
+| classNames   | `TextAreaProps['classNames']`                       | -             | Semantic class names for textarea slots.                                                        |
+| count        | `CountConfig`                                       | -             | Custom count strategy, limit, visibility, and exceed formatter.                                 |
+| defaultValue | `string \| number \| readonly string[] \| bigint`   | -             | Initial textarea value.                                                                         |
+| maxLength    | `number`                                            | -             | Native textarea `maxLength` attribute.                                                          |
+| prefixCls    | `string`                                            | `rc-textarea` | Class name prefix.                                                                              |
+| showCount    | `boolean \| { formatter: ShowCountFormatter }`      | `false`       | Show character count. Prefer `count.show` for new code.                                         |
+| style        | `React.CSSProperties`                               | -             | Inline styles for the textarea.                                                                 |
+| styles       | `TextAreaProps['styles']`                           | -             | Semantic styles for textarea slots.                                                             |
+| suffix       | `ReactNode`                                         | -             | Suffix content inside the textarea wrapper.                                                     |
+| value        | `string \| number \| readonly string[] \| bigint`   | -             | Controlled textarea value.                                                                      |
+| onChange     | `React.ChangeEventHandler<HTMLTextAreaElement>`     | -             | Triggered when the value changes.                                                               |
+| onClear      | `() => void`                                        | -             | Triggered when the clear button is clicked.                                                     |
+| onPressEnter | `React.KeyboardEventHandler<HTMLTextAreaElement>`   | -             | Triggered when Enter is pressed.                                                                |
+| onResize     | `(size: { width: number; height: number }) => void` | -             | Triggered when textarea size changes.                                                           |
 
 ### Refs
 
@@ -181,3 +181,22 @@ The release flow is handled by `@rc-component/np` through the `rc-np` command af
 ## License
 
 @rc-component/input is released under the [MIT](./LICENSE) license.
+
+### Clear configuration
+
+`allowClear` accepts a boolean or an `AllowClearConfig` object from `@rc-component/util`:
+
+```ts
+interface AllowClearConfig {
+  clearIcon?: React.ReactNode;
+  disabled?: boolean;
+  tabIndex?: number;
+  label?: string;
+}
+```
+
+All fields are optional. `disabled: true` behaves like `allowClear={false}`: the clear button and space reserved solely for it are removed; the input remains editable. Existing suffixes and other content are preserved. This changes the previous hidden-button spacing behavior where applicable.
+
+`tabIndex` affects only the clear button; `-1` removes it from Tab navigation while retaining mouse activation. `label` supplies its accessible name through `aria-label`. Defaults, clear values, callbacks, and component state restrictions are unchanged.
+
+When no other affix keeps the wrapper mounted, dynamically disabling clearing can recreate the input DOM node and lose focus or selection, just like switching to `allowClear={false}`. The value is preserved. With an existing suffix, the wrapper, focus, and selection remain stable.

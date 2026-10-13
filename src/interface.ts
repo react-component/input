@@ -7,7 +7,7 @@ import type {
   ReactNode,
   TextareaHTMLAttributes,
 } from 'react';
-import type { InputFocusOptions } from '@rc-component/util';
+import type { AllowClearConfig, InputFocusOptions } from '@rc-component/util';
 import type { LiteralUnion } from './utils/types';
 
 export interface CommonInputProps {
@@ -36,8 +36,7 @@ export interface CommonInputProps {
     suffix?: CSSProperties;
     clear?: CSSProperties;
   };
-  allowClear?:
-    boolean | { disabled?: boolean; clearIcon?: ReactNode; tabIndex?: number };
+  allowClear?: boolean | AllowClearConfig;
 }
 
 type DataAttr = Record<`data-${string}`, string>;
@@ -57,6 +56,8 @@ export interface BaseInputProps extends CommonInputProps {
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
   onClear?: () => void;
+  /** Hide the clear button without changing the affix wrapper. */
+  hiddenClear?: boolean;
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;

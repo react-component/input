@@ -345,14 +345,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       className={clsx(className, outOfRangeCls)}
       handleReset={handleReset}
       value={maskConfig.displayValue}
-      allowClear={
-        maskConfig.hasMask && !maskConfig.hasInput && rest.allowClear
-          ? {
-              ...(typeof rest.allowClear === 'object' ? rest.allowClear : {}),
-              disabled: true,
-            }
-          : rest.allowClear
-      }
+      hiddenClear={maskConfig.hasMask && !maskConfig.hasInput}
       focused={focused}
       triggerFocus={focus}
       suffix={getSuffix()}
