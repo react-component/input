@@ -12,7 +12,9 @@ export function hasPrefixSuffix(props: BaseInputProps | InputProps) {
   return (
     isReactRenderable(props.prefix) ||
     isReactRenderable(props.suffix) ||
-    Boolean(props.allowClear)
+    (typeof props.allowClear === 'object'
+      ? !!props.allowClear && !props.allowClear.disabled
+      : !!props.allowClear)
   );
 }
 

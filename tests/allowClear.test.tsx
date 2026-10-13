@@ -7,65 +7,83 @@ describe.each([
   ['Input', Input],
   ['TextArea', TextArea],
 ] as const)('%s allowClear', (_, Component) => {
-  it.each([false, undefined])(
-    'distinguishes allowClear=%s from a disabled clear button',
-    (allowClear) => {
+  it.each([undefined, 'suffix'])(
+    'removes the clear entry without changing other suffixes: %s',
+    async (suffix) => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      const onClear = jest.fn();
+      const config = Object.freeze({
+        clearIcon: 'custom',
+        tabIndex: -1,
+        label: 'Erase',
+      });
+      const props = {
+        prefixCls: 'rc-input',
+        defaultValue: 'test',
+        suffix,
+        onChange,
+        onClear,
+      };
       const { container, getByRole, queryByRole, rerender } = render(
-        <Component
-          prefixCls="rc-input"
-          defaultValue="test"
-          suffix="suffix"
-          allowClear={allowClear}
-        />,
+        <Component {...props} allowClear={false} />,
       );
-      expect(queryByRole('button')).toBeNull();
-      expect(container.firstChild).not.toHaveClass(
-        'rc-input-affix-wrapper-input-with-clear-btn',
-      );
-
+      const disabledMarkup = container.innerHTML;
       rerender(
-        <Component
-          prefixCls="rc-input"
-          defaultValue="test"
-          suffix="suffix"
-          allowClear={{ disabled: true, clearIcon: 'clear', tabIndex: -1 }}
-        />,
+        <Component {...props} allowClear={{ ...config, disabled: true }} />,
       );
-      const clearButton = getByRole('button');
-      expect(clearButton).toHaveClass('rc-input-clear-icon-hidden');
-      expect(clearButton).toHaveTextContent('clear');
+      expect(container.innerHTML).toBe(disabledMarkup);
+      expect(queryByRole('button')).toBeNull();
+      expect(getByRole('textbox')).toHaveValue('test');
+      expect(onChange).not.toHaveBeenCalled();
+      expect(onClear).not.toHaveBeenCalled();
+
+      rerender(<Component {...props} allowClear={config} />);
+      const clearButton = getByRole('button', { name: 'Erase' });
+      expect(clearButton).toHaveTextContent('custom');
       expect(clearButton.tabIndex).toBe(-1);
-      expect(container.firstChild).toHaveClass(
-        'rc-input-affix-wrapper-input-with-clear-btn',
-      );
-
-      rerender(
-        <Component
-          prefixCls="rc-input"
-          defaultValue="test"
-          suffix="suffix"
-          allowClear
-        />,
-      );
-      expect(getByRole('button')).toBe(clearButton);
-      expect(clearButton).not.toHaveClass('rc-input-clear-icon-hidden');
-      expect(clearButton).toHaveTextContent('✖');
-      expect(clearButton.tabIndex).toBe(0);
-
-      rerender(
-        <Component
-          prefixCls="rc-input"
-          defaultValue="test"
-          suffix="suffix"
-          allowClear={allowClear}
-        />,
-      );
-      expect(queryByRole('button')).toBeNull();
-      expect(container.firstChild).not.toHaveClass(
-        'rc-input-affix-wrapper-input-with-clear-btn',
-      );
+      await user.click(clearButton);
+      expect(getByRole('textbox')).toHaveValue('');
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onClear).toHaveBeenCalledTimes(1);
+      expect(config).toEqual({
+        clearIcon: 'custom',
+        tabIndex: -1,
+        label: 'Erase',
+      });
     },
   );
+
+  it('preserves focus and selection when a suffix keeps the wrapper mounted', async () => {
+    const user = userEvent.setup();
+    const { getByRole, rerender } = render(
+      <Component suffix="suffix" defaultValue="test" allowClear />,
+    );
+    const input = getByRole('textbox') as HTMLInputElement;
+    await user.click(input);
+    input.setSelectionRange(1, 3);
+    rerender(
+      <Component
+        suffix="suffix"
+        defaultValue="test"
+        allowClear={{ disabled: true }}
+      />,
+    );
+    expect(getByRole('textbox')).toBe(input);
+    expect(input).toHaveFocus();
+    expect(input.selectionStart).toBe(1);
+    expect(input.selectionEnd).toBe(3);
+  });
+
+  it('uses the default accessible name and supports Space activation', async () => {
+    const user = userEvent.setup();
+    const { getByRole } = render(<Component defaultValue="test" allowClear />);
+    await user.tab();
+    await user.tab();
+    expect(getByRole('button', { name: 'Clear' })).toHaveFocus();
+    await user.keyboard('[Space]');
+    expect(getByRole('textbox')).toHaveValue('');
+  });
 
   it.each([true, {}, { tabIndex: 0 }])(
     'keeps the clear button keyboard accessible with %j',

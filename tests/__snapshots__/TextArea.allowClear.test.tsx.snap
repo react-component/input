@@ -11,6 +11,7 @@ exports[`should support allowClear should not show icon if defaultValue is undef
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
@@ -31,6 +32,7 @@ exports[`should support allowClear should not show icon if defaultValue is undef
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
@@ -51,6 +53,7 @@ exports[`should support allowClear should not show icon if defaultValue is undef
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
@@ -71,6 +74,7 @@ exports[`should support allowClear should not show icon if value is undefined, n
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
@@ -91,6 +95,7 @@ exports[`should support allowClear should not show icon if value is undefined, n
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
@@ -111,6 +116,7 @@ exports[`should support allowClear should not show icon if value is undefined, n
     class="rc-textarea-suffix"
   >
     <button
+      aria-label="Clear"
       class="rc-textarea-clear-icon rc-textarea-clear-icon-hidden"
       type="button"
     >
