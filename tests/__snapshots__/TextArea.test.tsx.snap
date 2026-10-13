@@ -18,6 +18,7 @@ exports[`TextArea classNames and styles should work 1`] = `
       style="color: yellow;"
     >
       <button
+        aria-label="Clear"
         class="rc-textarea-clear-icon rc-textarea-clear-icon-has-suffix custom-clear"
         style="color: orange;"
         type="button"

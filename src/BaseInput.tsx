@@ -1,8 +1,7 @@
 import { clsx } from 'clsx';
-import { isReactRenderable } from '@rc-component/util';
+import { isReactRenderable, useAllowClear } from '@rc-component/util';
 import type { ReactElement, ReactNode } from 'react';
 import React, { cloneElement, useRef } from 'react';
-import useAllowClear from './hooks/useAllowClear';
 import type { BaseInputProps } from './interface';
 import { hasAddon, hasPrefixSuffix } from './utils/commonUtils';
 
@@ -38,7 +37,8 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     onClear,
   } = props;
 
-  const [showAllowClear, allowClearConfig] = useAllowClear(allowClear);
+  const allowClearConfig = useAllowClear(allowClear);
+  const showAllowClear = !allowClearConfig.disabled;
   const inputElement = children ?? inputEl;
 
   const AffixWrapperComponent = components?.affixWrapper || 'span';
@@ -77,8 +77,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
     // ================== Clear Icon ================== //
     let clearIcon: ReactNode = null;
     if (showAllowClear) {
-      const needClear =
-        !disabled && !readOnly && value && !allowClearConfig.disabled;
+      const needClear = !disabled && !readOnly && value;
       const clearIconCls = `${prefixCls}-clear-icon`;
       const iconNode = isReactRenderable(allowClearConfig.clearIcon)
         ? allowClearConfig.clearIcon
@@ -88,6 +87,7 @@ const BaseInput = React.forwardRef<HolderRef, BaseInputProps>((props, ref) => {
         <button
           type="button"
           tabIndex={allowClearConfig.tabIndex}
+          aria-label={allowClearConfig.label ?? 'Clear'}
           onClick={(event) => {
             handleReset?.(event);
             onClear?.();

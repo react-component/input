@@ -286,7 +286,8 @@ describe('Input allowClear', () => {
         defaultValue="111"
       />,
     );
-    expect(container.querySelector('.rc-input-clear-icon-hidden')).toBeTruthy();
+    expect(container.querySelector('.rc-input-clear-icon')).toBeNull();
+    expect(container.querySelector('.rc-input-affix-wrapper')).toBeNull();
   });
 
   it('classNames and styles should work', () => {
