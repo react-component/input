@@ -99,7 +99,7 @@ export default function calculateAutoSizeStyle(
 ): React.CSSProperties {
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
-    hiddenTextarea.setAttribute('tab-index', '-1');
+    hiddenTextarea.setAttribute('tabindex', '-1');
     hiddenTextarea.setAttribute('aria-hidden', 'true');
     // fix: A form field element should have an id or name attribute
     // A form field element has neither an id nor a name attribute. This might prevent the browser from correctly autofilling the form.
