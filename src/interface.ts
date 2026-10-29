@@ -56,6 +56,8 @@ export interface BaseInputProps extends CommonInputProps {
   readOnly?: boolean;
   handleReset?: MouseEventHandler;
   onClear?: () => void;
+  /** Hide the clear button without changing the affix wrapper. */
+  hiddenClear?: boolean;
   hidden?: boolean;
   dataAttrs?: {
     affixWrapper?: DataAttr;
@@ -87,6 +89,18 @@ export interface CountConfig {
   /** Trigger when content larger than the `max` limitation */
   exceedFormatter?: ExceedFormatter;
 }
+
+export interface InputMaskState {
+  value: string;
+  selection: { start: number; end: number } | null;
+}
+
+export type InputMaskPattern = string | readonly (string | RegExp)[];
+
+export type InputMask =
+  InputMaskPattern | ((state: InputMaskState) => InputMaskPattern);
+
+export type InputMaskDefinitions = Readonly<Record<string, RegExp | null>>;
 
 export interface InputProps
   extends
@@ -142,6 +156,15 @@ export interface InputProps
   };
   count?: CountConfig;
   onClear?: () => void;
+  /** `0`: digit, `X`: Latin letter, `*`: alphanumeric. Escape literals with `\\`. */
+  mask?: InputMask;
+  /** Custom single-character rules. Use `null` to make a default token literal. */
+  maskDefinitions?: InputMaskDefinitions;
+  /**
+   * Placeholder for unfilled positions.
+   * Omit or use `undefined`, `null` or `''` to hide placeholders.
+   */
+  maskPlaceholder?: string | null;
 }
 
 export interface InputRef {
