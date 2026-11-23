@@ -18,8 +18,11 @@ import useCount from './hooks/useCount';
 import useCountDisplay from './hooks/useCountDisplay';
 import useCountExceed from './hooks/useCountExceed';
 import useMergedValue from './hooks/useMergedValue';
+import useMask from './hooks/useMask';
 import type { ChangeEventInfo, InputProps, InputRef } from './interface';
 import { resolveOnChange } from './utils/commonUtils';
+
+const maskInputTypes = ['text', 'search', 'tel', 'url', 'password'];
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
@@ -44,6 +47,11 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     styles,
     onCompositionStart,
     onCompositionEnd,
+    onBeforeInput,
+    onSelect,
+    mask,
+    maskDefinitions,
+    maskPlaceholder,
     ...rest
   } = props;
 
@@ -66,10 +74,21 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     props.value,
   );
 
+  const maskConfig = useMask({
+    mask: maskInputTypes.includes(type) ? mask : undefined,
+    maskDefinitions,
+    maskPlaceholder,
+    value: formatValue,
+    focused: focused && !disabled && !props.readOnly,
+    isComposing: compositionRef.current,
+    inputRef,
+    maxLength,
+  });
+
   const countConfig = useCount(count, showCount);
   const { isOutOfRange, dataCount } = useCountDisplay({
     countConfig,
-    value: formatValue,
+    value: maskConfig.hasMask ? maskConfig.displayValue : formatValue,
     maxLength,
   });
   const getExceedValue = useCountExceed({
@@ -111,17 +130,32 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     currentValue: string,
     info: ChangeEventInfo,
   ) => {
-    const cutValue = getExceedValue(currentValue, compositionRef.current);
+    const nextValue =
+      maskConfig.hasMask && !compositionRef.current
+        ? maskConfig.getMaskedValue(
+            currentValue,
+            (e.nativeEvent as InputEvent).inputType,
+            // Apply `count.exceedFormatter` to the formatted value, keeping the mask caret.
+            (value) => getExceedValue(value, false, false),
+          )
+        : getExceedValue(currentValue, compositionRef.current);
 
-    if (info.source === 'compositionEnd' && currentValue === cutValue) {
+    if (info.source === 'compositionEnd' && currentValue === nextValue) {
       // Avoid triggering twice
       // https://github.com/ant-design/ant-design/issues/46587
       return;
     }
-    setValue(cutValue);
+    if (
+      maskConfig.hasMask &&
+      !compositionRef.current &&
+      nextValue === (maskConfig.hasInput ? maskConfig.displayValue : '')
+    ) {
+      return;
+    }
+    setValue(nextValue);
 
     if (inputRef.current) {
-      resolveOnChange(inputRef.current, e, onChange, cutValue);
+      resolveOnChange(inputRef.current, e, onChange, nextValue);
     }
   };
 
@@ -142,6 +176,15 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (maskConfig.hasMask) {
+      maskConfig.recordSelection(
+        e.key === 'Backspace'
+          ? 'backward'
+          : e.key === 'Delete'
+            ? 'forward'
+            : '',
+      );
+    }
     if (
       onPressEnter &&
       e.key === 'Enter' &&
@@ -161,6 +204,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleFocus: React.FocusEventHandler<HTMLInputElement> = (e) => {
+    if (maskConfig.hasMask && !maskConfig.hasInput) {
+      maskConfig.reset();
+    }
     setFocused(true);
     onFocus?.(e);
   };
@@ -174,6 +220,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   };
 
   const handleReset = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    maskConfig.reset();
     setValue('');
     focus();
     if (inputRef.current) {
@@ -208,6 +255,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         'styles',
         'classNames',
         'onClear',
+        'mask',
+        'maskDefinitions',
+        'maskPlaceholder',
       ],
     );
     return (
@@ -219,6 +269,14 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
+        onBeforeInput={(e) => {
+          maskConfig.recordSelection();
+          onBeforeInput?.(e);
+        }}
+        onSelect={(e) => {
+          maskConfig.recordSelection();
+          onSelect?.(e);
+        }}
         className={clsx(
           prefixCls,
           {
@@ -230,7 +288,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
         ref={inputRef}
         size={htmlSize}
         type={type}
+        maxLength={maskConfig.hasMask ? undefined : maxLength}
         onCompositionStart={(e) => {
+          maskConfig.recordSelection();
           compositionRef.current = true;
           onCompositionStart?.(e);
         }}
@@ -275,7 +335,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
       prefixCls={prefixCls}
       className={clsx(className, outOfRangeCls)}
       handleReset={handleReset}
-      value={formatValue}
+      value={maskConfig.displayValue}
+      hiddenClear={maskConfig.hasMask && !maskConfig.hasInput}
       focused={focused}
       triggerFocus={focus}
       suffix={getSuffix()}
