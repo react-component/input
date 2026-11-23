@@ -1,5 +1,10 @@
 import { clsx } from 'clsx';
-import { omit, triggerFocus, type InputFocusOptions } from '@rc-component/util';
+import {
+  isReactRenderable,
+  omit,
+  triggerFocus,
+  type InputFocusOptions,
+} from '@rc-component/util';
 import React, {
   forwardRef,
   useEffect,
@@ -236,7 +241,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const getSuffix = () => {
     // Max length value
-    if (suffix || countConfig.show) {
+    if (isReactRenderable(suffix) || countConfig.show) {
       return (
         <>
           {countConfig.show && (
@@ -244,7 +249,8 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
               className={clsx(
                 `${prefixCls}-show-count-suffix`,
                 {
-                  [`${prefixCls}-show-count-has-suffix`]: !!suffix,
+                  [`${prefixCls}-show-count-has-suffix`]:
+                    isReactRenderable(suffix),
                 },
                 classNames?.count,
               )}
