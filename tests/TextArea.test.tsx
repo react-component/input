@@ -196,9 +196,26 @@ describe('TextArea', () => {
       boxSizing: 'border-box',
       paddingSize: 4,
       sizingStyle:
-        'letter-spacing:normal;line-height:normal;padding-top:2px;padding-bottom:2px;font-family:-webkit-small-control;font-weight:;font-size:;font-variant:;text-rendering:auto;text-transform:none;width:;text-indent:0;padding-left:2px;padding-right:2px;border-width:1px;box-sizing:border-box;word-break:;white-space:pre-wrap',
+        'letter-spacing:normal;word-spacing:normal;line-height:normal;padding-top:2px;padding-bottom:2px;font-family:-webkit-small-control;font-weight:;font-size:;font-variant:;text-rendering:auto;text-transform:none;width:;text-indent:0;padding-left:2px;padding-right:2px;border-width:1px;box-sizing:border-box;word-break:;white-space:pre-wrap',
     });
   });
+
+  it.each(['8px', '16px', '-2px', 'normal'])(
+    'copies word-spacing %s when measuring autoSize',
+    (wordSpacing) => {
+      render(
+        <TextArea
+          autoSize
+          defaultValue="one two three four five six seven eight nine ten"
+          style={{ wordSpacing }}
+        />,
+      );
+      const measurement = document.querySelector<HTMLTextAreaElement>(
+        'textarea[aria-hidden="true"]',
+      );
+      expect(measurement).toHaveStyle({ wordSpacing });
+    },
+  );
 
   it('boxSizing === "border-box"', () => {
     const wrapper = document.createElement('textarea');

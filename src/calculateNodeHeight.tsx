@@ -20,6 +20,7 @@ const HIDDEN_TEXTAREA_STYLE = `
 
 const SIZING_STYLE = [
   'letter-spacing',
+  'word-spacing',
   'line-height',
   'padding-top',
   'padding-bottom',
