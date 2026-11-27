@@ -96,6 +96,17 @@ describe('TextArea', () => {
     expect(textarea.value).toBe('222');
   });
 
+  it('keeps the hidden measurement textarea out of the tab order', async () => {
+    render(<TextArea autoSize />);
+    await wait();
+
+    const measurementNode = document.querySelector(
+      'textarea[name="hiddenTextarea"]',
+    );
+    expect(measurementNode).toHaveAttribute('tabindex', '-1');
+    expect(measurementNode).not.toHaveAttribute('tab-index');
+  });
+
   it('should auto calculate height according to content length and autoSize property', async () => {
     const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const onInternalAutoSize = jest.fn();
